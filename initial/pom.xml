@@ -17,6 +17,7 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-thymeleaf</artifactId>
+            <version>1.4.0.RELEASE</version>
         </dependency>
         
         <!-- JPA Data (We are going to use Repositories, Entities, Hibernate, etc...) -->
