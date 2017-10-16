@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title th:text="#{label.form.title}">Form</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.0/css/bulma.min.css">
+  </head>
+  <body>
+  <section class="hero is-medium">
+    <div class="hero-body">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-one-third is-offset-one-third">
+                    <h1 class="title" th:text="#{label.form.title}">Account Login</h1>
+                    <form th:action="@{/user}" th:object="${user}" method="post">
+                        <div>
+                            <div class="field">
+                                <label class="label" th:text="#{label.user.username}">Username</label>
+                                <div class="control has-icons-left">
+                                    <input class="input" type="text" placeholder="User" th:field="*{username}" />
+                                    <span class="icon is-small is-left">
+                                        <i class="fa fa-user"></i>
+                                    </span>
+                                </div>
+                            </div>
+                            <p th:each="error: ${#fields.errors('username')}" th:text="${error}">Validation error</p>
+                        </div>
+
+                        <div>
+                            <div class="field">
+                                <label class="label" th:text="#{label.user.password}">Password</label>
+                                <div class="control has-icons-left">
+                                    <input class="input" type="password" placeholder="Password" th:field="*{password}" />
+                                    <span class="icon is-small is-left">
+                                        <i class="fa fa-lock"></i>
+                                    </span>
+                                </div>
+                            </div>
+                            <p th:each="error : ${#fields.errors('password')}" th:text="${error}">Validation error</p>
+                        </div>
+                        <div class="control">
+                            <button class="button is-link" type="submit" th:text="#{label.form.submit}">Submit</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+  </section>
+  </body>
+</html>
+
