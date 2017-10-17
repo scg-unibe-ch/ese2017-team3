@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.0/css/bulma.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.0/css/bulma.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 </head>
 <body class="login-page page-layout">
 <section class="hero is-link">
@@ -68,7 +69,7 @@
                     </div>
                 </div>
                 <div class="notification is-info ">
-                    <a href="" class="button delete"></a>
+                    <a href="#" class="button delete"></a>
                     <div class="columns is-gapless">
                         <div class="column is-half">
                             <div class="columns is-gapless">
@@ -126,7 +127,7 @@
                     </div>
                 </div>
 
-                <div class="notification"><a href="" class="button delete"></a><a href="" class="button delete"></a>
+                <div class="notification"><a href="#" class="button delete"></a>
                     <div class="columns is-gapless">
                         <div class="column is-half">
                             <div class="columns is-gapless">
@@ -321,5 +322,12 @@
         </div>
     </div>
 </div>
+<script>
+    $(document).ready(function() {
+       $(".delete").click(function() {
+           $(this).parent(".notification").hide(300);
+       });
+    });
+</script>
 </body>
 </html>
