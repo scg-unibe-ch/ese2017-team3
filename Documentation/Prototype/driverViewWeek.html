@@ -7,129 +7,171 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.0/css/bulma.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.0/css/bulma.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <style>
+        .weekday {
+            min-height: 50px;
+        }
+        
+        .weekday .menu-label {
+            font-size: 1.75em;
+            letter-spacing: 0.075em;
+        }
+        
+        .weekday table {
+            background-color: #ecf0f1;  
+        }
+        
+        .menu-label {
+            cursor: pointer;
+        }
+        
+    </style>
 </head>
 <body class="login-page page-layout">
-<section class="hero is-link is-small">
-    <div class="hero-body">
-        <div class="container">
-            <div class="columns is-gapless">
-                <div class="column">
-                    <p class="title">
-                        AniTrans
-                    </p>
-                    <p class="subtitle">
-                        Deine Tourenübersicht
-                    </p>
-                </div>
+    <section class="hero is-link is-small">
+        <div class="hero-body">
+            <div class="container">
+                <div class="columns is-gapless">
+                    <div class="column">
+                        <p class="title">
+                            AniTrans
+                        </p>
+                        <p class="subtitle">
+                            Deine Tourenübersicht
+                        </p>
+                    </div>
 
+                </div>
             </div>
         </div>
-    </div>
 
-    <div class="hero-foot">
-        <div class="container">
-            <nav class="tabs is-boxed">
-                <ul>
-                    <li>
-                        <a href="driverViewCurrent.html">Aktuell</a>
-                    </li>
-                    <li class="is-active">
-                        <a>Wochenübersicht</a>
-                    </li>
-                    <li>
-                        <a href="driverViewRecent.html">Vergangene</a>
-                    </li>
-                </ul>
-            </nav>
+        <div class="hero-foot">
+            <div class="container">
+                <nav class="tabs is-boxed">
+                    <ul>
+                        <li>
+                            <a href="driverViewCurrent.html">Aktuell</a>
+                        </li>
+                        <li class="is-active">
+                            <a>Wochenübersicht</a>
+                        </li>
+                        <li>
+                            <a href="driverViewRecent.html">Vergangene</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
         </div>
-    </div>
-</section>
-<div class="box">
-    <div class="block">
+    </section>
+    <div class="box">
         <aside class="menu">
-            <p class="menu-label">
-                Montag
-            </p>
-            <table class="table is-fullwidth">
-                <thead>
-                <tr>
-                    <th>Start<br>Ziel</th>
-                    <th>Datum<br>Zeit</th>
-                    <th>Fracht</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <td>Punkt A<br>Punkt B</td>
-                    <td>24.04.19<br>12:37</td>
-                    <td>3 Kühe <br>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Punkt A<br>Punkt B</td>
-                    <td>24.04.19<br>12:37</td>
-                    <td>3 Kühe <br></td>
-                </tr>
-                <tr>
-                    <td>Punkt A<br>Punkt B</td>
-                    <td>24.04.19<br>12:37</td>
-                    <td>3 Kühe <br></td>
-                </tr>
-                <tr>
-                    <td>Punkt A<br>Punkt B</td>
-                    <td>24.04.19<br>12:37</td>
-                    <td>3 Kühe <br></td>
-                </tr>
-                <tr>
-                    <td>Punkt A<br>Punkt B</td>
-                    <td>24.04.19<br>12:37</td>
-                    <td>3 Kühe <br></td>
-                </tr>
-                </tbody>
-            </table>
-            <p class="menu-label">
-                Dienstag
-            </p>
-            <table class="table is-fullwidth">
-                <thead>
-                <tr>
-                    <th>Start<br>Ziel</th>
-                    <th>Datum<br>Zeit</th>
-                    <th>Fracht</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <td>Punkt A<br>Punkt B</td>
-                    <td>24.04.19<br>12:37</td>
-                    <td>3 Kühe <br>
+        <div class="weekday">
+                <span class="menu-label">
+                    <span class="icon">
+                        <i class="fa fa-angle-down"></i>
+                    </span>
+                    Montag
+                </span>
+                <div class="panel">
+                    <table class="table is-fullwidth">
+                    <thead>
+                    <tr>
+                        <th>Start<br>Ziel</th>
+                        <th>Datum<br>Zeit</th>
+                        <th>Fracht</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>Punkt A<br>Punkt B</td>
+                        <td>24.04.19<br>12:37</td>
+                        <td>3 Kühe <br>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Punkt A<br>Punkt B</td>
+                        <td>24.04.19<br>12:37</td>
+                        <td>3 Kühe <br></td>
+                    </tr>
+                    <tr>
+                        <td>Punkt A<br>Punkt B</td>
+                        <td>24.04.19<br>12:37</td>
+                        <td>3 Kühe <br></td>
+                    </tr>
+                    <tr>
+                        <td>Punkt A<br>Punkt B</td>
+                        <td>24.04.19<br>12:37</td>
+                        <td>3 Kühe <br></td>
+                    </tr>
+                    <tr>
+                        <td>Punkt A<br>Punkt B</td>
+                        <td>24.04.19<br>12:37</td>
+                        <td>3 Kühe <br></td>
+                    </tr>
+                    </tbody>
+                </table>
+                </div>
+            </div>
+            <div class="weekday">
+                <span class="menu-label">
+                    <span class="icon">
+                        <i class="fa fa-angle-down"></i>
+                    </span>
+                    Dienstag
+                </span>
+                <div class="panel">
+                    <table class="table is-fullwidth">
+                    <thead>
+                    <tr>
+                        <th>Start<br>Ziel</th>
+                        <th>Datum<br>Zeit</th>
+                        <th>Fracht</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>Punkt A<br>Punkt B</td>
+                        <td>24.04.19<br>12:37</td>
+                        <td>3 Kühe <br>
 
-                    </td>
-                </tr>
-                <tr>
-                    <td>Punkt A<br>Punkt B</td>
-                    <td>24.04.19<br>12:37</td>
-                    <td>3 Kühe <br></td>
-                </tr>
-                <tr>
-                    <td>Punkt A<br>Punkt B</td>
-                    <td>24.04.19<br>12:37</td>
-                    <td>3 Kühe <br></td>
-                </tr>
-                <tr>
-                    <td>Punkt A<br>Punkt B</td>
-                    <td>24.04.19<br>12:37</td>
-                    <td>3 Kühe <br></td>
-                </tr>
-                <tr>
-                    <td>Punkt A<br>Punkt B</td>
-                    <td>24.04.19<br>12:37</td>
-                    <td>3 Kühe <br></td>
-                </tr>
-                </tbody>
-            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Punkt A<br>Punkt B</td>
+                        <td>24.04.19<br>12:37</td>
+                        <td>3 Kühe <br></td>
+                    </tr>
+                    <tr>
+                        <td>Punkt A<br>Punkt B</td>
+                        <td>24.04.19<br>12:37</td>
+                        <td>3 Kühe <br></td>
+                    </tr>
+                    <tr>
+                        <td>Punkt A<br>Punkt B</td>
+                        <td>24.04.19<br>12:37</td>
+                        <td>3 Kühe <br></td>
+                    </tr>
+                    <tr>
+                        <td>Punkt A<br>Punkt B</td>
+                        <td>24.04.19<br>12:37</td>
+                        <td>3 Kühe <br></td>
+                    </tr>
+                    </tbody>
+                </table>
+                </div>
+            </div>
         </aside>
     </div>
-</div>
+    <script>
+        $(document).ready(function(){
+            
+           // Enable dropdown functionality
+           $(".panel").hide();
+           $(".weekday").click(function() {
+               $(this).find(".panel").slideToggle("slow");
+           }); 
+        });
+    </script>
 </body>
 </html>

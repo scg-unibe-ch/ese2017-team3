@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>AniTrans Mitarbeiterportal</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.0/css/bulma.min.css">
+    <style type="text/css">
+        
+    @import url('https://fonts.googleapis.com/css?family=Oxygen');
+        
+    @keyframes imageAnimation { 
+        0% {
+            opacity: 0;
+            animation-timing-function: ease-in;
+        }
+        8% {
+            opacity: 1;
+            transform: scale(1.05);
+            animation-timing-function: ease-out;
+        }
+        17% {
+            opacity: 1;
+            transform: scale(1.1) rotate(3deg);
+        }
+        25% {
+            opacity: 0;
+            transform: scale(1.1) rotate(3deg);
+        }
+        100% { opacity: 0 }
+    }
+    
+     @keyframes titleAnimation { 
+        0% {
+            opacity: 0;
+            transform: translateX(200px);
+        }
+        8% {
+            opacity: 1;
+            transform: translateX(0px);
+        }
+        17% {
+            opacity: 1;
+            transform: translateX(0px);
+        }
+        19% {
+            opacity: 0;
+            transform: translateX(-400px);
+        }
+        25% { opacity: 0 }
+        100% { opacity: 0 }
+    }
+    
+    .cb-slideshow, .cb-slideshow:after { 
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        top: 0px;
+        left: 0px;
+        z-index: 0; 
+    }
+    
+    .cb-slideshow:after { 
+        content: '';
+        background: transparent url(../../Source/assets/pattern.png) repeat top left; 
+    }
+    
+    .cb-slideshow li span { 
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        color: transparent;
+        background-size: cover;
+        background-position: 50% 50%;
+        background-repeat: none;
+        opacity: 0;
+        z-index: 0;
+        animation: imageAnimation 24s linear infinite 0s; 
+    }
+    
+    .cb-slideshow li div { 
+        z-index: 1000;
+        position: absolute;
+        bottom: 30px;
+        left: 0px;
+        width: 100%;
+        text-align: center;
+        opacity: 0;
+        color: #fff;
+        animation: titleAnimation 24s linear infinite 0s; 
+    }
+    
+    
+    .cb-slideshow li:nth-child(1) span { 
+        background-image: url(../../Source/assets/panda.jpg) 
+    }
+    
+    .cb-slideshow li:nth-child(2) span { 
+        background-image: url(../../Source/assets/Funny-Goat-Face-Closeup-Picture.jpg);
+        animation-delay: 6s; 
+    }
+    
+    .cb-slideshow li:nth-child(3) span { 
+        background-image: url(../../Source/assets/Melchsee-Frutt_Kuh.jpg);
+        animation-delay: 12s; 
+    }
+    
+    .cb-slideshow li:nth-child(4) span { 
+        background-image: url(../../Source/assets/pferd.jpeg);
+        animation-delay: 18s; 
+    }
+
+    .cb-slideshow li:nth-child(2) div { 
+        animation-delay: 6s; 
+    }
+    
+    .cb-slideshow li:nth-child(3) div { 
+        animation-delay: 12s; 
+    }
+    
+    .cb-slideshow li:nth-child(4) div { 
+        animation-delay: 18s; 
+    }
+    
+    .no-cssanimations .cb-slideshow li span{
+        opacity: 1;
+    }
+    
+    @media screen and (max-width: 1140px) { 
+        .cb-slideshow li div h3 { font-size: 140px }
+    }
+    
+    @media screen and (max-width: 600px) { 
+        .cb-slideshow li div h3 { font-size: 80px }
+    }
+        
+    .login-box {
+        background-color:  #EDEDEA;
+        border-radius: 10px;
+        padding-left: 30px;            
+        padding-right: 40px;
+        padding-top: 30px;
+        padding-bottom: 30px;
+    }
+</style>
+</head>
+<body class="">
+    <ul class="cb-slideshow">
+            <li><span>1. Bild</span></li>
+            <li><span>2. Bild</span></li>
+            <li><span>3. Bild</span></li>
+            <li><span>4. Bild</span></li>
+    </ul>
+      <section class="hero is-medium">
+    <div class="hero-body">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-one-third is-offset-one-third login-box">
+                    <h1 class="title" th:text="#{label.form.title}">Account Login</h1>
+                    <form th:action="@{/user}" th:object="${user}" method="post">
+                        <div>
+                            <div class="field">
+                                <label class="label" th:text="#{label.user.username}">Username</label>
+                                <div class="control has-icons-left">
+                                    <input class="input" type="text" placeholder="User" th:field="*{username}" />
+                                    <span class="icon is-small is-left">
+                                        <i class="fa fa-user"></i>
+                                    </span>
+                                </div>
+                            </div>
+                            <!-- <p th:each="error: ${#fields.errors('username')}" th:text="${error}">Validation error</p> -->
+                        </div>
+                        <br>
+                        <div>
+                            <div class="field">
+                                <label class="label" th:text="#{label.user.password}">Password</label>
+                                <div class="control has-icons-left">
+                                    <input class="input" type="password" placeholder="Password" th:field="*{password}" />
+                                    <span class="icon is-small is-left">
+                                        <i class="fa fa-lock"></i>
+                                    </span>
+                                </div>
+                            </div>
+                            <!-- <p th:each="error : ${#fields.errors('password')}" th:text="${error}">Validation error</p> -->
+                        </div>
+                        <br>
+                        <div class="control">
+                            <a href="tourOverview.html" class="button is-link" type="submit" th:text="#{label.form.submit}">
+                                Submit
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+  </section>
+</body>
+</html>
