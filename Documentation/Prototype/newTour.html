@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <link rel="stylesheet" href="sliderCSS.css"/>
+    <script src="sliderScript.js"></script>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>AniTrans Tourenüberischt</title>
@@ -9,83 +11,25 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.0/css/bulma.css">
 </head>
 <body class="login-page page-layout">
-<style type="text/css">
-    @keyframes slidy {
-        0% {
-            left: 0%;
-        }
-        20% {
-            left: 0%;
-        }
-        25% {
-            left: -100%;
-        }
-        45% {
-            left: -100%;
-        }
-        50% {
-            left: -200%;
-        }
-        70% {
-            left: -200%;
-        }
-        75% {
-            left: -300%;
-        }
-        95% {
-            left: -300%;
-        }
-        100% {
-            left: 0%;
-        }
-    }
 
-    body {
-        margin: 0;
-    }
-
-    div#slider {
-        overflow: hidden;
-    }
-
-    div#slider figure img {
-        width: 20%;
-        float: left;
-    }
-
-    div#slider figure {
-        position: relative;
-        width: 500%;
-        margin: 0;
-        left: 0;
-        text-align: left;
-        font-size: 0;
-        animation: 30s slidy infinite;
-    }
-
-    section.login {
-        margin-top: 4em;
-    }
-
-    div.container-a {
-        text-align: center;
-    }
-</style>
 <section class="hero is-link">
     <div class="hero-body">
-        <div class="container-a is-fluid">
+        <div class="container is-fluid">
 
             <div class="columns is-vcentered">
                 <div class="column">
-                    <div id="slider">
-                        <figure>
-                            <img src="../../Source/assets/panda.jpg" height="20%" width="20%"/>
-                            <img src="../../Source/assets/Funny-Goat-Face-Closeup-Picture.jpg" height="20%"
-                                 width="20%"/>
-                            <img src="../../Source/assets/Melchsee-Frutt_Kuh.jpg" height="20%" width="20%"/>
-                            <img src="../../Source/assets/pferd.jpeg" height="20%" width="20%"/>
-                        </figure>
+                    <div class="ism-slider" data-play_type="loop" id="my-slider">
+                        <ol>
+                            <li>
+                                <img src="../../Source/assets/Funny-Goat-Face-Closeup-Picture.jpg" height="531"
+                                     width="945"/></li>
+                            <li><img src="../../Source/assets/Melchsee-Frutt_Kuh.jpg"/>
+                            </li>
+                            <li><img src="../../Source/assets/panda.jpg" height="479" width="640"/>
+                            </li>
+                        </ol>
                     </div>
+
                     <p class="title">
                         Anitrans
                     </p>
