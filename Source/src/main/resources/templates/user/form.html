@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>AniTrans Mitarbeiterportal</title>
     <link href="../static/css/bulma.css" th:href="@{/css/bulma.css}" rel="stylesheet" />
-
+    
     <style th:inline="text">    
         @import url('https://fonts.googleapis.com/css?family=Oxygen'); 
         @keyframes imageAnimation { 
@@ -61,7 +61,7 @@
 
         .cb-slideshow:after { 
             content: '';
-            background: transparent url(../../../../../Source/assets/pattern.png) repeat top left;
+            background: transparent url([[@{../images/pattern.png}]]) repeat top left;
         }
 
         .cb-slideshow li span { 
