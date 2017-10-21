@@ -20,15 +20,15 @@ public class deliveryController {
     @Autowired
     private DeliveryRepository deliveryRepository;
 
-    @GetMapping("/deliveries")
+    @GetMapping(path = "/deliveries")
     public String deliveryForm(Model model) {
 
         model.addAttribute("delivery", new delivery());
         return "deliveries";
     }
 
-    @PostMapping("deliveries")
-    public String deliverySubmit(@ModelAttribute delivery delivery, DeliveryRepository deliveryRepository, Model model) {
+    @PostMapping(path = "/deliveries")
+    public String deliverySubmit(@ModelAttribute delivery delivery, Model model) {
         deliveryRepository.save(new delivery(delivery.getCargo()));
         model.addAttribute("deliveries", deliveryRepository.findAll());
         return "deliveryresult";
