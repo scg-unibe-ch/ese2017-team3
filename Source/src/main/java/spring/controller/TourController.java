@@ -4,33 +4,30 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import spring.entity.Delivery;
-import spring.repositories.DeliveryRepository;
-import spring.service.DeliveryService;
-
-import java.util.ArrayList;
+import spring.entity.Tour;
+import spring.repositories.TourRepository;
 
 /**
  * Created by olulrich on 20.10.17.
  */
 
 @Controller
-public class DeliveryController {
+public class TourController {
 
     @Autowired
-    private DeliveryRepository deliveryRepository;
+    private TourRepository tourRepository;
 
     @GetMapping(path = "/deliveries")
     public String deliveryForm(Model model) {
 
-        model.addAttribute("delivery", new Delivery());
+        model.addAttribute("delivery", new Tour());
         return "deliveries";
     }
 
     @PostMapping(path = "/deliveries")
-    public String deliverySubmit(@ModelAttribute Delivery delivery, Model model) {
-        deliveryRepository.save(new Delivery(delivery.getCargo()));
-        model.addAttribute("deliveries", deliveryRepository.findAll());
+    public String deliverySubmit(@ModelAttribute Tour delivery, Model model) {
+        tourRepository.save(new Tour(delivery.getCargo()));
+        model.addAttribute("deliveries", tourRepository.findAll());
         return "deliveryresult";
     }
 }
