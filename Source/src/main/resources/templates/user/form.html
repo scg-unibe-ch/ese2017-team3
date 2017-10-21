@@ -6,7 +6,7 @@
     <title>AniTrans Mitarbeiterportal</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
     <link href="../static/css/bulma.css" th:href="@{/css/bulma.css}" rel="stylesheet" />
-
+    
     <style th:inline="text">    
         @import url('https://fonts.googleapis.com/css?family=Oxygen'); 
         @keyframes imageAnimation { 
@@ -62,7 +62,7 @@
 
         .cb-slideshow:after { 
             content: '';
-            background: transparent url(../../../../../Source/assets/pattern.png) repeat top left;
+            background: transparent url([[@{../images/pattern.png}]]) repeat top left;
         }
 
         .cb-slideshow li span { 
