@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html xmlns="http://www.thymeleaf.org" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
@@ -170,40 +170,35 @@
             <div class="columns">
                 <div class="column is-one-third is-offset-one-third login-box">
                     <h1 class="title">Login</h1>
-                    <form th:action="@{/user}" th:object="${user}" method="post">
-                        <div>
-                            <div class="field">
-                                <label class="label">Username</label>
-                                <div class="control has-icons-left">
-                                    <input class="input" type="text" placeholder="Username" th:field="*{username}"/>
-                                    <span class="icon is-small is-left">
-                                        <i class="fa fa-user"></i>
-                                    </span>
-                                </div>
-                            </div>
-                            <p th:each="error: ${#fields.errors('username')}" th:text="${error}">Validation error</p>
-                        </div>
-                        <br/>
-                        <div>
-                            <div class="field">
-                                <label class="label">Password</label>
-                                <div class="control has-icons-left">
-                                    <input class="input" type="password" placeholder="Password" th:field="*{password}"/>
-                                    <span class="icon is-small is-left">
-                                        <i class="fa fa-lock"></i>
-                                    </span>
-                                </div>
-                            </div>
-                            <p th:each="error: ${#fields.errors('password')}" th:text="${error}">Validation error</p>
-                        </div>
-                        <br/>
-                        <div class="control">
-                            <button class="button is-link" type="submit">Login</button>
-                        </div>
-                        <div class="control">
-                            <button class="button is-link is-pulled-right">Register</button>
-                        </div>
-                    </form>
+                    
+                    
+                    
+                    
+                    
+                    <form name="f" th:action="@{/login}" method="post">               
+            <fieldset>
+                <legend>Please Login</legend>
+                <div th:if="${param.error}" class="alert alert-error">    
+                    Invalid username and password.
+                </div>
+                <div th:if="${param.logout}" class="alert alert-success"> 
+                    You have been logged out.
+                </div>
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username"/>        
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password"/>    
+                <div class="form-actions">
+                    <button type="submit" class="btn">Log in</button>
+                </div>
+            </fieldset>
+        </form>
+                    
+                    
+                    
+                    
+                    
+                    
                 </div>
             </div>
         </div>
