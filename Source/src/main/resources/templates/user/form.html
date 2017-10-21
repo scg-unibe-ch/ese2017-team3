@@ -6,7 +6,7 @@
     <title>AniTrans Mitarbeiterportal</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.0/css/bulma.min.css" />
-    <style type="text/css">    
+    <style th:inline="text">    
         @import url('https://fonts.googleapis.com/css?family=Oxygen'); 
         @keyframes imageAnimation { 
             0% {
@@ -93,7 +93,7 @@
 
 
         .cb-slideshow li:nth-child(1) span { 
-            background-image: url([[@../images/panda.jpg]]) 
+            background-image: url([[@{../images/panda.jpg}]]) 
         }
 
         .cb-slideshow li:nth-child(2) span { 
@@ -102,12 +102,12 @@
         }
 
         .cb-slideshow li:nth-child(3) span { 
-            background-image: url([[@../images/Melchsee-Frutt_Kuh.jpg]]);
+            background-image: url([[@{../images/Melchsee-Frutt_Kuh.jpg}]]);
             animation-delay: 12s; 
         }
 
         .cb-slideshow li:nth-child(4) span { 
-            background-image: url([[@../images/pferd.jpeg]]);
+            background-image: url([[@{../images/pferd.jpeg}]]);
             animation-delay: 18s; 
         }
 
@@ -157,7 +157,7 @@
         <div class="container">
             <div class="columns">
                 <div class="column is-one-third is-offset-one-third login-box">
-                    <h1 class="title">Account Login</h1>
+                    <h1 class="title">Register</h1>
                     <form th:action="@{/user}" th:object="${user}" method="post">
                         <div>
                             <div class="field">
