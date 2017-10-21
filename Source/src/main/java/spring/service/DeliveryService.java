@@ -3,7 +3,7 @@ package spring.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import spring.repositories.DeliveryRepository;
-import spring.entity.delivery;
+import spring.entity.Delivery;
 
 import java.util.ArrayList;
 import java.util.Properties;
@@ -13,7 +13,7 @@ import java.util.Properties;
  */
 
 @Service
-public class deliveryService {
+public class DeliveryService {
 
     @Autowired
     private DeliveryRepository deliveryRepository;
