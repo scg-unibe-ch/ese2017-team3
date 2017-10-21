@@ -29,7 +29,7 @@ public class DeliveryController {
 
     @PostMapping(path = "/deliveries")
     public String deliverySubmit(@ModelAttribute Delivery delivery, Model model) {
-        deliveryRepository.save(new Delivery(delivery.getCargo()));
+        deliveryRepository.save(delivery);
         model.addAttribute("deliveries", deliveryRepository.findAll());
         return "deliveryresult";
     }

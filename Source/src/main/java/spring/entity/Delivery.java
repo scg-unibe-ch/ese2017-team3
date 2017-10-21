@@ -45,6 +45,12 @@ public class Delivery {
     private String destinationCity;
 
     @Column (nullable = true)
+    private String startPersonName;
+
+    @Column (nullable = true)
+    private String startPersonSurname;
+
+    @Column (nullable = true)
     private String contactPersonName;
 
     @Column (nullable = true)
@@ -52,6 +58,9 @@ public class Delivery {
 
     @Column (nullable = true)
     private float estimatedTime;
+
+    @Column (nullable = true)
+    private String driver;
 
     // Calendar object that contains the date and the time when the delivery should be started
     @Column (nullable = true)
@@ -186,5 +195,29 @@ public class Delivery {
 
     public String getContactPersonSurname() {
         return contactPersonSurname;
+    }
+
+    public String getStartPersonName() {
+        return startPersonName;
+    }
+
+    public void setStartPersonName(String startPersonName) {
+        this.startPersonName = startPersonName;
+    }
+
+    public String getStartPersonSurname() {
+        return startPersonSurname;
+    }
+
+    public void setStartPersonSurname(String startPersonSurname) {
+        this.startPersonSurname = startPersonSurname;
+    }
+
+    public String getDriver() {
+        return driver;
+    }
+
+    public void setDriver(String driver) {
+        this.driver = driver;
     }
 }

@@ -1,12 +1,197 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Deliveries</title>
+    <link rel="stylesheet" th:href="@{/css/sliderCSS.css}"/>
+    <script type="text/javascript" th:src="@{/js/sliderScript.js}" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>AniTrans Tourenüberischt</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+    <link href="../static/css/bulma.css" th:href="@{/css/bulma.css}" rel="stylesheet"/>
 </head>
-<body>
-<form action="#" th:action="@{/deliveries}" th:object="${delivery}" method="post">
-    <p>Cargo: <input type="text" th:field="*{cargo}" /></p>
-    <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
-</form>
+<body class="login-page page-layout">
+
+<section class="hero is-link">
+    <div class="hero-body">
+        <div class="container is-fluid">
+            <div class="columns">
+                <div class="column is-one-quarter" style="margin-top: auto;">
+                    <p class="title">
+                        Anitrans
+                    </p>
+                    <p class="subtitle">
+                        Verwaltungssystem
+                    </p>
+                </div>
+                <div class="column is-half">
+                    <div class="ism-slider " data-play_type="loop" id="my-slider">
+                        <ol>
+                            <li>
+                                <img th:src="@{/images/goat.jpg}" height="531"
+                                     width="945"/></li>
+                            <li><img th:src="@{/images/cow.jpg}"/>
+                            </li>
+                            <li><img th:src="@{/images/panda.jpg}" height="479" width="640"/>
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="hero-foot">
+        <div class="container is-fluid">
+            <nav class="tabs is-boxed">
+                <ul>
+                    <li>
+                        <a href="tourOverview.html">Tourenübersicht</a>
+                    </li>
+                    <li class="is-active">
+                        <a>Neue Tour</a>
+                    </li>
+                    <li>
+                        <a href="overviewDrivers.html">Fahrer</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+</section>
+<div class="block">
+
+    <div class="block">
+        <div class="box">
+            <form action="#" th:action="@{/deliveries}" th:object="${delivery}" method="post">
+                <div class="columns">
+                    <div class="column is-1">Species:</div>
+                    <div class="column is-5">
+                        <div class="field">
+                            <input class="input" type="text" placeholder="Animal" th:field="*{cargo}" />
+                        </div>
+                    </div>
+                    <div class="column is-1">Amount:</div>
+                    <div class="column is-5 ">
+                        <div class="field">
+                            <input class="input" type="text" placeholder="Amount" th:field="*{numberOfAnimals}" />
+                        </div>
+                    </div>
+                </div>
+                <div class="columns  is-multiline">
+                    <div class="column is-1">Start location:</div>
+                    <div class="column is-5">
+                        <div class="field">
+                            <input class="input" type="text" placeholder="Surname" th:field="*{startPersonSurname}" />
+                        </div>
+                    </div>
+                    <div class="column is-1 is-center">Destination:</div>
+                    <div class="column is-5 ">
+                        <div class="field">
+                            <input class="input" type="text" placeholder="Surname" th:field="*{contactPersonSurname}" />
+                        </div>
+                    </div>
+                    <div class="column is-1"></div>
+                    <div class="column is-5">
+                        <div class="field">
+                            <input class="input" type="text" placeholder="Name" th:field="*{startPersonName}" />
+                        </div>
+                    </div>
+                    <div class="column is-1"></div>
+                    <div class="column is-5">
+                        <div class="field">
+                            <input class="input" type="text" placeholder="Name" th:field="*{contactPersonName}" />
+                        </div>
+                    </div>
+                    <div class="column is-1"></div>
+                    <div class="column is-3">
+                        <div class="field">
+                            <input class="input" type="text" placeholder="Street" th:field="*{startAddress}" />
+                        </div>
+                    </div>
+                    <div class="column is-2">
+                        <div class="field">
+                            <input class="input" type="text" placeholder="Nr." th:field="*{startAddressNumber}" />
+                        </div>
+                    </div>
+                    <div class="column is-1"></div>
+                    <div class="column is-3">
+                        <div class="field">
+                            <input class="input" type="text" placeholder="Strasse" th:field="*{destinationAddress}" />
+                        </div>
+                    </div>
+                    <div class="column is-2">
+                        <div class="field">
+                            <input class="input" type="text" placeholder="Nr." th:field="*{destinationAddressNumber}" />
+                        </div>
+                    </div>
+                    <div class="column is-1"></div>
+                    <div class="column is-2">
+                        <div class="field">
+                            <input class="input" type="text" placeholder="ZIP" th:field="*{startZIP}" />
+                        </div>
+                    </div>
+                    <div class="column is-3">
+                        <div class="field">
+                            <input class="input" type="text" placeholder="City" th:field="*{startCity}" />
+                        </div>
+                    </div>
+                    <div class="column is-1"></div>
+                    <div class="column is-2">
+                        <div class="field">
+                            <input class="input" type="text" placeholder="ZIP" th:field="*{startZIP}" />
+                        </div>
+                    </div>
+                    <div class="column is-3">
+                        <div class="field">
+                            <input class="input" type="text" placeholder="City" th:field="*{startCity}" />
+                        </div>
+                    </div>
+
+                </div>
+                <div class="columns">
+                    <div class="column is-1">Date:</div>
+                    <div class="column is-5">
+                        <div class="field">
+                            <input class="input" type="text" placeholder="Date" />
+                        </div>
+                    </div>
+                    <div class="column is-1">Time:</div>
+                    <div class="column is-5">
+                        <div class="field">
+                            <input class="input" type="text" placeholder="Starting time" />
+                        </div>
+                    </div>
+                </div>
+                <div class="columns">
+                    <div class="column is-1">Driver:</div>
+                    <div class="column">
+                        <span class="select is-fullwidth">
+                            <select th:field="*{driver}">
+                                <option value="Housi">Housi</option>
+                                <option value="Kürä">Kürä</option>
+                                <option value="Max">Max</option>
+                                <option value="Fritz">Fritz</option>
+                            </select>
+                        </span>
+                    </div>
+                </div>
+                <div class="columns">
+                    <div class="column is-1"></div>
+                    <div class="column">
+                        <p class="control">
+                            <textarea class="textarea" placeholder="Bemerkung"></textarea>
+                        </p>
+                    </div>
+                </div>
+                <div class="columns">
+                    <div class="column is-2 is-offset-10"><button type="submit" class="button is-info is-pulled-right is-fullwidth">Speichern</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>
+
 </body>
 </html>
