@@ -45,10 +45,9 @@ public class Tour {
     @Column(nullable = true)
     private String destinationCity;
 
-<<<<<<< HEAD:Source/src/main/java/spring/entity/Tour.java
     @Column(nullable = true)
     private String destinationPersonName;
-=======
+
     @Column (nullable = true)
     private String startPersonName;
 
@@ -57,7 +56,6 @@ public class Tour {
 
     @Column (nullable = true)
     private String contactPersonName;
->>>>>>> 3137570e89e8c3ebc5fc62aa728861d2c4e40131:Source/src/main/java/spring/entity/Delivery.java
 
     @Column(nullable = true)
     private String destinationPersonSurname;
