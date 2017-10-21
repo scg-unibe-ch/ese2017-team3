@@ -31,12 +31,6 @@ public class deliveryController {
     public String deliverySubmit(@ModelAttribute delivery delivery, DeliveryRepository deliveryRepository, Model model) {
         deliveryRepository.save(new delivery(delivery.getCargo()));
         model.addAttribute("deliveries", deliveryRepository.findAll());
-        return "redirect:deliveryresult";
-    }
-
-    @GetMapping
-    public String deliveryResult(Model model) {
-        model.addAttribute("deliveries", deliveryRepository.findAll());
         return "deliveryresult";
     }
 }
