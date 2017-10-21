@@ -17,7 +17,4 @@ public class deliveryService {
     @Autowired
     private DeliveryRepository deliveryRepository;
 
-    public ArrayList<delivery> getAllDeliveries() {
-        return this.deliveryRepository.getAllDeliveries();
-    }
 }

@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
     <title>Deliveries</title>
 </head>
 <body>
-<p th:text="${cargo_1}"></p><br>
-<p th:text="${cargo_2}"></p><br>
-<p th:text="${cargo_3}"></p><br>
+<form action="#" th:action="@{/deliveries}" th:object="${delivery}" method="post">
+    <p>Cargo: <input type="text" th:field="*{cargo}" /></p>
+    <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
+</form>
 </body>
 </html>
