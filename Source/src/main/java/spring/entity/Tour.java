@@ -62,7 +62,9 @@ public class Delivery {
         this.cargo = cargo;
     }
 
-    public Delivery(){}
+
+    //Default Constructor for the Sake of JPA
+    protected Delivery(){}
 
     // Setter methods
 
