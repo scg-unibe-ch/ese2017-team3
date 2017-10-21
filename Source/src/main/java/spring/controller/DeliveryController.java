@@ -15,7 +15,7 @@ import java.util.ArrayList;
  */
 
 @Controller
-public class deliveryController {
+public class DeliveryController {
 
     @Autowired
     private DeliveryRepository deliveryRepository;

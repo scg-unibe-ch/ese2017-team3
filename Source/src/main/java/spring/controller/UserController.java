@@ -31,7 +31,7 @@ public class UserController {
 	@PreAuthorize("@userSecurityService.canCreate()")
 	@GetMapping(path = "/create")
 	public ModelAndView createForm() {
-		return new ModelAndView("user/form", "user", new User("user", "", Collections.emptyList()));
+		return new ModelAndView("user/RegistrationForm", "user", new User("user", "", Collections.emptyList()));
 	}
 
 	@PreAuthorize("@userSecurityService.canCreate()")
