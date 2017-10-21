@@ -2,7 +2,7 @@ package spring.repositories;
 
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
-import spring.entity.delivery;
+import spring.entity.Delivery;
 
 import java.util.*;
 
@@ -11,7 +11,7 @@ import java.util.*;
  */
 
 @Repository
-public interface DeliveryRepository extends CrudRepository<delivery, Long> {
+public interface DeliveryRepository extends CrudRepository<Delivery, Long> {
 
 
 }

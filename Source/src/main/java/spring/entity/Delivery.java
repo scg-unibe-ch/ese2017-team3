@@ -7,7 +7,7 @@ import java.util.Calendar;
  * Created by olulrich on 20.10.17.
  */
 @Entity
-public class delivery {
+public class Delivery {
 
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
@@ -58,11 +58,11 @@ public class delivery {
     private Calendar startingTime;
 
 
-    public delivery(String cargo) {
+    public Delivery(String cargo) {
         this.cargo = cargo;
     }
 
-    public delivery(){}
+    public Delivery(){}
 
     // Setter methods
 
