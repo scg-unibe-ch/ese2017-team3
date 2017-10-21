@@ -25,15 +25,9 @@ public class TourController {
     }
 
     @PostMapping(path = "/deliveries")
-<<<<<<< HEAD:Source/src/main/java/spring/controller/TourController.java
-    public String deliverySubmit(@ModelAttribute Tour delivery, Model model) {
-        tourRepository.save(new Tour(delivery.getCargo()));
+    public String deliverySubmit(@ModelAttribute Tour tour, Model model) {
+        tourRepository.save(tour);
         model.addAttribute("deliveries", tourRepository.findAll());
-=======
-    public String deliverySubmit(@ModelAttribute Delivery delivery, Model model) {
-        deliveryRepository.save(delivery);
-        model.addAttribute("deliveries", deliveryRepository.findAll());
->>>>>>> 3137570e89e8c3ebc5fc62aa728861d2c4e40131:Source/src/main/java/spring/controller/DeliveryController.java
         return "deliveryresult";
     }
 }

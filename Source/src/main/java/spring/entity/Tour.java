@@ -10,45 +10,40 @@ import java.util.Calendar;
 public class Tour {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy= GenerationType.AUTO)
     private int id;
 
-    @Column(nullable = false)
+    @Column (nullable = false)
     private String cargo;
 
-    @Column(nullable = true)
+    @Column (nullable = true)
     private int numberOfAnimals;
 
-
-    @Column(nullable = true)
+    @Column (nullable = true)
     private String startAddress;
 
     // Street number of start location
-    @Column(nullable = true)
+    @Column (nullable = true)
     private int startAddressNumber;
 
-    @Column(nullable = true)
+    @Column (nullable = true)
     private int startZIP;
 
-    @Column(nullable = true)
+    @Column (nullable = true)
     private String startCity;
 
-    @Column(nullable = true)
+    @Column (nullable = true)
     private String destinationAddress;
 
-    @Column(nullable = true)
+    @Column (nullable = true)
     private int destinationAddressNumber;
 
-    @Column(nullable = true)
+    @Column (nullable = true)
     private int destinationZIP;
 
-    @Column(nullable = true)
+    @Column (nullable = true)
     private String destinationCity;
 
-<<<<<<< HEAD:Source/src/main/java/spring/entity/Tour.java
-    @Column(nullable = true)
-    private String destinationPersonName;
-=======
     @Column (nullable = true)
     private String startPersonName;
 
@@ -57,54 +52,26 @@ public class Tour {
 
     @Column (nullable = true)
     private String contactPersonName;
->>>>>>> 3137570e89e8c3ebc5fc62aa728861d2c4e40131:Source/src/main/java/spring/entity/Delivery.java
 
-    @Column(nullable = true)
-    private String destinationPersonSurname;
+    @Column (nullable = true)
+    private String contactPersonSurname;
 
-    @Column(nullable = true)
+    @Column (nullable = true)
     private float estimatedTime;
 
     @Column (nullable = true)
     private String driver;
 
     // Calendar object that contains the date and the time when the delivery should be started
-    @Column(nullable = true)
+    @Column (nullable = true)
     private Calendar startingTime;
-
-    @Column(nullable = false)
-    private State state = State.CREATED;
 
 
     public Tour(String cargo) {
         this.cargo = cargo;
     }
 
-    public Tour(String cargo, int numberOfAnimals, String startPersonName, String startPersonSurname, String startAddress,
-                int startAddressNumber, int startZIP, String startCity, String destinationPersonName, String destinationPersonSurname,
-                String destinationAddress, int destinationAddressNumber, int destinationZIP, String destinationCity, float estimatedTime, Calendar startingTime) {
-        this.cargo = cargo;
-        this.numberOfAnimals = numberOfAnimals;
-        this.startPersonName = startPersonName;
-        this.startPersonSurname = startPersonSurname;
-        this.startAddress = startAddress;
-        this.startAddressNumber = startAddressNumber;
-        this.startZIP = startZIP;
-        this.startCity = startCity;
-        this.destinationPersonName = destinationPersonName;
-        this.destinationPersonSurname = destinationPersonSurname;
-        this.destinationAddress = destinationAddress;
-        this.destinationAddressNumber = destinationAddressNumber;
-        this.destinationZIP = destinationZIP;
-        this.destinationCity = destinationCity;
-        this.estimatedTime = estimatedTime;
-        this.startingTime = startingTime;
-    }
-
-
-    //Default Constructor for the Sake of JPA
-    protected Tour() {
-    }
+    public Tour(){}
 
     // Setter methods
 
@@ -160,12 +127,12 @@ public class Tour {
         this.destinationCity = destinationCity;
     }
 
-    public void setDestinationPersonName(String destinationPersonName) {
-        this.destinationPersonName = destinationPersonName;
+    public void setContactPersonName(String contactPersonName) {
+        this.contactPersonName = contactPersonName;
     }
 
-    public void setDestinationPersonSurname(String destinationPersonSurname) {
-        this.destinationPersonSurname = destinationPersonSurname;
+    public void setContactPersonSurname(String contactPersonSurname) {
+        this.contactPersonSurname = contactPersonSurname;
     }
 
     // Getter methods
@@ -222,24 +189,12 @@ public class Tour {
         return destinationCity;
     }
 
-    public String getDestinationPersonName() {
-        return destinationPersonName;
+    public String getContactPersonName() {
+        return contactPersonName;
     }
 
-    public String getDestinationPersonSurname() {
-        return destinationPersonSurname;
-    }
-
-    @Override
-    public String toString() {
-        return "Tour with the id: " + this.id + " goes from: \n" + this.startAddress + " " + this.startAddressNumber + "\n" +
-                this.startZIP + " " + this.startCity + "\n\n to: \n" + this.destinationAddress + " " + this.destinationAddressNumber + "\n" +
-                this.destinationZIP + " " + this.destinationCity + "\ncontaining" + this.numberOfAnimals + " " + this.cargo +
-                " and starts/started on: " + this.startingTime.toString() + " with an estimated duration of: " + this.estimatedTime + "";
-    }
-
-    public enum State {
-        SUCCESSFUL, FAILED, DELETED, CREATED
+    public String getContactPersonSurname() {
+        return contactPersonSurname;
     }
 
     public String getStartPersonName() {
@@ -266,4 +221,3 @@ public class Tour {
         this.driver = driver;
     }
 }
-
