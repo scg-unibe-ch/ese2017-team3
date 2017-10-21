@@ -6,6 +6,7 @@ import spring.repositories.DeliveryRepository;
 import spring.entity.delivery;
 
 import java.util.ArrayList;
+import java.util.Properties;
 
 /**
  * Created by olulrich on 20.10.17.
@@ -17,4 +18,7 @@ public class deliveryService {
     @Autowired
     private DeliveryRepository deliveryRepository;
 
+    public DeliveryRepository getDeliveryRepository() {
+        return deliveryRepository;
+    }
 }
