@@ -20,7 +20,7 @@ public class TourController {
     @GetMapping(path = "/deliveries")
     public String deliveryForm(Model model) {
 
-        model.addAttribute("delivery", new Tour());
+        model.addAttribute("tour", new Tour());
         return "deliveries";
     }
 
