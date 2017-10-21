@@ -45,14 +45,28 @@ public class Tour {
     @Column(nullable = true)
     private String destinationCity;
 
+<<<<<<< HEAD:Source/src/main/java/spring/entity/Tour.java
     @Column(nullable = true)
     private String destinationPersonName;
+=======
+    @Column (nullable = true)
+    private String startPersonName;
+
+    @Column (nullable = true)
+    private String startPersonSurname;
+
+    @Column (nullable = true)
+    private String contactPersonName;
+>>>>>>> 3137570e89e8c3ebc5fc62aa728861d2c4e40131:Source/src/main/java/spring/entity/Delivery.java
 
     @Column(nullable = true)
     private String destinationPersonSurname;
 
     @Column(nullable = true)
     private float estimatedTime;
+
+    @Column (nullable = true)
+    private String driver;
 
     // Calendar object that contains the date and the time when the delivery should be started
     @Column(nullable = true)
@@ -226,6 +240,30 @@ public class Tour {
 
     public enum State {
         SUCCESSFUL, FAILED, DELETED, CREATED
+    }
+
+    public String getStartPersonName() {
+        return startPersonName;
+    }
+
+    public void setStartPersonName(String startPersonName) {
+        this.startPersonName = startPersonName;
+    }
+
+    public String getStartPersonSurname() {
+        return startPersonSurname;
+    }
+
+    public void setStartPersonSurname(String startPersonSurname) {
+        this.startPersonSurname = startPersonSurname;
+    }
+
+    public String getDriver() {
+        return driver;
+    }
+
+    public void setDriver(String driver) {
+        this.driver = driver;
     }
 }
 
