@@ -58,8 +58,7 @@ public class delivery {
     private Calendar startingTime;
 
 
-    public delivery(int id, String cargo) {
-        this.id = id;
+    public delivery(String cargo) {
         this.cargo = cargo;
     }
 
