@@ -34,6 +34,10 @@ public class TourController {
     public String deliverySubmit(@ModelAttribute Tour tour, Model model) {
         tourRepository.save(tour);
         List<Tour> tours = tourService.getTours();
+        
+        Tour activeTour = tours.get(0);
+    	model.addAttribute("activeTour", activeTour);
+        
         model.addAttribute("tours", tours);
         return "tourOverview";
     }
@@ -43,8 +47,12 @@ public class TourController {
         List<Tour> tours = tourService.getTours();
     	model.addAttribute("tours", tours);
 
-    	Tour activeTour = tours.get(activeIndex);
-    	model.addAttribute("activeTour", activeTour);
+    	if (tours.size() == 0) {
+    		model.addAttribute("activeTour", null);
+    	} else {
+    		Tour activeTour = tours.get(activeIndex);
+        	model.addAttribute("activeTour", activeTour);
+    	}
 
     	return "tourOverview";
     }
