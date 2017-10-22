@@ -80,7 +80,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="notification is-info" th:if="${not #lists.isEmpty(tours)}" th:each="tour : ${tours}">
+                <div class="notification" th:if="${not #lists.isEmpty(tours)}" th:each="tour : ${tours}">
                     <a href="#" class="button delete"></a>
                     <div class="columns is-gapless">
                         <div class="column is-half">
@@ -134,64 +134,6 @@
                                     Cargo:&nbsp;
                                 </div>
                                 <div class="column"><u th:text="${tour.cargo}"></u></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="notification"><a href="#" class="button delete"></a>
-                    <div class="columns is-gapless">
-                        <div class="column is-half">
-                            <div class="columns is-gapless">
-                                <div class="column is-narrow">
-                                    <span class="icon"><i class="fa fa-calendar"></i>&nbsp;</span>
-                                </div>
-                                <div class="column "><u>asdfasdf</u></div>
-                            </div>
-                        </div>
-                        <div class="column is-half">
-                            <div class="columns is-gapless">
-                                <div class="column is-narrow">
-                                    <span class="icon"><i class="fa fa-clock-o"></i>&nbsp;</span>
-                                </div>
-                                <div class="column"><u>asdffasdf</u></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="columns is-gapless">
-                        <div class="column is-half">
-                            <div class="columns is-gapless">
-                                <div class="column is-narrow">
-                                    <span class="icon"><i class="fa fa-map-pin"></i>&nbsp;</span>
-                                </div>
-                                <div class="column"><u>asdfdfasdf</u></div>
-                            </div>
-                        </div>
-                        <div class="column is-half">
-                            <div class="columns is-gapless">
-                                <div class="column is-narrow">
-                                    <span class="icon"><i class="fa fa-flag-checkered"></i>&nbsp;</span>
-                                </div>
-                                <div class="column"><u>adfasdfasdf</u></div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="columns is-gapless">
-                        <div class="column is-half">
-                            <div class="columns is-gapless">
-                                <div class="column is-narrow">
-                                    <span class="icon"><i class="fa fa-user"></i>&nbsp;</span>
-                                </div>
-                                <div class="column"><u>House</u></div>
-                            </div>
-                        </div>
-                        <div class="column is-half">
-                            <div class="columns is-gapless">
-                                <div class="column is-narrow">
-                                    Fracht:&nbsp;
-                                </div>
-                                <div class="column"><u>adfsdf</u></div>
                             </div>
                         </div>
                     </div>
