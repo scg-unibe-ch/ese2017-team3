@@ -39,7 +39,7 @@ public class TourController {
     @RequestMapping(path = "/tours")
     public String tourOverview(Model model) {
         List<Tour> tours = tourService.getTours();
-    	model.addAttribute("deliveries", tours);
+    	model.addAttribute("tours", tours);
     	return "tourOverview";
     }
 }
