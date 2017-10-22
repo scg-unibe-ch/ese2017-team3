@@ -38,9 +38,14 @@ public class TourController {
         return "tourOverview";
     }
     @RequestMapping(path = "/tours")
-    public String tourOverview(Model model) {
+    public String tourOverview(Model model, @RequestParam(required = false, defaultValue = "0") int activeIndex) {
+
         List<Tour> tours = tourService.getTours();
     	model.addAttribute("tours", tours);
+
+    	Tour activeTour = tours.get(activeIndex);
+    	model.addAttribute("activeTour", activeTour);
+
     	return "tourOverview";
     }
 }

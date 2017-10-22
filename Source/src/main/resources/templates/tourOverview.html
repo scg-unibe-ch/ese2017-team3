@@ -82,6 +82,8 @@
                 </div>
                 <div class="notification" th:if="${not #lists.isEmpty(tours)}" th:each="tour : ${tours}">
                     <a href="#" class="button delete"></a>
+                    <div th:with="result=${tour.id - 1}">
+                    <a th:href="'/tours?activeIndex=' + ${result}">
                     <div class="columns is-gapless">
                         <div class="column is-half">
                             <div class="columns is-gapless">
@@ -137,6 +139,8 @@
                             </div>
                         </div>
                     </div>
+                    </a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -146,16 +150,16 @@
             <div class="block">
                 <div class="box">
                     <div class="columns">
-                        <div class="column is-2">Tierart:</div>
+                        <div class="column is-2">Cargo:</div>
                         <div class="column is-4">
                             <div class="field">
-                                <input class="input" type="text" placeholder="Tierart" />
+                                <input class="input" type="text" th:value="${activeTour.cargo}"/>
                             </div>
                         </div>
                         <div class="column is-2">Anzahl:</div>
                         <div class="column is-4 ">
                             <div class="field">
-                                <input class="input" type="text" placeholder="Anzahl" />
+                                <input class="input" type="text" th:value="${activeTour.numberOfAnimals}" />
                             </div>
                         </div>
                     </div>
@@ -163,69 +167,69 @@
                         <div class="column is-2">Startort:</div>
                         <div class="column is-4">
                             <div class="field">
-                                <input class="input" type="text" placeholder="Name" />
+                                <input class="input" type="text" th:value="${activeTour.startPersonName}" />
                             </div>
                         </div>
                         <div class="column is-2 is-center">Zielort:</div>
                         <div class="column is-4 ">
                             <div class="field">
-                                <input class="input" type="text" placeholder="Name" />
+                                <input class="input" type="text" th:value="${activeTour.contactPersonName}" />
                             </div>
                         </div>
                         <div class="column is-2"></div>
                         <div class="column is-4">
                             <div class="field">
-                                <input class="input" type="text" placeholder="Vorname" />
+                                <input class="input" type="text" th:value="${activeTour.startPersonSurname}" />
                             </div>
                         </div>
                         <div class="column is-2"></div>
                         <div class="column is-4">
                             <div class="field">
-                                <input class="input" type="text" placeholder="Vorname" />
+                                <input class="input" type="text" th:value="${activeTour.contactPersonSurname}" />
                             </div>
                         </div>
                         <div class="column is-2"></div>
                         <div class="column is-3">
                             <div class="field">
-                                <input class="input" type="text" placeholder="Strasse" />
+                                <input class="input" type="text" th:value="${activeTour.startAddress}" />
                             </div>
                         </div>
                         <div class="column is-1">
                             <div class="field">
-                                <input class="input" type="text" placeholder="Nr." />
+                                <input class="input" type="text" th:value="${activeTour.startAddressNumber}" />
                             </div>
                         </div>
                         <div class="column is-2"></div>
                         <div class="column is-3">
                             <div class="field">
-                                <input class="input" type="text" placeholder="Strasse" />
+                                <input class="input" type="text" th:value="${activeTour.destinationAddress}" />
                             </div>
                         </div>
                         <div class="column is-1">
                             <div class="field">
-                                <input class="input" type="text" placeholder="Nr." />
+                                <input class="input" type="text" th:value="${activeTour.destinationAddressNumber}" />
                             </div>
                         </div>
                         <div class="column is-2"></div>
-                        <div class="column is-1">
+                        <div class="column is-2">
                             <div class="field">
-                                <input class="input" type="text" placeholder="PLZ" />
+                                <input class="input" type="text" th:value="${activeTour.startZIP}" />
                             </div>
                         </div>
-                        <div class="column is-3">
+                        <div class="column is-2">
                             <div class="field">
-                                <input class="input" type="text" placeholder="Ort" />
+                                <input class="input" type="text" th:value="${activeTour.startCity}" />
                             </div>
                         </div>
                         <div class="column is-2"></div>
-                        <div class="column is-1">
+                        <div class="column is-2">
                             <div class="field">
-                                <input class="input" type="text" placeholder="PLZ" />
+                                <input class="input" type="text" th:value="${activeTour.destinationZIP}" />
                             </div>
                         </div>
-                        <div class="column is-3">
+                        <div class="column is-2">
                             <div class="field">
-                                <input class="input" type="text" placeholder="Ort" />
+                                <input class="input" type="text" th:value="${activeTour.destinationCity}" />
                             </div>
                         </div>
 
