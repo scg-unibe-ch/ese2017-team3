@@ -127,7 +127,7 @@
                     <div class="column is-1"></div>
                     <div class="column is-2">
                         <div class="field">
-                            <input class="input" type="text" placeholder="ZIP" th:field="*{startZIP}" />
+                            <input class="input" type="text" placeholder="ZIP" th:field="*{startZip}" />
                         </div>
                     </div>
                     <div class="column is-3">
@@ -138,7 +138,7 @@
                     <div class="column is-1"></div>
                     <div class="column is-2">
                         <div class="field">
-                            <input class="input" type="text" placeholder="ZIP" th:field="*{destinationZIP}" />
+                            <input class="input" type="text" placeholder="ZIP" th:field="*{destinationZip}" />
                         </div>
                     </div>
                     <div class="column is-3">
@@ -149,16 +149,30 @@
 
                 </div>
                 <div class="columns">
-                    <div class="column is-1">Date:</div>
+                    <div class="column is-1">Start date:</div>
                     <div class="column is-5">
                         <div class="field">
-                            <input class="input" type="text" placeholder="Date" />
+                            <input class="input" type="date"  th:field="*{deliveryStartDate}"/>
                         </div>
                     </div>
-                    <div class="column is-1">Time:</div>
+                    <div class="column is-1">Start time:</div>
                     <div class="column is-5">
                         <div class="field">
-                            <input class="input" type="text" placeholder="Starting time" />
+                            <input class="input" type="time" placeholder="hh:mm" th:field="*{deliveryStartTime}"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="columns">
+                    <div class="column is-1">Estimation:</div>
+                    <div class="column is-5">
+                        <div class="field">
+                            <input class="input" type="text" placeholder="Estimated delivery time (hours)" th:field="*{estimatedTime}" />
+                        </div>
+                    </div>
+                    <div class="column is-1">Time frame:</div>
+                    <div class="column is-5">
+                        <div class="field">
+                            <input class="input" type="text" placeholder="Time frame for delivery" th:field="*{timeFrame}" />
                         </div>
                     </div>
                 </div>
@@ -179,7 +193,7 @@
                     <div class="column is-1"></div>
                     <div class="column">
                         <p class="control">
-                            <textarea class="textarea" placeholder="Bemerkung"></textarea>
+                            <textarea class="textarea" placeholder="Comment" th:field="*{comment}" />
                         </p>
                     </div>
                 </div>
