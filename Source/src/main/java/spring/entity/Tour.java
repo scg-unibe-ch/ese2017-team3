@@ -36,25 +36,18 @@ public class Tour {
     @Column (nullable = true)
     private String startCity;
 
-    /*public LocalDate getDeliveryStartDate() {
+    public LocalDate getDeliveryStartDate() {
         return deliveryStartDate;
-    }*/
-
-    public String getDeliveryStartDate() {
-        return deliveryStartDate.toString();
     }
+
 
     public void setDeliveryStartDate(String dateString) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("uuuu-MM-dd");
         this.deliveryStartDate = LocalDate.parse(dateString, formatter);
     }
 
-    /* public LocalTime getDeliveryStartTime() {
+    public LocalTime getDeliveryStartTime() {
         return deliveryStartTime;
-    } */
-
-    public String getDeliveryStartTime() {
-        return deliveryStartTime.toString();
     }
 
     public void setDeliveryStartTime(String timeString) {
