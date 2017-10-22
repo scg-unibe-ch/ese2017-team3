@@ -1,7 +1,11 @@
 package spring.entity;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
-import java.util.Calendar;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 
 /**
  * Created by olulrich on 20.10.17.
@@ -27,10 +31,28 @@ public class Tour {
     private int startAddressNumber;
 
     @Column (nullable = true)
-    private int startZIP;
+    private int startZip;
 
     @Column (nullable = true)
     private String startCity;
+
+    public LocalDate getDeliveryStartDate() {
+        return deliveryStartDate;
+    }
+
+    public void setDeliveryStartDate(String dateString) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("uuuu-MM-dd");
+        this.deliveryStartDate = LocalDate.parse(dateString, formatter);
+    }
+
+    public LocalTime getDeliveryStartTime() {
+        return deliveryStartTime;
+    }
+
+    public void setDeliveryStartTime(String timeString) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+        this.deliveryStartTime = LocalTime.parse(timeString, formatter);
+    }
 
     @Column (nullable = true)
     private String destinationAddress;
@@ -39,7 +61,7 @@ public class Tour {
     private int destinationAddressNumber;
 
     @Column (nullable = true)
-    private int destinationZIP;
+    private int destinationZip;
 
     @Column (nullable = true)
     private String destinationCity;
@@ -62,10 +84,36 @@ public class Tour {
     @Column (nullable = true)
     private String driver;
 
-    // Calendar object that contains the date and the time when the delivery should be started
     @Column (nullable = true)
-    private Calendar startingTime;
+    private String comment;
 
+    @Column (nullable = true)
+    @DateTimeFormat(pattern="uuuu-MM-dd")
+    private LocalDate deliveryStartDate;
+
+    @Column (nullable = true)
+    @DateTimeFormat(pattern="HH:mm")
+    private LocalTime deliveryStartTime;
+
+
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
+
+    public String getTimeFrame() {
+        return timeFrame;
+    }
+
+    public void setTimeFrame(String timeFrame) {
+        this.timeFrame = timeFrame;
+    }
+
+    @Column (nullable = true)
+    private String timeFrame;
 
     public Tour(String cargo) {
         this.cargo = cargo;
@@ -95,8 +143,8 @@ public class Tour {
         this.startAddressNumber = startAddressNumber;
     }
 
-    public void setStartZIP(int startZIP) {
-        this.startZIP = startZIP;
+    public void setStartZip(int startZip) {
+        this.startZip = startZip;
     }
 
     public void setDestinationAddress(String destinationAddress) {
@@ -107,16 +155,12 @@ public class Tour {
         this.destinationAddressNumber = destinationAddressNumber;
     }
 
-    public void setDestinationZIP(int destinationZIP) {
-        this.destinationZIP = destinationZIP;
+    public void setDestinationZip(int destinationZip) {
+        this.destinationZip = destinationZip;
     }
 
     public void setEstimatedTime(float estimatedTime) {
         this.estimatedTime = estimatedTime;
-    }
-
-    public void setStartingTime(Calendar startingTime) {
-        this.startingTime = startingTime;
     }
 
     public void setStartCity(String startCity) {
@@ -157,8 +201,8 @@ public class Tour {
         return startAddressNumber;
     }
 
-    public int getStartZIP() {
-        return startZIP;
+    public int getStartZip() {
+        return startZip;
     }
 
     public String getDestinationAddress() {
@@ -169,16 +213,12 @@ public class Tour {
         return destinationAddressNumber;
     }
 
-    public int getDestinationZIP() {
-        return destinationZIP;
+    public int getDestinationZip() {
+        return destinationZip;
     }
 
     public float getEstimatedTime() {
         return estimatedTime;
-    }
-
-    public Calendar getStartingTime() {
-        return startingTime;
     }
 
     public String getStartCity() {
