@@ -7,5 +7,4 @@ import spring.entity.User;
 @Repository
 public interface  UserRepository extends CrudRepository<User, Long>{
 
-    User findByName(String username);
-}
+    User findByUserName(String username);

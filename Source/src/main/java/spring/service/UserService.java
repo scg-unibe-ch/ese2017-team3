@@ -23,7 +23,8 @@ import java.util.List;
 //for reference
 
 @Service
-@Transactional
+
+
 public class UserService implements UserDetailsService {
     @Autowired
     private UserRepository userRepository;
@@ -35,7 +36,8 @@ public class UserService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username)
             throws UsernameNotFoundException {
 
-        User user = userRepository.findByName(username);
+
+        User user = userRepository.findByUserName(username);
 
         if (user == null) {
             return new org.springframework.security.core.userdetails.User(

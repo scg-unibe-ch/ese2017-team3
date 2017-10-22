@@ -17,18 +17,18 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import org.springframework.security.provisioning.UserDetailsManager;
 
+@SuppressWarnings("ALL")
 @Configuration
 @EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
-//	@Bean
 	@Autowired
 	DataSource dataSource;
 
 	@Bean
-	public UserDetailsManager userDetailsManager(DataSource dataSource) {
+	public UserDetailsManager userDetailsManager(DataSource ds) {
 		JdbcUserDetailsManager userDetailsManager = new JdbcUserDetailsManager();
-		userDetailsManager.setDataSource(dataSource);
+		userDetailsManager.setDataSource(ds);
 		return userDetailsManager;
 	}
 
