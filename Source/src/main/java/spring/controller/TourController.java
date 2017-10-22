@@ -6,6 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import spring.entity.Tour;
 import spring.repositories.TourRepository;
+import spring.security.*;
 
 /**
  * Created by olulrich on 20.10.17.

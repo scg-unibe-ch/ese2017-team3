@@ -2,13 +2,10 @@ package spring.repositories;
 
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
-import spring.entity.Tour;
-
-/**
- * Created by olulrich on 20.10.17.
- */
+import spring.entity.User;
 
 @Repository
-public interface TourRepository extends CrudRepository<Tour, Long> {
+public interface  UserRepository extends CrudRepository<User, Long>{
 
+    User findByName(String username);
 }
