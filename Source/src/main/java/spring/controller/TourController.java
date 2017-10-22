@@ -6,6 +6,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import spring.entity.Tour;
 import spring.repositories.TourRepository;
+import spring.service.TourService;
+
+import java.util.List;
 
 /**
  * Created by olulrich on 20.10.17.
@@ -16,6 +19,9 @@ public class TourController {
 
     @Autowired
     private TourRepository tourRepository;
+
+    @Autowired
+    private TourService tourService;
 
     @GetMapping(path = "/deliveries")
     public String deliveryForm(Model model) {
@@ -32,7 +38,8 @@ public class TourController {
     }
     @RequestMapping(path = "/tours")
     public String tourOverview(Model model) {
-    	model.addAttribute("deliveries", tourRepository.findAll());
+        List<Tour> tours = tourService.getTours();
+    	model.addAttribute("deliveries", tours);
     	return "tourOverview";
     }
 }
