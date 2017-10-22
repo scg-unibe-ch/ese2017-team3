@@ -1,5 +1,7 @@
 package spring.repositories;
 
+import java.util.List;
+
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 import spring.entity.Tour;
@@ -11,6 +13,7 @@ import spring.entity.Tour;
 @Repository
 public interface TourRepository extends CrudRepository<Tour, Long> {
 
-
+	public List<Tour> findAll();
+	
 
 }

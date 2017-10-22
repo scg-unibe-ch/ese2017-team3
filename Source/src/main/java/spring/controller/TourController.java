@@ -30,4 +30,10 @@ public class TourController {
         model.addAttribute("deliveries", tourRepository.findAll());
         return "deliveryresult";
     }
+    
+    @RequestMapping(path = "/tours")
+    public String tourList(Model model) {
+    	model.addAttribute("tour", tourRepository.findAll());
+    	return "tours";
+    }
 }
