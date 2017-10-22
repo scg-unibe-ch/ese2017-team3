@@ -33,8 +33,9 @@ public class TourController {
     @PostMapping(path = "/deliveries")
     public String deliverySubmit(@ModelAttribute Tour tour, Model model) {
         tourRepository.save(tour);
-        model.addAttribute("deliveries", tourRepository.findAll());
-        return "deliveryresult";
+        List<Tour> tours = tourService.getTours();
+        model.addAttribute("tours", tours);
+        return "tourOverview";
     }
     @RequestMapping(path = "/tours")
     public String tourOverview(Model model) {
