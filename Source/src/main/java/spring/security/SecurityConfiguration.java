@@ -15,9 +15,14 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import org.springframework.security.provisioning.UserDetailsManager;
+
+import java.util.Collections;
 
 @SuppressWarnings("ALL")
 @Configuration
@@ -26,6 +31,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Autowired
     DataSource dataSource;
+
+    @Autowired
+    UserDetailsManager userDetailsManager;
 
     @Bean
     public UserDetailsManager userDetailsManager(DataSource ds) {
@@ -57,9 +65,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        auth.jdbcAuthentication().dataSource(dataSource)
-        ;
+        auth.jdbcAuthentication().dataSource(dataSource);
+
+        if (!userDetailsManager.userExists("Admin")) {
+            auth.inMemoryAuthentication().withUser("admin").password("anitrans").authorities("ROLE_ADMIN");
+//            User user = new User("admin", "anitrans", Collections.singletonList(new SimpleGrantedAuthority("ROLE_ADMIN")));
+//            userDetailsManager.createUser(user);
+        }
     }
-
-
 }
