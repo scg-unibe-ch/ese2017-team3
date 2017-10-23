@@ -46,7 +46,7 @@ public class TourController {
     }
 
     // GET request to /tours will return a list of all tours
-    @RequestMapping(path = "/tours")
+    @GetMapping(path = "/tours")
     public String tourOverview(Model model, @RequestParam(required = false, defaultValue = "0") int activeIndex) {
 
         List<Tour> tours = tourService.getTours();
@@ -72,6 +72,22 @@ public class TourController {
         tourRepository.delete(toDelete);
 
         tours.remove(index);
+
+        model.addAttribute("tours", tours);
+        return new ModelAndView("redirect:/tours");
+    }
+
+    @PostMapping(path = "/tours/update")
+    public ModelAndView updateTour(@ModelAttribute Tour activeTour, Model model) {
+
+        List<Tour> tours;
+
+        Tour toDelete = tourRepository.findOne(activeTour.getId() + 1);
+        tourRepository.delete(toDelete);
+
+        tourRepository.save(activeTour);
+
+        tours = tourService.getTours();
 
         model.addAttribute("tours", tours);
         return new ModelAndView("redirect:/tours");

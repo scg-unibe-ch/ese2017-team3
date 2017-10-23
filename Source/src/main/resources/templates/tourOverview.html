@@ -164,132 +164,134 @@
         <div th:if="${not #lists.isEmpty(tours)}" class="column">
             <div class="block">
                 <div class="box">
-                    <div class="columns">
-                        <div class="column is-2">Cargo:</div>
-                        <div class="column is-4">
-                            <div class="field">
-                                <input class="input" type="text" th:value="${activeTour.cargo}"/>
+                    <form action="#" th:action="@{/tours/update}" th:object="${activeTour}" method="post">
+                        <div class="columns">
+                            <div class="column is-2">Cargo:</div>
+                            <div class="column is-4">
+                                <div class="field">
+                                    <input class="input" type="text" th:field="*{cargo}"/>
+                                </div>
+                            </div>
+                            <div class="column is-2">Anzahl:</div>
+                            <div class="column is-4 ">
+                                <div class="field">
+                                    <input class="input" type="text" th:field="*{numberOfAnimals}"/>
+                                </div>
                             </div>
                         </div>
-                        <div class="column is-2">Anzahl:</div>
-                        <div class="column is-4 ">
-                            <div class="field">
-                                <input class="input" type="text" th:value="${activeTour.numberOfAnimals}"/>
+                        <div class="columns  is-multiline">
+                            <div class="column is-2">Startort:</div>
+                            <div class="column is-4">
+                                <div class="field">
+                                    <input class="input" type="text" th:field="*{startPersonName}"/>
+                                </div>
+                            </div>
+                            <div class="column is-2 is-center">Zielort:</div>
+                            <div class="column is-4 ">
+                                <div class="field">
+                                    <input class="input" type="text" th:field="*{contactPersonName}"/>
+                                </div>
+                            </div>
+                            <div class="column is-2"></div>
+                            <div class="column is-4">
+                                <div class="field">
+                                    <input class="input" type="text" th:field="*{startPersonSurname}"/>
+                                </div>
+                            </div>
+                            <div class="column is-2"></div>
+                            <div class="column is-4">
+                                <div class="field">
+                                    <input class="input" type="text" th:field="*{contactPersonSurname}"/>
+                                </div>
+                            </div>
+                            <div class="column is-2"></div>
+                            <div class="column is-3">
+                                <div class="field">
+                                    <input class="input" type="text" th:field="*{startAddress}"/>
+                                </div>
+                            </div>
+                            <div class="column is-1">
+                                <div class="field">
+                                    <input class="input" type="text" th:field="*{startAddressNumber}"/>
+                                </div>
+                            </div>
+                            <div class="column is-2"></div>
+                            <div class="column is-3">
+                                <div class="field">
+                                    <input class="input" type="text" th:field="*{destinationAddress}"/>
+                                </div>
+                            </div>
+                            <div class="column is-1">
+                                <div class="field">
+                                    <input class="input" type="text" th:field="*{destinationAddressNumber}"/>
+                                </div>
+                            </div>
+                            <div class="column is-2"></div>
+                            <div class="column is-2">
+                                <div class="field">
+                                    <input class="input" type="text" th:field="*{startZip}"/>
+                                </div>
+                            </div>
+                            <div class="column is-2">
+                                <div class="field">
+                                    <input class="input" type="text" th:field="*{startCity}"/>
+                                </div>
+                            </div>
+                            <div class="column is-2"></div>
+                            <div class="column is-2">
+                                <div class="field">
+                                    <input class="input" type="text" th:field="*{destinationZip}"/>
+                                </div>
+                            </div>
+                            <div class="column is-2">
+                                <div class="field">
+                                    <input class="input" type="text" th:field="*{destinationCity}"/>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="columns">
+                            <div class="column is-2">Datum:</div>
+                            <div class="column is-4">
+                                <div class="field">
+                                    <input class="input" type="text" placeholder="Datum"/>
+                                </div>
+                            </div>
+                            <div class="column is-2">Zeit:</div>
+                            <div class="column is-4">
+                                <div class="field">
+                                    <input class="input" type="text" placeholder="Zeit"/>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="columns  is-multiline">
-                        <div class="column is-2">Startort:</div>
-                        <div class="column is-4">
-                            <div class="field">
-                                <input class="input" type="text" th:value="${activeTour.startPersonName}"/>
-                            </div>
-                        </div>
-                        <div class="column is-2 is-center">Zielort:</div>
-                        <div class="column is-4 ">
-                            <div class="field">
-                                <input class="input" type="text" th:value="${activeTour.contactPersonName}"/>
-                            </div>
-                        </div>
-                        <div class="column is-2"></div>
-                        <div class="column is-4">
-                            <div class="field">
-                                <input class="input" type="text" th:value="${activeTour.startPersonSurname}"/>
-                            </div>
-                        </div>
-                        <div class="column is-2"></div>
-                        <div class="column is-4">
-                            <div class="field">
-                                <input class="input" type="text" th:value="${activeTour.contactPersonSurname}"/>
-                            </div>
-                        </div>
-                        <div class="column is-2"></div>
-                        <div class="column is-3">
-                            <div class="field">
-                                <input class="input" type="text" th:value="${activeTour.startAddress}"/>
-                            </div>
-                        </div>
-                        <div class="column is-1">
-                            <div class="field">
-                                <input class="input" type="text" th:value="${activeTour.startAddressNumber}"/>
-                            </div>
-                        </div>
-                        <div class="column is-2"></div>
-                        <div class="column is-3">
-                            <div class="field">
-                                <input class="input" type="text" th:value="${activeTour.destinationAddress}"/>
-                            </div>
-                        </div>
-                        <div class="column is-1">
-                            <div class="field">
-                                <input class="input" type="text" th:value="${activeTour.destinationAddressNumber}"/>
-                            </div>
-                        </div>
-                        <div class="column is-2"></div>
-                        <div class="column is-2">
-                            <div class="field">
-                                <input class="input" type="text" th:value="${activeTour.startZip}"/>
-                            </div>
-                        </div>
-                        <div class="column is-2">
-                            <div class="field">
-                                <input class="input" type="text" th:value="${activeTour.startCity}"/>
-                            </div>
-                        </div>
-                        <div class="column is-2"></div>
-                        <div class="column is-2">
-                            <div class="field">
-                                <input class="input" type="text" th:value="${activeTour.destinationZip}"/>
-                            </div>
-                        </div>
-                        <div class="column is-2">
-                            <div class="field">
-                                <input class="input" type="text" th:value="${activeTour.destinationCity}"/>
+                        <div class="columns">
+                            <div class="column is-2">Fahrer:</div>
+                            <div class="column">
+                                <div class="select">
+                                    <select th:field="*{driver}">
+                                        <option value="Housi">Housi</option>
+                                        <option value="Kürä">Kürä</option>
+                                        <option value="Max">Max</option>
+                                        <option value="Fritz">Fritz</option>
+                                    </select>
+                                </div>
                             </div>
                         </div>
 
-                    </div>
-                    <div class="columns">
-                        <div class="column is-2">Datum:</div>
-                        <div class="column is-4">
-                            <div class="field">
-                                <input class="input" type="text" placeholder="Datum"/>
-                            </div>
-                        </div>
-                        <div class="column is-2">Zeit:</div>
-                        <div class="column is-4">
-                            <div class="field">
-                                <input class="input" type="text" placeholder="Zeit"/>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="columns">
-                        <div class="column is-2">Fahrer:</div>
-                        <div class="column">
-                            <div class="select">
-                                <select>
-                                    <option>Housi</option>
-                                    <option>Kürä</option>
-                                    <option>Max</option>
-                                    <option>Fritz</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
 
-
-                    <div class="columns">
-                        <div class="column is-2">Comment:</div>
-                        <div class="column">
-                            <p class="control">
-                                <textarea class="textarea" placeholder="Comment"></textarea>
-                            </p>
+                        <div class="columns">
+                            <div class="column is-2">Comment:</div>
+                            <div class="column">
+                                <p class="control">
+                                    <textarea class="textarea" placeholder="Comment"></textarea>
+                                </p>
+                            </div>
                         </div>
-                    </div>
-                    <div class="columns">
-                        <div class="column is-2 is-offset-10"><a href="" class="button is-info is-pulled-right">Save</a>
+                        <div class="columns">
+                            <div class="column is-2 is-offset-10"><button type="submit" class="button is-info is-pulled-right">Save</button>
+                            </div>
                         </div>
-                    </div>
+                    </form>
                 </div>
             </div>
         </div>
