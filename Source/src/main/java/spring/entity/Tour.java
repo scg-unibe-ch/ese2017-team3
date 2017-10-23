@@ -15,7 +15,7 @@ public class Tour {
 
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
-    private int id;
+    private long id;
 
     @Column (nullable = false)
     private String cargo;
@@ -182,7 +182,7 @@ public class Tour {
 
     // Getter methods
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
