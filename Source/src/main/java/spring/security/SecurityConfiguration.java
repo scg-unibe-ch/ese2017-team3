@@ -4,6 +4,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.ImportResource;
@@ -14,6 +15,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import org.springframework.security.provisioning.UserDetailsManager;
 
@@ -22,44 +24,43 @@ import org.springframework.security.provisioning.UserDetailsManager;
 @EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
-	@Autowired
-	DataSource dataSource;
+    @Autowired
+    DataSource dataSource;
 
-	@Bean
-	public UserDetailsManager userDetailsManager(DataSource ds) {
-		JdbcUserDetailsManager userDetailsManager = new JdbcUserDetailsManager();
-		userDetailsManager.setDataSource(ds);
-		return userDetailsManager;
-	}
+    @Bean
+    public UserDetailsManager userDetailsManager(DataSource ds) {
+        JdbcUserDetailsManager userDetailsManager = new JdbcUserDetailsManager();
+        userDetailsManager.setDataSource(ds);
+        return userDetailsManager;
+    }
 
-	@Override
-	protected void configure(HttpSecurity http) throws Exception {
-		http.authorizeRequests()
-			.antMatchers("/", "/user/create", "/css/**", "/images/**", "/js/**")
-			.permitAll()
-			.and()
-		.authorizeRequests()
-			.regexMatchers(HttpMethod.POST, "/user")
-			.permitAll()
-			.and()
-		.authorizeRequests()
-			.anyRequest()
-			.authenticated()
-			.and()
-		.formLogin()
-			.loginPage("/login")
-			.permitAll()
-			.and()
-		.httpBasic();
-	}
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http.authorizeRequests()
 
-	@Autowired
-	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-		auth.jdbcAuthentication().dataSource(dataSource)
-//				.inMemoryAuthentication()
-//				.withUser("user").password("password").roles("USER");
-		;
-	}
+                .antMatchers("/", "/user/create", "/css/**", "/images/**", "/js/**")
+                    .permitAll()
+
+                    .regexMatchers(HttpMethod.POST, "/user")
+                    .permitAll()
+
+                    .antMatchers("/deliveries", "/deliveryresult", "/tourOverview", "/tours")
+                    .permitAll()//.hasRole("admin")
+                .anyRequest()
+                    .authenticated()
+                    .and()
+                .formLogin()
+                    .loginPage("/login")
+                    .permitAll()
+                    .and()
+                .httpBasic();
+    }
+
+    @Autowired
+    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+        auth.jdbcAuthentication().dataSource(dataSource)
+        ;
+    }
 
 
 }
