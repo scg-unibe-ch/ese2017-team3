@@ -23,14 +23,14 @@ public class TourController {
     @Autowired
     private TourService tourService;
 
-    @GetMapping(path = "/createTour")
+    @GetMapping(path = "/deliveries")
     public String deliveryForm(Model model) {
 
         model.addAttribute("tour", new Tour());
         return "deliveries";
     }
 
-    @PostMapping(path = "/createTour")
+    @PostMapping(path = "/deliveries")
     public String deliverySubmit(@ModelAttribute Tour tour, Model model) {
         tourRepository.save(tour);
         List<Tour> tours = tourService.getTours();
