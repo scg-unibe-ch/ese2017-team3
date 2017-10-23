@@ -9,6 +9,7 @@ import spring.entity.Tour;
 import spring.repositories.TourRepository;
 import spring.service.TourService;
 
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 /**
@@ -83,9 +84,40 @@ public class TourController {
         List<Tour> tours;
 
         Tour toDelete = tourRepository.findOne(activeTour.getId() + 1);
-        tourRepository.delete(toDelete);
-
-        tourRepository.save(activeTour);
+        toDelete.setCargo(activeTour.getCargo());
+        toDelete.setNumberOfAnimals(activeTour.getNumberOfAnimals());
+        toDelete.setStartPersonSurname(activeTour.getContactPersonSurname());
+        
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("uuuu-MM-dd");
+        toDelete.setId(activeTour.getId());
+        toDelete.setCargo(activeTour.getCargo());
+        toDelete.setNumberOfAnimals(activeTour.getNumberOfAnimals());
+        toDelete.setStartPersonName(activeTour.getStartPersonName());
+        toDelete.setStartPersonSurname(activeTour.getStartPersonSurname());
+        toDelete.setStartAddress(activeTour.getStartAddress());
+        toDelete.setStartAddressNumber(activeTour.getStartAddressNumber());
+        toDelete.setStartZip(activeTour.getStartZip());
+        toDelete.setStartCity(activeTour.getStartCity());
+        toDelete.setContactPersonName(activeTour.getContactPersonName());
+        toDelete.setContactPersonSurname(activeTour.getContactPersonSurname());
+        toDelete.setDestinationAddress(activeTour.getDestinationAddress());
+        toDelete.setDestinationAddressNumber(activeTour.getDestinationAddressNumber());
+        toDelete.setDestinationZip(activeTour.getDestinationZip());
+        toDelete.setDestinationCity(activeTour.getDestinationCity());
+        toDelete.setDeliveryStartDate(formatter.format(activeTour.getDeliveryStartDate()));
+        toDelete.setDeliveryStartTime(formatter.format(activeTour.getDeliveryStartTime()));
+        toDelete.setEstimatedTime(activeTour.getEstimatedTime());
+        toDelete.setTimeFrame(activeTour.getTimeFrame());
+        toDelete.setDriver(activeTour.getDriver());
+        toDelete.setComment(activeTour.getComment());
+        
+        
+        
+        
+        
+        
+        
+        tourRepository.save(toDelete);
 
         tours = tourService.getTours();
 
