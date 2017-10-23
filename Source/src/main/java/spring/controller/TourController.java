@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 import spring.entity.Tour;
 import spring.repositories.TourRepository;
 import spring.service.TourService;
@@ -23,6 +24,7 @@ public class TourController {
     @Autowired
     private TourService tourService;
 
+    // Get request on /deliveries will return a form to create a new tour
     @GetMapping(path = "/deliveries")
     public String deliveryForm(Model model) {
 
@@ -30,6 +32,7 @@ public class TourController {
         return "deliveries";
     }
 
+    // POST request to /deliveries with the appropriate values will create a new tour and redirect to /tours
     @PostMapping(path = "/deliveries")
     public String deliverySubmit(@ModelAttribute Tour tour, Model model) {
         tourRepository.save(tour);
@@ -41,6 +44,8 @@ public class TourController {
         model.addAttribute("tours", tours);
         return "tourOverview";
     }
+
+    // GET request to /tours will return a list of all tours
     @RequestMapping(path = "/tours")
     public String tourOverview(Model model, @RequestParam(required = false, defaultValue = "0") int activeIndex) {
 
@@ -55,5 +60,20 @@ public class TourController {
     	}
 
     	return "tourOverview";
+    }
+
+    // GET request on /tours/delete will delete the tour with the matching index
+    @GetMapping(path = "/tours/delete")
+    public ModelAndView deleteTour(Model model, @RequestParam(required = true) int index) {
+
+        List<Tour> tours = tourService.getTours();
+        Tour toDelete = tours.get(index);
+
+        tourRepository.delete(toDelete);
+
+        tours.remove(index);
+
+        model.addAttribute("tours", tours);
+        return new ModelAndView("redirect:/tours");
     }
 }
