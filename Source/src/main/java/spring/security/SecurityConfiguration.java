@@ -67,7 +67,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         auth.jdbcAuthentication().dataSource(dataSource);
 
-        if (!userDetailsManager.userExists("Admin")) {
+        if (!userDetailsManager.userExists("admin")) {
             auth.inMemoryAuthentication().withUser("admin").password("anitrans").authorities("ROLE_ADMIN");
 //            User user = new User("admin", "anitrans", Collections.singletonList(new SimpleGrantedAuthority("ROLE_ADMIN")));
 //            userDetailsManager.createUser(user);
