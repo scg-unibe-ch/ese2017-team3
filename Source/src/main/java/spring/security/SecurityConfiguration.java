@@ -40,14 +40,13 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
                 .antMatchers("/", "/user/create", "/css/**", "/images/**", "/js/**")
                     .permitAll()
-
-                    .regexMatchers(HttpMethod.POST, "/user")
+                .regexMatchers(HttpMethod.POST, "/user")
                     .permitAll()
-
-                    .antMatchers("/deliveries", "/deliveryresult", "/tourOverview", "/tours")
-                    .permitAll()//.hasRole("admin")
-                .anyRequest()
-                    .authenticated()
+				.antMatchers("/deliveries", "/deliveryresult", "/tourOverview", "/tours")
+//                    .permitAll()
+					.hasRole("ADMIN")
+//                .anyRequest()
+//                    .authenticated()
                     .and()
                 .formLogin()
                     .loginPage("/login")
