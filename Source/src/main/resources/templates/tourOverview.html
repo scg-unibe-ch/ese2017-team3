@@ -169,13 +169,13 @@
                             <div class="column is-2">Cargo:</div>
                             <div class="column is-4">
                                 <div class="field">
-                                    <input class="input" type="text" th:value="${activeTour.cargo}"/>
+                                    <input class="input" type="text" th:field="*{cargo}"/>
                                 </div>
                             </div>
                             <div class="column is-2">Anzahl:</div>
                             <div class="column is-4 ">
                                 <div class="field">
-                                    <input class="input" type="text" th:value="${activeTour.numberOfAnimals}"/>
+                                    <input class="input" type="text" th:field="*{numberOfAnimals}"/>
                                 </div>
                             </div>
                         </div>
@@ -183,69 +183,69 @@
                             <div class="column is-2">Startort:</div>
                             <div class="column is-4">
                                 <div class="field">
-                                    <input class="input" type="text" th:value="${activeTour.startPersonName}"/>
+                                    <input class="input" type="text" th:field="*{startPersonName}"/>
                                 </div>
                             </div>
                             <div class="column is-2 is-center">Zielort:</div>
                             <div class="column is-4 ">
                                 <div class="field">
-                                    <input class="input" type="text" th:value="${activeTour.contactPersonName}"/>
+                                    <input class="input" type="text" th:field="*{contactPersonName}"/>
                                 </div>
                             </div>
                             <div class="column is-2"></div>
                             <div class="column is-4">
                                 <div class="field">
-                                    <input class="input" type="text" th:value="${activeTour.startPersonSurname}"/>
+                                    <input class="input" type="text" th:field="*{startPersonSurname}"/>
                                 </div>
                             </div>
                             <div class="column is-2"></div>
                             <div class="column is-4">
                                 <div class="field">
-                                    <input class="input" type="text" th:value="${activeTour.contactPersonSurname}"/>
+                                    <input class="input" type="text" th:field="*{contactPersonSurname}"/>
                                 </div>
                             </div>
                             <div class="column is-2"></div>
                             <div class="column is-3">
                                 <div class="field">
-                                    <input class="input" type="text" th:value="${activeTour.startAddress}"/>
+                                    <input class="input" type="text" th:field="*{startAddress}"/>
                                 </div>
                             </div>
                             <div class="column is-1">
                                 <div class="field">
-                                    <input class="input" type="text" th:value="${activeTour.startAddressNumber}"/>
+                                    <input class="input" type="text" th:field="*{startAddressNumber}"/>
                                 </div>
                             </div>
                             <div class="column is-2"></div>
                             <div class="column is-3">
                                 <div class="field">
-                                    <input class="input" type="text" th:value="${activeTour.destinationAddress}"/>
+                                    <input class="input" type="text" th:field="*{destinationAddress}"/>
                                 </div>
                             </div>
                             <div class="column is-1">
                                 <div class="field">
-                                    <input class="input" type="text" th:value="${activeTour.destinationAddressNumber}"/>
+                                    <input class="input" type="text" th:field="*{destinationAddressNumber}"/>
                                 </div>
                             </div>
                             <div class="column is-2"></div>
                             <div class="column is-2">
                                 <div class="field">
-                                    <input class="input" type="text" th:value="${activeTour.startZip}"/>
+                                    <input class="input" type="text" th:field="*{startZip}"/>
                                 </div>
                             </div>
                             <div class="column is-2">
                                 <div class="field">
-                                    <input class="input" type="text" th:value="${activeTour.startCity}"/>
+                                    <input class="input" type="text" th:field="*{startCity}"/>
                                 </div>
                             </div>
                             <div class="column is-2"></div>
                             <div class="column is-2">
                                 <div class="field">
-                                    <input class="input" type="text" th:value="${activeTour.destinationZip}"/>
+                                    <input class="input" type="text" th:field="*{destinationZip}"/>
                                 </div>
                             </div>
                             <div class="column is-2">
                                 <div class="field">
-                                    <input class="input" type="text" th:value="${activeTour.destinationCity}"/>
+                                    <input class="input" type="text" th:field="*{destinationCity}"/>
                                 </div>
                             </div>
 
@@ -268,11 +268,11 @@
                             <div class="column is-2">Fahrer:</div>
                             <div class="column">
                                 <div class="select">
-                                    <select>
-                                        <option>Housi</option>
-                                        <option>Kürä</option>
-                                        <option>Max</option>
-                                        <option>Fritz</option>
+                                    <select th:field="*{driver}">
+                                        <option value="Housi">Housi</option>
+                                        <option value="Kürä">Kürä</option>
+                                        <option value="Max">Max</option>
+                                        <option value="Fritz">Fritz</option>
                                     </select>
                                 </div>
                             </div>
