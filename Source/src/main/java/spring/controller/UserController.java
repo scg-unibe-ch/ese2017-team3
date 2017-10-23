@@ -25,52 +25,55 @@ import org.springframework.web.servlet.ModelAndView;
 @RequestMapping(path = "/user")
 public class UserController {
 
-	@Autowired
-	private UserDetailsManager userDetailsManager;
+    @Autowired
+    private UserDetailsManager userDetailsManager;
 
-	@PreAuthorize("@userSecurityService.canCreate()")
-	@GetMapping(path = "/create")
-	public ModelAndView createForm() {
-		return new ModelAndView("user/RegistrationForm", "user", new User("user", "", Collections.emptyList()));
-	}
+    @PreAuthorize("@userSecurityService.canCreate()")
+    @GetMapping(path = "/create")
+    public ModelAndView createForm() {
+        return new ModelAndView("user/RegistrationForm", "user", new User("user", "", Collections.emptyList()));
+    }
 
-	@PreAuthorize("@userSecurityService.canCreate()")
-	@PostMapping(path = "")
-	public ModelAndView create(@RequestParam String username, @RequestParam String password) {
-		if (!userDetailsManager.userExists("admin")) {
+    @PreAuthorize("@userSecurityService.canCreate()")
+    @PostMapping(path = "")
+    public ModelAndView create(@RequestParam String username, @RequestParam String password) {
+        if (!userDetailsManager.userExists("admin")) {
             User admin = new User("admin", "anitrans", Collections.singletonList(new SimpleGrantedAuthority("ROLE_ADMIN")));
             userDetailsManager.createUser(admin);
-		}
-		// NOTE users need an authority, otherwise they are treated as non-existing
-		User user = new User(username, password, Collections.singletonList(new SimpleGrantedAuthority("ROLE_DRIVER")));
-		userDetailsManager.createUser(user);
-		Authentication auth = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
-		SecurityContextHolder.getContext().setAuthentication(auth);
-		return new ModelAndView("redirect:/user/{username}", "username", user.getUsername());
-	}
+        }
+        // NOTE users need an authority, otherwise they are treated as non-existing
 
-	@PreAuthorize("@userSecurityService.canRead(#username)")
-	@GetMapping(path = "/{username}")
-	public ModelAndView read(@PathVariable(value = "username") String username) {
-		UserDetails user = userDetailsManager.loadUserByUsername(username);
-		return new ModelAndView("user/read", "user", user);
-	}
+        User user = new User(username, password, Collections.singletonList(new SimpleGrantedAuthority("ROLE_DRIVER")));
+//        if (!userDetailsManager.userExists(username)) {
+            userDetailsManager.createUser(user);
+//        }
+        Authentication auth = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
+        SecurityContextHolder.getContext().setAuthentication(auth);
+        return new ModelAndView("redirect:/user/{username}", "username", user.getUsername());
+    }
 
-	@PreAuthorize("@userSecurityService.canUpdate(#username)")
-	@PutMapping(path = "/{username}")
-	public ModelAndView update(@PathVariable(value = "username") String username, @RequestParam String password) {
-		String oldPassword = ((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal())
-				.getPassword();
-		userDetailsManager.changePassword(oldPassword, password);
-		UserDetails user = userDetailsManager.loadUserByUsername(username);
-		return new ModelAndView("redirect:/user/{username}", "username", user.getUsername());
-	}
+    @PreAuthorize("@userSecurityService.canRead(#username)")
+    @GetMapping(path = "/{username}")
+    public ModelAndView read(@PathVariable(value = "username") String username) {
+        UserDetails user = userDetailsManager.loadUserByUsername(username);
+        return new ModelAndView("user/read", "user", user);
+    }
 
-	@PreAuthorize("@userSecurityService.canDelete(#username)")
-	@DeleteMapping(path = "/{username}")
-	public ModelAndView delete(@PathVariable(value = "username") String username) {
-		userDetailsManager.deleteUser(username);
-		return new ModelAndView("redirect:/");
-	}
+    @PreAuthorize("@userSecurityService.canUpdate(#username)")
+    @PutMapping(path = "/{username}")
+    public ModelAndView update(@PathVariable(value = "username") String username, @RequestParam String password) {
+        String oldPassword = ((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal())
+                .getPassword();
+        userDetailsManager.changePassword(oldPassword, password);
+        UserDetails user = userDetailsManager.loadUserByUsername(username);
+        return new ModelAndView("redirect:/user/{username}", "username", user.getUsername());
+    }
+
+    @PreAuthorize("@userSecurityService.canDelete(#username)")
+    @DeleteMapping(path = "/{username}")
+    public ModelAndView delete(@PathVariable(value = "username") String username) {
+        userDetailsManager.deleteUser(username);
+        return new ModelAndView("redirect:/");
+    }
 
 }
