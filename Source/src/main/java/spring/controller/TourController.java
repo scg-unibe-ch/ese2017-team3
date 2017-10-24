@@ -5,8 +5,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import spring.entity.Driver;
 import spring.entity.Tour;
 import spring.repositories.TourRepository;
+import spring.service.DriverService;
 import spring.service.TourService;
 
 import java.time.format.DateTimeFormatter;
@@ -25,9 +27,16 @@ public class TourController {
     @Autowired
     private TourService tourService;
 
+    @Autowired
+    private DriverService driverService;
+
     // Get request on /deliveries will return a form to create a new tour
     @GetMapping(path = "/deliveries")
     public String deliveryForm(Model model) {
+
+        //prepare a list of Drivers to select from.
+        List<Driver> drivers = driverService.getDrivers();
+        model.addAttribute("drivers", drivers);
 
         model.addAttribute("tour", new Tour());
         return "deliveries";
