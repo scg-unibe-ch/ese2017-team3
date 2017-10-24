@@ -254,13 +254,13 @@
                             <div class="column is-2">Date:</div>
                             <div class="column is-4">
                                 <div class="field">
-                                    <input class="input" type="text" placeholder="Datum"/>
+                                    <input class="input" type="date" th:value="*{deliveryStartDate}" id="deliveryStartDate" name="deliveryStartDate"/>
                                 </div>
                             </div>
                             <div class="column is-2">Time:</div>
                             <div class="column is-4">
                                 <div class="field">
-                                    <input class="input" type="text" placeholder="Zeit"/>
+                                    <input class="input" type="time" th:value="*{deliveryStartTime}" id="deliveryStartTime" name="deliveryStartTime"/>
                                 </div>
                             </div>
                         </div>
@@ -283,7 +283,7 @@
                             <div class="column is-2">Comment:</div>
                             <div class="column">
                                 <p class="control">
-                                    <textarea class="textarea" placeholder="Comment"></textarea>
+                                    <textarea class="textarea" type="text" th:field="*{comment}"></textarea>
                                 </p>
                             </div>
                         </div>
