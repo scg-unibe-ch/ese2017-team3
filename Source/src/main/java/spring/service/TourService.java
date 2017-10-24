@@ -1,6 +1,8 @@
 package spring.service;
 
+import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
@@ -41,12 +43,21 @@ public class TourService {
     public List<Tour> getCurrentToursForDriver(String username) {
         List<Tour> tours = new ArrayList<Tour>();
         LocalDate today = LocalDate.now();
-        for (Tour t : tourRepository.findByDriver(username)) {
-            LocalDate startDate = t.getDeliveryStartDate();
-            if (!startDate.isBefore(today) && !startDate.isAfter(today)) {
-                tours.add(t);
-            }
-        }
+        tourRepository.findByDriverAndDeliveryStartDate(username, today).forEach(tours::add);
+        return tours;
+    }
+
+    /**
+     * Returns a <code>List</code> of <code>Tours</code> that are assigned to this driver
+     * and are scheduled for this week
+     * @param username the username of the driver
+     * @param day the weekday
+     * @return a <code>List</code> containing the driver's <code>Tours</code> for the specified day
+     */
+    public List<Tour> getToursForDriverAndDay(String username, DayOfWeek day) {
+        List<Tour> tours = new ArrayList<Tour>();
+        LocalDate tourDate = LocalDateTime.now().with(day).toLocalDate();
+        tourRepository.findByDriverAndDeliveryStartDate(username, tourDate).forEach(tours::add);
         return tours;
     }
 
