@@ -32,6 +32,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Autowired
     DataSource dataSource;
 
+    @Autowired
+    AuthSuccessHandler authSuccessHandler;
 
     @Bean
     public UserDetailsManager userDetailsManager(DataSource ds) {
@@ -51,12 +53,14 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 				.antMatchers("/**")
 //                    .permitAll()
 					.hasRole("ADMIN")
-//                .anyRequest()
-//                    .authenticated()
+                .antMatchers("/frontend/**")
+                    .hasRole("DRIVER")
+                .anyRequest()
+                    .authenticated()
                     .and()
                 .formLogin()
                     .loginPage("/login")
-                    .permitAll()
+                    .permitAll().successHandler(authSuccessHandler)
                     .and()
                 .httpBasic();
     }

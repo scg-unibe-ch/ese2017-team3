@@ -9,6 +9,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import spring.security.AuthSuccessHandler;
 import spring.security.UserSecurityService;
 
 @Configuration
@@ -20,29 +21,9 @@ public class MvcConfiguration extends WebMvcConfigurerAdapter {
 
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
-        if (checkIfAdmin()){
-            registry.addViewController("/").setViewName("tourOverview");
-        }else{
-            registry.addViewController("/").setViewName();
-        }
-
-
-        registry.addViewController("/login").setViewName("user/LoginForm");
+        registry.addViewController("/tourOverview").setViewName("tourOverview");
+        registry.addViewController("/login").setViewName("LoginForm");
         registry.addViewController("/error").setViewName("error");
+        registry.addViewController("/myCurrentTours").setViewName("myCurrentTours");
     }
-
-    private boolean checkIfAdmin() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        UserDetails currentUser = userDetailsManager.loadUserByUsername(authentication.getName());
-        for (GrantedAuthority userPermissions : currentUser.getAuthorities()){
-            if(userPermissions.getAuthority().equals("ADMIN")){
-                return true;
-            }
-
-        }
-        return false;
-
-    }
-
-
 }

@@ -30,6 +30,6 @@ public class DriverController {
 
         model.addAttribute("drivers", drivers);
 
-        return "drivers";
+        return "backend/drivers";
     }
 }
