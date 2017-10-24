@@ -86,9 +86,8 @@ class TourComparator implements Comparator<Tour> {
 	
 	@Override
 	public int compare(Tour tour1, Tour tour2) {
-		switch(sortBy) {
-    	case "Date//Time": {
-    		if (tour1.getDeliveryStartDate().toEpochDay() > tour2.getDeliveryStartDate().toEpochDay()) {
+		if (sortBy.equals("Date/Time")) {
+			if (tour1.getDeliveryStartDate().toEpochDay() > tour2.getDeliveryStartDate().toEpochDay()) {
     			return 1;
     		} else if (tour1.getDeliveryStartDate().toEpochDay() < tour2.getDeliveryStartDate().toEpochDay()) {
     			return -1;
@@ -97,24 +96,15 @@ class TourComparator implements Comparator<Tour> {
     		} else if (tour1.getDeliveryStartTime().toNanoOfDay() < tour2.getDeliveryStartTime().toNanoOfDay()) {
     			return -1;
     		} else return 0;
-    	}
-    	case "Startin Location": {
-    		
-    		break;
-    	}
-    	case "Target Location": {
-
-    		break;
-    	}
-    	case "Driver": {
-    		
-    		break;
-    	}
-    	case "Cargo": {
-
-    		break;
-    	}
-    	}
+		} else if (sortBy.equals("Startin Location")) {
+			
+		} else if (sortBy.equals("Target Location")) {
+			
+		} else if (sortBy.equals("Driver")) {
+			
+		} else if (sortBy.equals("Cargo")) {
+			
+		}
 		return 0;
 	}
 }
