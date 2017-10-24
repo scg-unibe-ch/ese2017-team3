@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>AniTrans Tour Overview</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+    <link href="../static/css/bulma.css" th:href="@{/css/bulma.css}" rel="stylesheet"/>
+    <script th:src="@{/js/jquery-3.2.1.min}" />
+    <style>
+        .tour-item {
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body class="login-page page-layout">
+<section class="hero is-link is-small">
+    <div class="hero-body">
+        <div class="container">
+            <div class="columns is-gapless">
+                <div class="column">
+                    <p class="title">
+                        AniTrans
+                    </p>
+                    <p class="subtitle">
+                        Your tour overview
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="hero-foot">
+        <div class="container">
+            <nav class="tabs is-boxed">
+                <ul>
+                    <li class="is-active">
+                        <a>Today</a>
+                    </li>
+                    <li>
+                        <a href="">This week</a>
+                    </li>
+                    <li>
+                        <a href="">Past tours</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+</section>
+<div class="block">
+    <div class="box">
+        <div class="content">
+            <div class="columns is-mobile">
+                <div class="column is-one-quarter"><strong>Start</strong></div>
+                <div class="column"><strong>From</strong></div>
+                <div class="column"><strong>To</strong></div>
+            </div>
+            <hr />
+            <div th:if="${not #lists.isEmpty(tours)}" th:each="tour : ${tours}">
+                <div class="tour-container" th:field="${tour}">
+                    <div class="tour-item">
+                        <div class="columns is-mobile">
+                            <div class="column is-one-quarter">
+                                <span type="time" th:value="*{deliveryStartTime}">Time</span>
+                            </div>
+                            <div class="column">
+                                <span th:value="*{startAddress}">Address </span>
+                                <span th:value="*{startAddressNumber}">Number, </span>
+                                <span th:value="*{startZip}">ZIP </span>
+                                <span th:value="*{startCity}">City </span>
+                            </div>
+                            <div class="column">
+                                <span th:value="*{destinationAddress}">Address </span>
+                                <span th:value="*{destinationAddressNumber}">Number, </span>
+                                <span th:value="*{destinationZip}">ZIP </span>
+                                <span th:value="*{destinationCity}">City </span>
+                            </div>
+                        </div>
+                        <div class="panel">
+                            <div class="columns is-mobile">
+                                <div class="column is-one-quarter">
+                                    <strong>Species: </strong><span th:value="*{cargo}">Animal</span>
+                                </div>
+                                <div class="column">
+                                    <strong>Amount: </strong><span type="text" th:value="*{numberOfAnimals}">#</span>
+                                </div>
+                                <div class="column">
+                                    <strong>Time Frame: </strong><span type="text" th:value="*{timeFrame}">--:-- to --:--</span>
+                                </div>
+                            </div>
+                            <div class="columns is-mobile">
+                                <div class="column is-one-quarter"></div>
+                                <div class="column">
+                                    <strong>Estimated Time: </strong><span th:value="*{estimatedTime}">--</span>h
+                                </div>
+                                <div class="column">
+                                    <strong>Contact Person: </strong><span type="text" th:value="*{contactPerson}">Person</span>
+                                </div>
+                            </div>
+                            <div class="columns is-mobile">
+                                <div class="column">
+                                    <blockquote type="text" th:value="*{contactPerson}">Comment</blockquote>
+                                </div>
+                            </div>
+                        </div>
+                        <hr />
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function() {
+        // Enable dropdown functionality
+        $(".panel").hide();
+        $(".tour-item").click(function() {
+            $(this).find(".panel").slideToggle("slow");
+        });
+    });
+</script>
+</body>
+
+</html>
