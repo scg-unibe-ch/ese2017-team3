@@ -31,7 +31,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Autowired
     DataSource dataSource;
-;
+
 
     @Bean
     public UserDetailsManager userDetailsManager(DataSource ds) {
