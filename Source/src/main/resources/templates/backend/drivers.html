@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>AniTrans Driver Overview</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
-    <link href="../../static/css/bulma.css" th:href="@{/css/bulma.css}" rel="stylesheet"/>
+    <link href="../static/css/bulma.css" th:href="@{/css/bulma.css}" rel="stylesheet"/>
 </head>
 <body class="login-page page-layout">
 <section class="hero is-link">
@@ -47,7 +47,7 @@
                         <a href="tours">Tour Overview</a>
                     </li>
                     <li>
-                        <a href="deliveries">New Tour</a>
+                        <a href="deliveries.html">New Tour</a>
                     </li>
                     <li class="is-active">
                         <a>Drivers</a>
@@ -61,7 +61,7 @@
     <thead>
     <tr>
         <th>Name</th>
-        <th>Anstellungsdatum</th>
+        <th>Hiring Date</th>
         <th></th>
     </tr>
     </thead>
@@ -69,7 +69,7 @@
     <tr th:if="${not #lists.isEmpty(drivers)}" th:each="driver : ${drivers}">
         <td><p th:text="${driver.username}"></p></td>
         <td><p th:text="${driver.getHiringDateString()}"></p></td>
-        <td><a href="" class="button is-danger">Fire!</a></td>
+        <td><a th:href="'drivers/delete?username=' + ${driver.username}" class="button is-danger"><i class="fa fa-fire"></i> Fire</a></td>
     </tr>
     </tbody>
 </table>

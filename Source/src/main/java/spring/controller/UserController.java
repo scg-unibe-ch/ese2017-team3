@@ -38,7 +38,7 @@ public class UserController {
     @PreAuthorize("@userSecurityService.canCreate()")
     @GetMapping(path = "/create")
     public ModelAndView createForm() {
-        return new ModelAndView("user/RegistrationForm", "user", new User("user", "", Collections.emptyList()));
+        return new ModelAndView("RegistrationForm", "user", new User("user", "", Collections.emptyList()));
     }
 
     @PreAuthorize("@userSecurityService.canCreate()")
@@ -50,8 +50,12 @@ public class UserController {
         }
         // NOTE users need an authority, otherwise they are treated as non-existing
 
-        User user = new User(username, password, Collections.singletonList(new SimpleGrantedAuthority("ROLE_DRIVER")));
-//        if (!userDetailsManager.userExists(username)) {
+        if (userDetailsManager.userExists(username)) {
+
+            return new ModelAndView("duplicateUser");
+
+        } else {
+            User user = new User(username, password, Collections.singletonList(new SimpleGrantedAuthority("ROLE_DRIVER")));
             userDetailsManager.createUser(user);
 
             Driver driver = new Driver();
@@ -60,10 +64,10 @@ public class UserController {
 
             driverRepository.save(driver);
 
-//        }
-        Authentication auth = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
-        SecurityContextHolder.getContext().setAuthentication(auth);
-        return new ModelAndView("redirect:/user/{username}", "username", user.getUsername());
+            Authentication auth = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
+            SecurityContextHolder.getContext().setAuthentication(auth);
+            return new ModelAndView("redirect:/");
+        }
     }
 
     @PreAuthorize("@userSecurityService.canRead(#username)")
