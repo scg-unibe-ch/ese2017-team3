@@ -66,25 +66,9 @@
     </tr>
     </thead>
     <tbody>
-    <tr>
-        <td>Housi</td>
-        <td>24.10.18</td>
-        <td><a href="" class="button is-danger">Entlassen</a></td>
-    </tr>
-    <tr>
-
-        <td>Kürä</td>
-        <td>12.12.06</td>
-        <td><a href="" class="button is-danger">Entlassen</a></td>
-    </tr>
-    <tr>
-        <td>Max</td>
-        <td>10.10.16</td>
-        <td><a href="" class="button is-danger">Entlassen</a></td>
-    </tr>
-    <tr>
-        <td>Fritz</td>
-        <td>12.11.15</td>
+    <tr th:if="${not #lists.isEmpty(drivers)}" th:each="driver : ${drivers}">
+        <td><p th:text="${driver.username}"></p></td>
+        <td><p th:text="${driver.getHiringDateString()}"></p></td>
         <td><a href="" class="button is-danger">Entlassen</a></td>
     </tr>
     </tbody>
