@@ -42,19 +42,19 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         return userDetailsManager;
     }
 
+    public void configure (WebSecurity web){
+        web.ignoring()
+                .antMatchers("/css/**", "/images/**", "/js/**", "/today");
+    }
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-
-                .antMatchers("/", "/user/create", "/css/**", "/images/**", "/js/**", "/today")
+                .antMatchers( "/user/create")
                     .permitAll()
                 .regexMatchers(HttpMethod.POST, "/user")
                     .permitAll()
-				.antMatchers("/**")
-//                    .permitAll()
+				.antMatchers("/backend/**")
 					.hasRole("ADMIN")
-                .antMatchers("/frontend/**")
-                    .hasRole("DRIVER")
                 .anyRequest()
                     .authenticated()
                     .and()
