@@ -20,18 +20,28 @@ public class MvcConfiguration extends WebMvcConfigurerAdapter {
 
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
-        registry.addViewController("/").setViewName("tourOverview");
+        if (checkIfAdmin()){
+            registry.addViewController("/").setViewName("tourOverview");
+        }else{
+            registry.addViewController("/").setViewName();
+        }
+
+
         registry.addViewController("/login").setViewName("user/LoginForm");
         registry.addViewController("/error").setViewName("error");
     }
 
-    private boolean checkIfAdmin(String username) {
+    private boolean checkIfAdmin() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        userDetailsManager.loadUserByUsername(authentication.getName());
-        currentUser.getAuthorities();
-        String name = auth.getName();
-        if (GrantedAuthority userAuthorities = userDetailsManager.loadUserByUsername(name).getAuthorities())
-             //get logged in username
+        UserDetails currentUser = userDetailsManager.loadUserByUsername(authentication.getName());
+        for (GrantedAuthority userPermissions : currentUser.getAuthorities()){
+            if(userPermissions.getAuthority().equals("ADMIN")){
+                return true;
+            }
+
+        }
+        return false;
+
     }
 
 
