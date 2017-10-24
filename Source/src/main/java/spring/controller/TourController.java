@@ -15,6 +15,7 @@ import spring.security.UserSecurityService;
 import spring.service.DriverService;
 import spring.service.TourService;
 
+import java.time.DayOfWeek;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.List;
@@ -37,6 +38,29 @@ public class TourController {
 
     @Autowired
     private DriverService driverService;
+
+
+    @GetMapping(path = "/thisWeek")
+    public String myWeeklyTours(Model model) {
+        UserDetails user = userSecurityService.getAuthenticatedUser();
+        List<Tour> monday = tourService.getToursForDriverAndDay(user.getUsername(), DayOfWeek.MONDAY);
+        List<Tour> tuesday = tourService.getToursForDriverAndDay(user.getUsername(), DayOfWeek.TUESDAY);
+        List<Tour> wednesday = tourService.getToursForDriverAndDay(user.getUsername(), DayOfWeek.WEDNESDAY);
+        List<Tour> thursday = tourService.getToursForDriverAndDay(user.getUsername(), DayOfWeek.THURSDAY);
+        List<Tour> friday = tourService.getToursForDriverAndDay(user.getUsername(), DayOfWeek.FRIDAY);
+        List<Tour> saturday = tourService.getToursForDriverAndDay(user.getUsername(), DayOfWeek.SATURDAY);
+        List<Tour> sunday = tourService.getToursForDriverAndDay(user.getUsername(), DayOfWeek.SUNDAY);
+
+        model.addAttribute("monday", monday);
+        model.addAttribute("tuesday", tuesday);
+        model.addAttribute("wednesday", wednesday);
+        model.addAttribute("thursday", thursday);
+        model.addAttribute("friday", friday);
+        model.addAttribute("saturday", saturday);
+        model.addAttribute("sunday", sunday);
+
+        return "myWeeklyTours";
+    }
 
     @GetMapping(path = "/today")
     public String myCurrentTours(Model model) {
