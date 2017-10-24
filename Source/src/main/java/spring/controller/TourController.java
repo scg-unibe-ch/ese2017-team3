@@ -40,7 +40,7 @@ public class TourController {
     private DriverService driverService;
 
 
-    @GetMapping(path = "/thisWeek")
+    @GetMapping(path = "/week")
     public String myWeeklyTours(Model model) {
         UserDetails user = userSecurityService.getAuthenticatedUser();
         List<Tour> monday = tourService.getToursForDriverAndDay(user.getUsername(), DayOfWeek.MONDAY);
@@ -145,8 +145,9 @@ public class TourController {
         toDelete.setNumberOfAnimals(activeTour.getNumberOfAnimals());
         toDelete.setStartPersonSurname(activeTour.getContactPersonSurname());
         
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("uuuu-MM-dd");
-        toDelete.setId(activeTour.getId());
+        DateTimeFormatter formatterDate = DateTimeFormatter.ofPattern("uuuu-MM-dd");
+        DateTimeFormatter formatterTime = DateTimeFormatter.ofPattern("HH:mm");
+        //toDelete.setId(activeTour.getId());
         toDelete.setCargo(activeTour.getCargo());
         toDelete.setNumberOfAnimals(activeTour.getNumberOfAnimals());
         toDelete.setStartPersonName(activeTour.getStartPersonName());
@@ -161,8 +162,8 @@ public class TourController {
         toDelete.setDestinationAddressNumber(activeTour.getDestinationAddressNumber());
         toDelete.setDestinationZip(activeTour.getDestinationZip());
         toDelete.setDestinationCity(activeTour.getDestinationCity());
-        toDelete.setDeliveryStartDate(formatter.format(activeTour.getDeliveryStartDate()));
-        toDelete.setDeliveryStartTime(formatter.format(activeTour.getDeliveryStartTime()));
+        toDelete.setDeliveryStartDate(formatterDate.format(activeTour.getDeliveryStartDate()));
+        toDelete.setDeliveryStartTime(formatterTime.format(activeTour.getDeliveryStartTime()));
         toDelete.setEstimatedTime(activeTour.getEstimatedTime());
         toDelete.setTimeFrame(activeTour.getTimeFrame());
         toDelete.setDriver(activeTour.getDriver());

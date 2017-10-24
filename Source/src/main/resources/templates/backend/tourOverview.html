@@ -68,12 +68,12 @@
                         </div>
                         <div class="column is-half">
                             <div class="select">
-                                <select>
-                                    <option>Date/Time</option>
-                                    <option>Startin Location</option>
-                                    <option>Target Location</option>
-                                    <option>Driver</option>
-                                    <option>Cargo</option>
+                                <select onChange="window.location.href='tours?sortBy=' + this.value">
+                                    <option th:selected="${sortBy == 'Date/Time'}">Date/Time</option>
+                                    <option th:selected="${sortBy == 'Startin Location'}">Startin Location</option>
+                                    <option th:selected="${sortBy == 'Target Location'}">Target Location</option>
+                                    <option th:selected="${sortBy == 'Driver'}">Driver</option>
+                                    <option th:selected="${sortBy == 'Cargo'}">Cargo</option>
                                 </select>
                             </div>
 
@@ -254,13 +254,13 @@
                             <div class="column is-2">Date:</div>
                             <div class="column is-4">
                                 <div class="field">
-                                    <input class="input" type="text" placeholder="Datum"/>
+                                    <input class="input" type="date" th:value="*{deliveryStartDate}" id="deliveryStartDate" name="deliveryStartDate"/>
                                 </div>
                             </div>
                             <div class="column is-2">Time:</div>
                             <div class="column is-4">
                                 <div class="field">
-                                    <input class="input" type="text" placeholder="Zeit"/>
+                                    <input class="input" type="time" th:value="*{deliveryStartTime}" id="deliveryStartTime" name="deliveryStartTime"/>
                                 </div>
                             </div>
                         </div>
@@ -269,10 +269,7 @@
                             <div class="column">
                                 <div class="select">
                                     <select th:field="*{driver}">
-                                        <option value="Housi">Housi</option>
-                                        <option value="Kürä">Kürä</option>
-                                        <option value="Max">Max</option>
-                                        <option value="Fritz">Fritz</option>
+                                        <option th:if="${not #lists.isEmpty(drivers)}" th:each="driver : ${drivers}" th:value="${driver.username}" th:text="${driver.username}"></option>
                                     </select>
                                 </div>
                             </div>
@@ -283,7 +280,7 @@
                             <div class="column is-2">Comment:</div>
                             <div class="column">
                                 <p class="control">
-                                    <textarea class="textarea" placeholder="Comment"></textarea>
+                                    <textarea class="textarea" type="text" th:field="*{comment}"></textarea>
                                 </p>
                             </div>
                         </div>
