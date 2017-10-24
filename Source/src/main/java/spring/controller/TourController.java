@@ -1,13 +1,17 @@
 package spring.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.security.core.userdetails.UserDetails;
 import spring.entity.Driver;
 import spring.entity.Tour;
 import spring.repositories.TourRepository;
+import spring.security.UserSecurityService;
 import spring.service.DriverService;
 import spring.service.TourService;
 
@@ -23,6 +27,9 @@ import java.util.List;
 public class TourController {
 
     @Autowired
+    private UserSecurityService userSecurityService;
+
+    @Autowired
     private TourRepository tourRepository;
 
     @Autowired
@@ -30,6 +37,16 @@ public class TourController {
 
     @Autowired
     private DriverService driverService;
+
+    @GetMapping(path = "/today")
+    public String myCurrentTours(Model model) {
+        UserDetails user = userSecurityService.getAuthenticatedUser();
+        List<Tour> tours = tourService.getCurrentToursForDriver(user.getUsername());
+
+        model.addAttribute("tours", tours);
+
+        return "myCurrentTours";
+    }
 
     // Get request on /deliveries will return a form to create a new tour
     @GetMapping(path = "/deliveries")
@@ -64,6 +81,10 @@ public class TourController {
         if (!sortBy.equals("")) model.addAttribute("sortBy", sortBy);
         
     	model.addAttribute("tours", tours);
+
+        //prepare a list of Drivers to select from.
+        List<Driver> drivers = driverService.getDrivers();
+        model.addAttribute("drivers", drivers);
 
     	if (tours.size() == 0) {
     		model.addAttribute("activeTour", null);

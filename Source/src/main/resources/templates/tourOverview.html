@@ -5,7 +5,7 @@
     <script type="text/javascript" th:src="@{/js/sliderScript.js}"/>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <title>AniTrans Tourenüberischt</title>
+    <title>AniTrans Tour Overview</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
     <link href="../static/css/bulma.css" th:href="@{/css/bulma.css}" rel="stylesheet"/>
 </head>
@@ -172,7 +172,7 @@
                                     <input class="input" type="text" th:field="*{cargo}"/>
                                 </div>
                             </div>
-                            <div class="column is-2">Anzahl:</div>
+                            <div class="column is-2">Amount:</div>
                             <div class="column is-4 ">
                                 <div class="field">
                                     <input class="input" type="text" th:field="*{numberOfAnimals}"/>
@@ -180,13 +180,13 @@
                             </div>
                         </div>
                         <div class="columns  is-multiline">
-                            <div class="column is-2">Startort:</div>
+                            <div class="column is-2">Starting Location:</div>
                             <div class="column is-4">
                                 <div class="field">
                                     <input class="input" type="text" th:field="*{startPersonName}"/>
                                 </div>
                             </div>
-                            <div class="column is-2 is-center">Zielort:</div>
+                            <div class="column is-2 is-center">Target Location:</div>
                             <div class="column is-4 ">
                                 <div class="field">
                                     <input class="input" type="text" th:field="*{contactPersonName}"/>
@@ -251,13 +251,13 @@
 
                         </div>
                         <div class="columns">
-                            <div class="column is-2">Datum:</div>
+                            <div class="column is-2">Date:</div>
                             <div class="column is-4">
                                 <div class="field">
                                     <input class="input" type="text" placeholder="Datum"/>
                                 </div>
                             </div>
-                            <div class="column is-2">Zeit:</div>
+                            <div class="column is-2">Time:</div>
                             <div class="column is-4">
                                 <div class="field">
                                     <input class="input" type="text" placeholder="Zeit"/>
@@ -265,14 +265,11 @@
                             </div>
                         </div>
                         <div class="columns">
-                            <div class="column is-2">Fahrer:</div>
+                            <div class="column is-2">Driver:</div>
                             <div class="column">
                                 <div class="select">
                                     <select th:field="*{driver}">
-                                        <option value="Housi">Housi</option>
-                                        <option value="Kürä">Kürä</option>
-                                        <option value="Max">Max</option>
-                                        <option value="Fritz">Fritz</option>
+                                        <option th:if="${not #lists.isEmpty(drivers)}" th:each="driver : ${drivers}" th:value="${driver.username}" th:text="${driver.username}"></option>
                                     </select>
                                 </div>
                             </div>

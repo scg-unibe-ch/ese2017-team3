@@ -1,5 +1,6 @@
 package spring.service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
@@ -24,8 +25,32 @@ public class TourService {
     public TourRepository getTourRepository() {
         return tourRepository;
     }
-    
-    private List<Tour> getTours() {
+
+    public List<Tour> getToursForDriver(String username) {
+        List<Tour> tours = new ArrayList<Tour>();
+        tourRepository.findByDriver(username).forEach(tours::add);
+        return tours;
+    }
+
+    /**
+     * Returns a <code>List</code> of <code>Tours</code> that are assigned to this driver
+     * and are scheduled for today
+     * @param username the username of the driver
+     * @return a <code>List</code> containing the driver's <code>Tours</code> for today
+     */
+    public List<Tour> getCurrentToursForDriver(String username) {
+        List<Tour> tours = new ArrayList<Tour>();
+        LocalDate today = LocalDate.now();
+        for (Tour t : tourRepository.findByDriver(username)) {
+            LocalDate startDate = t.getDeliveryStartDate();
+            if (!startDate.isBefore(today) && !startDate.isAfter(today)) {
+                tours.add(t);
+            }
+        }
+        return tours;
+    }
+
+    public List<Tour> getTours() {
     	List<Tour> tours = new ArrayList<Tour>();
     	tourRepository.findAll().forEach(tours::add);
     	return tours;
