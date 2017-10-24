@@ -79,6 +79,10 @@ public class TourController {
         List<Tour> tours = tourService.getTours();
     	model.addAttribute("tours", tours);
 
+        //prepare a list of Drivers to select from.
+        List<Driver> drivers = driverService.getDrivers();
+        model.addAttribute("drivers", drivers);
+
     	if (tours.size() == 0) {
     		model.addAttribute("activeTour", null);
     	} else {
