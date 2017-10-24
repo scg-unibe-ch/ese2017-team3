@@ -40,7 +40,7 @@ public class TourController {
     private DriverService driverService;
 
 
-    @GetMapping(path = "/thisWeek")
+    @GetMapping(path = "/week")
     public String myWeeklyTours(Model model) {
         UserDetails user = userSecurityService.getAuthenticatedUser();
         List<Tour> monday = tourService.getToursForDriverAndDay(user.getUsername(), DayOfWeek.MONDAY);
