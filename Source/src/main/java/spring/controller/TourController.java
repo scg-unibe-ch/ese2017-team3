@@ -12,6 +12,7 @@ import spring.service.DriverService;
 import spring.service.TourService;
 
 import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -46,7 +47,7 @@ public class TourController {
     @PostMapping(path = "/deliveries")
     public String deliverySubmit(@ModelAttribute Tour tour, Model model) {
         tourRepository.save(tour);
-        List<Tour> tours = tourService.getTours();
+        List<Tour> tours = tourService.getSortedTours("");
         
         Tour activeTour = tours.get(0);
     	model.addAttribute("activeTour", activeTour);
@@ -57,9 +58,11 @@ public class TourController {
 
     // GET request to /tours will return a list of all tours
     @GetMapping(path = "/tours")
-    public String tourOverview(Model model, @RequestParam(required = false, defaultValue = "0") int activeIndex) {
-
-        List<Tour> tours = tourService.getTours();
+    public String tourOverview(Model model, @RequestParam(required = false, defaultValue = "0") int activeIndex, @RequestParam(required = false, defaultValue = "") String sortBy) {
+        
+    	List<Tour> tours = tourService.getSortedTours(sortBy);
+        if (!sortBy.equals("")) model.addAttribute("sortBy", sortBy);
+        
     	model.addAttribute("tours", tours);
 
     	if (tours.size() == 0) {
@@ -76,7 +79,7 @@ public class TourController {
     @GetMapping(path = "/tours/delete")
     public ModelAndView deleteTour(Model model, @RequestParam(required = true) int index) {
 
-        List<Tour> tours = tourService.getTours();
+        List<Tour> tours = tourService.getSortedTours("");
         Tour toDelete = tours.get(index);
 
         tourRepository.delete(toDelete);
@@ -122,13 +125,9 @@ public class TourController {
         
         
         
-        
-        
-        
-        
         tourRepository.save(toDelete);
 
-        tours = tourService.getTours();
+        tours = tourService.getSortedTours("");
 
         model.addAttribute("tours", tours);
         return new ModelAndView("redirect:/tours");

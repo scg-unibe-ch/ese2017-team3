@@ -68,12 +68,12 @@
                         </div>
                         <div class="column is-half">
                             <div class="select">
-                                <select>
-                                    <option>Date/Time</option>
-                                    <option>Startin Location</option>
-                                    <option>Target Location</option>
-                                    <option>Driver</option>
-                                    <option>Cargo</option>
+                                <select onChange="window.location.href='tours?sortBy=' + this.value">
+                                    <option th:selected="${sortBy == 'Date/Time'}">Date/Time</option>
+                                    <option th:selected="${sortBy == 'Startin Location'}">Startin Location</option>
+                                    <option th:selected="${sortBy == 'Target Location'}">Target Location</option>
+                                    <option th:selected="${sortBy == 'Driver'}">Driver</option>
+                                    <option th:selected="${sortBy == 'Cargo'}">Cargo</option>
                                 </select>
                             </div>
 
