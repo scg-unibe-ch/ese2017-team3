@@ -59,7 +59,7 @@ public class TourController {
         model.addAttribute("saturday", saturday);
         model.addAttribute("sunday", sunday);
 
-        return "myWeeklyTours";
+        return "frontend/myWeeklyTours";
     }
 
     @GetMapping(path = "/today")
@@ -69,7 +69,7 @@ public class TourController {
 
         model.addAttribute("tours", tours);
 
-        return "myCurrentTours";
+        return "frontend/myCurrentTours";
     }
 
     // Get request on /deliveries will return a form to create a new tour
