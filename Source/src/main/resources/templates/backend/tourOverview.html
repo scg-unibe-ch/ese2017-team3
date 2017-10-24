@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <title>AniTrans Tour Overview</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
-    <link href="../static/css/bulma.css" th:href="@{/css/bulma.css}" rel="stylesheet"/>
+    <link href="../../static/css/bulma.css" th:href="@{/css/bulma.css}" rel="stylesheet"/>
 </head>
 <body class="login-page page-layout">
 <section class="hero is-link">
@@ -47,7 +47,7 @@
                         <a>Tour Overview</a>
                     </li>
                     <li>
-                        <a href="deliveries.html">New Tour</a>
+                        <a href="deliveries">New Tour</a>
                     </li>
                     <li>
                         <a href="drivers">Drivers</a>
@@ -68,12 +68,12 @@
                         </div>
                         <div class="column is-half">
                             <div class="select">
-                                <select onChange="window.location.href='tours?sortBy=' + this.value">
-                                    <option th:selected="${sortBy == 'Date/Time'}">Date/Time</option>
-                                    <option th:selected="${sortBy == 'Startin Location'}">Startin Location</option>
-                                    <option th:selected="${sortBy == 'Target Location'}">Target Location</option>
-                                    <option th:selected="${sortBy == 'Driver'}">Driver</option>
-                                    <option th:selected="${sortBy == 'Cargo'}">Cargo</option>
+                                <select>
+                                    <option>Date/Time</option>
+                                    <option>Startin Location</option>
+                                    <option>Target Location</option>
+                                    <option>Driver</option>
+                                    <option>Cargo</option>
                                 </select>
                             </div>
 
@@ -172,7 +172,7 @@
                                     <input class="input" type="text" th:field="*{cargo}"/>
                                 </div>
                             </div>
-                            <div class="column is-2">Amount:</div>
+                            <div class="column is-2">Number:</div>
                             <div class="column is-4 ">
                                 <div class="field">
                                     <input class="input" type="text" th:field="*{numberOfAnimals}"/>
@@ -180,13 +180,13 @@
                             </div>
                         </div>
                         <div class="columns  is-multiline">
-                            <div class="column is-2">Starting Location:</div>
+                            <div class="column is-2">Start:</div>
                             <div class="column is-4">
                                 <div class="field">
                                     <input class="input" type="text" th:field="*{startPersonName}"/>
                                 </div>
                             </div>
-                            <div class="column is-2 is-center">Target Location:</div>
+                            <div class="column is-2 is-center">Destination:</div>
                             <div class="column is-4 ">
                                 <div class="field">
                                     <input class="input" type="text" th:field="*{contactPersonName}"/>
@@ -269,7 +269,10 @@
                             <div class="column">
                                 <div class="select">
                                     <select th:field="*{driver}">
-                                        <option th:if="${not #lists.isEmpty(drivers)}" th:each="driver : ${drivers}" th:value="${driver.username}" th:text="${driver.username}"></option>
+                                        <option value="Housi">Housi</option>
+                                        <option value="Kürä">Kürä</option>
+                                        <option value="Max">Max</option>
+                                        <option value="Fritz">Fritz</option>
                                     </select>
                                 </div>
                             </div>

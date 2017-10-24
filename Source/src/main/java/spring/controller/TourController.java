@@ -57,7 +57,7 @@ public class TourController {
         model.addAttribute("drivers", drivers);
 
         model.addAttribute("tour", new Tour());
-        return "deliveries";
+        return "backend/deliveries";
     }
 
     // POST request to /deliveries with the appropriate values will create a new tour and redirect to /tours
@@ -70,7 +70,7 @@ public class TourController {
     	model.addAttribute("activeTour", activeTour);
         
         model.addAttribute("tours", tours);
-        return "tourOverview";
+        return "backend/tourOverview";
     }
 
     // GET request to /tours will return a list of all tours
@@ -93,7 +93,7 @@ public class TourController {
         	model.addAttribute("activeTour", activeTour);
     	}
 
-    	return "tourOverview";
+    	return "backend/tourOverview";
     }
 
     // GET request on /tours/delete will delete the tour with the matching index
