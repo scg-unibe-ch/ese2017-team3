@@ -6,10 +6,30 @@
     <title>AniTrans Tour Overview</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
     <link href="../static/css/bulma.css" th:href="@{/css/bulma.css}" rel="stylesheet"/>
-    <script th:src="@{/js/jquery-3.2.1.min}" />
+    <script th:src="@{/js/jquery-3.2.1.min.js}" />
     <style>
         .tour-item {
             cursor: pointer;
+            padding-left: 10px;
+            padding-right: 10px;
+            padding-top: 10px;
+            padding-bottom: 10px;
+            border-radius: 4px;
+        }
+
+        .tour-item:hover {
+            background-color: #D1EEEE;
+        }
+
+        .selected {
+            background-color: #D1EEEE;
+        }
+
+        .content blockquote {
+            background-color: #A4BABA;
+            border-left: 5px solid #406E6E;
+            padding: 1.25em 1.5em;
+            color: #FFFFFF;
         }
     </style>
 </head>
@@ -63,50 +83,50 @@
                     <div class="tour-item">
                         <div class="columns is-mobile">
                             <div class="column is-one-quarter">
-                                <span type="time" th:value="*{deliveryStartTime}">Time</span>
+                                <span type="time" th:text="${tour.deliveryStartTime}">Time</span>
                             </div>
                             <div class="column">
-                                <span th:value="*{startAddress}">Address </span>
-                                <span th:value="*{startAddressNumber}">Number, </span>
-                                <span th:value="*{startZip}">ZIP </span>
-                                <span th:value="*{startCity}">City </span>
+                                <span th:text="${tour.startAddress}">Address </span>
+                                <span th:text="${tour.startAddressNumber}">Number, </span>
+                                <span th:text="${tour.startZip}">ZIP </span>
+                                <span th:text="${tour.startCity}">City </span>
                             </div>
                             <div class="column">
-                                <span th:value="*{destinationAddress}">Address </span>
-                                <span th:value="*{destinationAddressNumber}">Number, </span>
-                                <span th:value="*{destinationZip}">ZIP </span>
-                                <span th:value="*{destinationCity}">City </span>
+                                <span th:text="${tour.destinationAddress}">Address </span>
+                                <span th:text="${tour.destinationAddressNumber}">Number, </span>
+                                <span th:text="${tour.destinationZip}">ZIP </span>
+                                <span th:text="${tour.destinationCity}">City </span>
                             </div>
                         </div>
                         <div class="panel">
                             <div class="columns is-mobile">
                                 <div class="column is-one-quarter">
-                                    <strong>Species: </strong><span th:value="*{cargo}">Animal</span>
+                                    <strong>Species: </strong><span th:text="${tour.cargo}" />
                                 </div>
                                 <div class="column">
-                                    <strong>Amount: </strong><span type="text" th:value="*{numberOfAnimals}">#</span>
+                                    <strong>Amount: </strong><span type="text" th:text="${tour.numberOfAnimals}"/>
                                 </div>
                                 <div class="column">
-                                    <strong>Time Frame: </strong><span type="text" th:value="*{timeFrame}">--:-- to --:--</span>
+                                    <strong>Time Frame: </strong><span type="text" th:text="${tour.timeFrame}">--:-- to --:--</span>
                                 </div>
                             </div>
                             <div class="columns is-mobile">
                                 <div class="column is-one-quarter"></div>
                                 <div class="column">
-                                    <strong>Estimated Time: </strong><span th:value="*{estimatedTime}">--</span>h
+                                    <strong>Estimated Time: </strong><span th:text="${tour.estimatedTime}">--</span>h
                                 </div>
                                 <div class="column">
-                                    <strong>Contact Person: </strong><span type="text" th:value="*{contactPerson}">Person</span>
+                                    <strong>Contact Person: </strong><span type="text" th:text="${tour.contactPerson}">Person</span>
                                 </div>
                             </div>
                             <div class="columns is-mobile">
                                 <div class="column">
-                                    <blockquote type="text" th:value="*{contactPerson}">Comment</blockquote>
+                                    <blockquote type="text" th:text="${tour.contactPerson}">Comment</blockquote>
                                 </div>
                             </div>
                         </div>
-                        <hr />
                     </div>
+                    <hr />
                 </div>
             </div>
 
@@ -118,6 +138,7 @@
         // Enable dropdown functionality
         $(".panel").hide();
         $(".tour-item").click(function() {
+            $(this).toggleClass("selected");
             $(this).find(".panel").slideToggle("slow");
         });
     });

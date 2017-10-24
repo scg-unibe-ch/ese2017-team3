@@ -22,7 +22,13 @@ public class TourService {
     public TourRepository getTourRepository() {
         return tourRepository;
     }
-    
+
+    public List<Tour> getToursForDriver(String username) {
+        List<Tour> tours = new ArrayList<Tour>();
+        tourRepository.findByDriver(username).forEach(tours::add);
+        return tours;
+    }
+
     public List<Tour> getTours() {
     	List<Tour> tours = new ArrayList<Tour>();
     	tourRepository.findAll().forEach(tours::add);

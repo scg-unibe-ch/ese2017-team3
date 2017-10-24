@@ -14,6 +14,7 @@ import spring.entity.Tour;
 public interface TourRepository extends CrudRepository<Tour, Long> {
 
 	public List<Tour> findAll();
-	
+
+	public List<Tour> findByDriver(String username);
 
 }

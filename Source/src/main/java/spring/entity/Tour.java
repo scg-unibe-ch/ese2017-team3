@@ -134,6 +134,8 @@ public class Tour {
 	    return contactPersonSurname;
 	}
 
+	public String getContactPerson() { return contactPersonName + " " + contactPersonSurname; }
+
 	public String getDestinationAddress() {
 	    return destinationAddress;
 	}
