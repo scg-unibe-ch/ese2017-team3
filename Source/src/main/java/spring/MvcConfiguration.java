@@ -16,14 +16,11 @@ import spring.security.UserSecurityService;
 public class MvcConfiguration extends WebMvcConfigurerAdapter {
 
 
-    @Autowired
-    UserDetailsManager userDetailsManager;
 
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
         registry.addViewController("/tourOverview").setViewName("tourOverview");
         registry.addViewController("/login").setViewName("LoginForm");
         registry.addViewController("/error").setViewName("error");
-        registry.addViewController("/myCurrentTours").setViewName("myCurrentTours");
     }
 }
