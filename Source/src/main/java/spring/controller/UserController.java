@@ -66,7 +66,7 @@ public class UserController {
 
             Authentication auth = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
             SecurityContextHolder.getContext().setAuthentication(auth);
-            return new ModelAndView("redirect:/");
+            return new ModelAndView("frontend/myCurrentTours");
         }
     }
 
