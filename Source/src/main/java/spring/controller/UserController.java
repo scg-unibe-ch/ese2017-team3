@@ -63,7 +63,7 @@ public class UserController {
 //        }
         Authentication auth = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
         SecurityContextHolder.getContext().setAuthentication(auth);
-        return new ModelAndView("redirect:/user/{username}", "username", user.getUsername());
+        return new ModelAndView("redirect:/");
     }
 
     @PreAuthorize("@userSecurityService.canRead(#username)")
