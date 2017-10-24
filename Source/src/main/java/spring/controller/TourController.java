@@ -40,7 +40,7 @@ public class TourController {
     @GetMapping(path = "/today")
     public String myCurrentTours(Model model) {
         UserDetails user = userSecurityService.getAuthenticatedUser();
-        List<Tour> tours = tourService.getToursForDriver(user.getUsername());
+        List<Tour> tours = tourService.getCurrentToursForDriver(user.getUsername());
 
         model.addAttribute("tours", tours);
 
