@@ -69,7 +69,7 @@
     <tr th:if="${not #lists.isEmpty(drivers)}" th:each="driver : ${drivers}">
         <td><p th:text="${driver.username}"></p></td>
         <td><p th:text="${driver.getHiringDateString()}"></p></td>
-        <td><a href="" class="button is-danger">Entlassen</a></td>
+        <td><a href="" class="button is-danger">Fire!</a></td>
     </tr>
     </tbody>
 </table>
