@@ -1,5 +1,7 @@
 package spring.controller;
 
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.Collections;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +22,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import spring.entity.Driver;
+import spring.repositories.DriverRepository;
 
 @Controller
 @RequestMapping(path = "/user")
@@ -27,6 +31,9 @@ public class UserController {
 
     @Autowired
     private UserDetailsManager userDetailsManager;
+
+    @Autowired
+    private DriverRepository driverRepository;
 
     @PreAuthorize("@userSecurityService.canCreate()")
     @GetMapping(path = "/create")
@@ -46,6 +53,13 @@ public class UserController {
         User user = new User(username, password, Collections.singletonList(new SimpleGrantedAuthority("ROLE_DRIVER")));
 //        if (!userDetailsManager.userExists(username)) {
             userDetailsManager.createUser(user);
+
+            Driver driver = new Driver();
+            driver.setUsername(username);
+            driver.setHiringDate(LocalDate.now());
+
+            driverRepository.save(driver);
+
 //        }
         Authentication auth = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
         SecurityContextHolder.getContext().setAuthentication(auth);

@@ -5,10 +5,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import spring.entity.Driver;
 import spring.entity.Tour;
 import spring.repositories.TourRepository;
+import spring.service.DriverService;
 import spring.service.TourService;
 
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 /**
@@ -24,9 +27,16 @@ public class TourController {
     @Autowired
     private TourService tourService;
 
+    @Autowired
+    private DriverService driverService;
+
     // Get request on /deliveries will return a form to create a new tour
     @GetMapping(path = "/deliveries")
     public String deliveryForm(Model model) {
+
+        //prepare a list of Drivers to select from.
+        List<Driver> drivers = driverService.getDrivers();
+        model.addAttribute("drivers", drivers);
 
         model.addAttribute("tour", new Tour());
         return "deliveries";
@@ -83,9 +93,40 @@ public class TourController {
         List<Tour> tours;
 
         Tour toDelete = tourRepository.findOne(activeTour.getId() + 1);
-        tourRepository.delete(toDelete);
-
-        tourRepository.save(activeTour);
+        toDelete.setCargo(activeTour.getCargo());
+        toDelete.setNumberOfAnimals(activeTour.getNumberOfAnimals());
+        toDelete.setStartPersonSurname(activeTour.getContactPersonSurname());
+        
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("uuuu-MM-dd");
+        toDelete.setId(activeTour.getId());
+        toDelete.setCargo(activeTour.getCargo());
+        toDelete.setNumberOfAnimals(activeTour.getNumberOfAnimals());
+        toDelete.setStartPersonName(activeTour.getStartPersonName());
+        toDelete.setStartPersonSurname(activeTour.getStartPersonSurname());
+        toDelete.setStartAddress(activeTour.getStartAddress());
+        toDelete.setStartAddressNumber(activeTour.getStartAddressNumber());
+        toDelete.setStartZip(activeTour.getStartZip());
+        toDelete.setStartCity(activeTour.getStartCity());
+        toDelete.setContactPersonName(activeTour.getContactPersonName());
+        toDelete.setContactPersonSurname(activeTour.getContactPersonSurname());
+        toDelete.setDestinationAddress(activeTour.getDestinationAddress());
+        toDelete.setDestinationAddressNumber(activeTour.getDestinationAddressNumber());
+        toDelete.setDestinationZip(activeTour.getDestinationZip());
+        toDelete.setDestinationCity(activeTour.getDestinationCity());
+        toDelete.setDeliveryStartDate(formatter.format(activeTour.getDeliveryStartDate()));
+        toDelete.setDeliveryStartTime(formatter.format(activeTour.getDeliveryStartTime()));
+        toDelete.setEstimatedTime(activeTour.getEstimatedTime());
+        toDelete.setTimeFrame(activeTour.getTimeFrame());
+        toDelete.setDriver(activeTour.getDriver());
+        toDelete.setComment(activeTour.getComment());
+        
+        
+        
+        
+        
+        
+        
+        tourRepository.save(toDelete);
 
         tours = tourService.getTours();
 

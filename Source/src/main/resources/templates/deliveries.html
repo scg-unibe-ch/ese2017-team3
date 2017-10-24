@@ -51,7 +51,7 @@
                         <a>New Tour</a>
                     </li>
                     <li>
-                        <a href="overviewDrivers.html">Drivers</a>
+                        <a href="drivers.html">Drivers</a>
                     </li>
                 </ul>
             </nav>
@@ -181,10 +181,7 @@
                     <div class="column">
                         <span class="select is-fullwidth">
                             <select th:field="*{driver}">
-                                <option value="Housi">Housi</option>
-                                <option value="Kürä">Kürä</option>
-                                <option value="Max">Max</option>
-                                <option value="Fritz">Fritz</option>
+                                <option th:if="${not #lists.isEmpty(drivers)}" th:each="driver : ${drivers}" th:value="${driver.username}" th:text="${driver.username}"></option>
                             </select>
                         </span>
                     </div>

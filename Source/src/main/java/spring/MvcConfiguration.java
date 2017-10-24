@@ -14,14 +14,15 @@ import spring.security.UserSecurityService;
 @Configuration
 public class MvcConfiguration extends WebMvcConfigurerAdapter {
 
+
     @Autowired
     UserDetailsManager userDetailsManager;
 
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
-        if (checkIfAdmin())
-            registry.addViewController("/").setViewName("tourOverview");
+        registry.addViewController("/").setViewName("tourOverview");
         registry.addViewController("/login").setViewName("user/LoginForm");
+        registry.addViewController("/error").setViewName("error");
     }
 
     private boolean checkIfAdmin(String username) {
