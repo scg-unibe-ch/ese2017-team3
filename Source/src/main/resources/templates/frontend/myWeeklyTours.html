@@ -55,15 +55,15 @@
         <div class="container">
             <nav class="tabs is-boxed">
                 <ul>
-                    <li th:href="myCurrentTours">
-                        <a>Today</a>
+                    <li>
+                        <a href="/today">Today</a>
                     </li>
                     <li class="is-active">
                         <a href="">This week</a>
                     </li>
-                    <li>
-                        <a href="">Past tours</a>
-                    </li>
+                    <!--<li>-->
+                    <!--<a href="">Past tours</a>-->
+                    <!--</li>-->
                 </ul>
             </nav>
         </div>
@@ -243,7 +243,7 @@
                                         </div>
                                     </div>
                                     <div class="columns is-mobile">
-                                        <div class="column">
+                                        <div class="colu    mn">
                                             <blockquote type="text" th:text="${tour.comment}">Comment</blockquote>
                                         </div>
                                     </div>
@@ -322,7 +322,7 @@
                     <div class="column"><strong>To</strong></div>
                 </div>
                 <hr />
-                <div th:if="${not #lists.isEmpty(saturday)}" th:each="tour : ${saturday}">
+                <div th:if="${not #lists.isEmpty(friday)}" th:each="tour : ${friday}">
                     <div class="tour-container" th:field="${tour}">
                         <div class="tour-item">
                             <div class="columns is-mobile">
@@ -382,7 +382,7 @@
                     <div class="column"><strong>To</strong></div>
                 </div>
                 <hr />
-                <div th:if="${not #lists.isEmpty(monday)}" th:each="tour : ${monday}">
+                <div th:if="${not #lists.isEmpty(saturday)}" th:each="tour : ${saturday}">
                     <div class="tour-container" th:field="${tour}">
                         <div class="tour-item">
                             <div class="columns is-mobile">
@@ -560,16 +560,15 @@
     $(document).ready(function() {
 
         $(".panel").hide();
-        $(".weekday-panel").hide();
 
         $(".tour-item").click(function() {
             $(this).toggleClass("selected");
             $(this).find(".panel").slideToggle("slow");
         });
 
-        $(".weekday-container").click(function() {
-            $(this).find(".weekday-container").slideToggle("slow");
-        });
+//        $(".weekday-container").click(function() {
+//            $(this).find(".weekday-panel").slideToggle("slow");
+//        });
     });
 </script>
 </body>

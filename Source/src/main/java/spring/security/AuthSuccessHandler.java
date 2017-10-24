@@ -64,7 +64,7 @@ public class AuthSuccessHandler implements AuthenticationSuccessHandler {
         }
 
         if (isUser) {
-            return "/myCurrentTours";
+            return "/today";
         } else if (isAdmin) {
             return "/tours";
         } else {
