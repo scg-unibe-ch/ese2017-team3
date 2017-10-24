@@ -87,11 +87,11 @@ public class UserController {
         return new ModelAndView("redirect:/user/{username}", "username", user.getUsername());
     }
 
-    @PreAuthorize("@userSecurityService.canDelete(#username)")
-    @DeleteMapping(path = "/{username}")
-    public ModelAndView delete(@PathVariable(value = "username") String username) {
-        userDetailsManager.deleteUser(username);
-        return new ModelAndView("redirect:/");
-    }
+//    @PreAuthorize("@userSecurityService.canDelete(#username)")
+//    @DeleteMapping(path = "/{username}")
+//    public ModelAndView delete(@PathVariable(value = "username") String username) {
+//        userDetailsManager.deleteUser(username);
+//        return new ModelAndView("redirect:/");
+//    }
 
 }
