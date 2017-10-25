@@ -51,6 +51,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .antMatchers( "/user/create")
                     .permitAll()
+                .regexMatchers(HttpMethod.POST, "/user")
+                    .permitAll()
 				.antMatchers("/deliveries","/deliveryresult", "/drivers","/tourOverview","/tours","/tours/**","/drivers/**")
 					.hasRole("ADMIN")
                 .anyRequest()
