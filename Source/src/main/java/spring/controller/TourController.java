@@ -99,8 +99,8 @@ public class TourController {
 
     // GET request to /tours will return a list of all tours
     @GetMapping(path = "/tours")
-    public String tourOverview(Model model, @RequestParam(required = false, defaultValue = "0") int activeIndex, @RequestParam(required = false, defaultValue = "") String sortBy) {
-        
+    public String tourOverview(Model model, @RequestParam(required = false, defaultValue = "0") int activeIndex, @RequestParam(required = false, defaultValue="Date/Time") String sortBy) {
+    	
     	List<Tour> tours = tourService.getSortedTours(sortBy);
         if (!sortBy.equals("")) model.addAttribute("sortBy", sortBy);
         
@@ -138,42 +138,39 @@ public class TourController {
     @PostMapping(path = "/tours/update")
     public ModelAndView updateTour(@ModelAttribute Tour activeTour, Model model) {
 
-        List<Tour> tours;
-
-        Tour toDelete = tourRepository.findOne(activeTour.getId() + 1);
-        toDelete.setCargo(activeTour.getCargo());
-        toDelete.setNumberOfAnimals(activeTour.getNumberOfAnimals());
-        toDelete.setStartPersonSurname(activeTour.getContactPersonSurname());
+        Tour oldTour = tourRepository.findOne(activeTour.getId() + 1);
+        oldTour.setCargo(activeTour.getCargo());
+        oldTour.setNumberOfAnimals(activeTour.getNumberOfAnimals());
+        oldTour.setStartPersonSurname(activeTour.getContactPersonSurname());
         
         DateTimeFormatter formatterDate = DateTimeFormatter.ofPattern("uuuu-MM-dd");
         DateTimeFormatter formatterTime = DateTimeFormatter.ofPattern("HH:mm");
         //toDelete.setId(activeTour.getId());
-        toDelete.setCargo(activeTour.getCargo());
-        toDelete.setNumberOfAnimals(activeTour.getNumberOfAnimals());
-        toDelete.setStartPersonName(activeTour.getStartPersonName());
-        toDelete.setStartPersonSurname(activeTour.getStartPersonSurname());
-        toDelete.setStartAddress(activeTour.getStartAddress());
-        toDelete.setStartAddressNumber(activeTour.getStartAddressNumber());
-        toDelete.setStartZip(activeTour.getStartZip());
-        toDelete.setStartCity(activeTour.getStartCity());
-        toDelete.setContactPersonName(activeTour.getContactPersonName());
-        toDelete.setContactPersonSurname(activeTour.getContactPersonSurname());
-        toDelete.setDestinationAddress(activeTour.getDestinationAddress());
-        toDelete.setDestinationAddressNumber(activeTour.getDestinationAddressNumber());
-        toDelete.setDestinationZip(activeTour.getDestinationZip());
-        toDelete.setDestinationCity(activeTour.getDestinationCity());
-        toDelete.setDeliveryStartDate(formatterDate.format(activeTour.getDeliveryStartDate()));
-        toDelete.setDeliveryStartTime(formatterTime.format(activeTour.getDeliveryStartTime()));
-        toDelete.setEstimatedTime(activeTour.getEstimatedTime());
-        toDelete.setTimeFrame(activeTour.getTimeFrame());
-        toDelete.setDriver(activeTour.getDriver());
-        toDelete.setComment(activeTour.getComment());
+        oldTour.setCargo(activeTour.getCargo());
+        oldTour.setNumberOfAnimals(activeTour.getNumberOfAnimals());
+        oldTour.setStartPersonName(activeTour.getStartPersonName());
+        oldTour.setStartPersonSurname(activeTour.getStartPersonSurname());
+        oldTour.setStartAddress(activeTour.getStartAddress());
+        oldTour.setStartAddressNumber(activeTour.getStartAddressNumber());
+        oldTour.setStartZip(activeTour.getStartZip());
+        oldTour.setStartCity(activeTour.getStartCity());
+        oldTour.setContactPersonName(activeTour.getContactPersonName());
+        oldTour.setContactPersonSurname(activeTour.getContactPersonSurname());
+        oldTour.setDestinationAddress(activeTour.getDestinationAddress());
+        oldTour.setDestinationAddressNumber(activeTour.getDestinationAddressNumber());
+        oldTour.setDestinationZip(activeTour.getDestinationZip());
+        oldTour.setDestinationCity(activeTour.getDestinationCity());
+        oldTour.setDeliveryStartDate(formatterDate.format(activeTour.getDeliveryStartDate()));
+        oldTour.setDeliveryStartTime(formatterTime.format(activeTour.getDeliveryStartTime()));
+        oldTour.setEstimatedTime(activeTour.getEstimatedTime());
+        oldTour.setTimeFrame(activeTour.getTimeFrame());
+        oldTour.setDriver(activeTour.getDriver());
+        oldTour.setComment(activeTour.getComment());
         
         
-        
-        tourRepository.save(toDelete);
+        tourRepository.save(oldTour);
 
-        tours = tourService.getSortedTours("");
+        List<Tour> tours = tourService.getSortedTours("");
 
         model.addAttribute("tours", tours);
         return new ModelAndView("redirect:/tours");

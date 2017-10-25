@@ -68,7 +68,7 @@
                         </div>
                         <div class="column is-half">
                             <div class="select">
-                                <select onChange="window.location.href='tours?sortBy=' + this.value">
+                                <select onChange="paramChangerSetter('sortBy', this.value)">
                                     <option th:selected="${sortBy == 'Date/Time'}">Date/Time</option>
                                     <option th:selected="${sortBy == 'Startin Location'}">Startin Location</option>
                                     <option th:selected="${sortBy == 'Target Location'}">Target Location</option>
@@ -97,7 +97,7 @@
                     <div th:with="result=${tour.id - 1}">
                         <div class="notification" th:classappend="${tour.id == activeTour.id} ? is-info">
                             <a th:href="'tours/delete?index=' + ${result}" class="button delete"></a>
-                            <a th:href="'/tours?activeIndex=' + ${result}">
+                            <a th:attr="onClick='paramChangerSetter(\'activeIndex\', ' + ${result} + ')'">
                                 <div class="columns is-gapless">
                                     <div class="column is-half">
                                         <div class="columns is-gapless">
@@ -300,6 +300,27 @@
             $(this).parent(".notification").hide(300);
         });
     });
+    
+
+    	function paramChangerSetter(paramName, newValueForParam) {
+        	var newHref = window.location.href;
+        	var regularExpression = new RegExp(paramName + "=[a-zA-Z1-9/ (%20)]*", "g");
+        	
+        	if (regularExpression.test(newHref)) {							//update param
+        		newHref = newHref.replace(regularExpression, paramName + "=" + newValueForParam);
+        	} else {														//set param
+        		if (newHref.indexOf("?") == -1) {
+        			newHref = newHref + "?" + paramName + "=" + newValueForParam;
+        		} else {
+        		    //NOTE: The comments below are important for the Html-parser. Don't remove them
+        			newHref = newHref + /*<![CDATA[*/"&"/*]]>*/ + paramName + "=" + newValueForParam;
+        		}
+        		
+        	}
+        	window.location.href=newHref + "";
+        }
+    
+    
 </script>
 </body>
 </html>
