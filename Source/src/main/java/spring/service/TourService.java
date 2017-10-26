@@ -97,14 +97,27 @@ class TourComparator implements Comparator<Tour> {
     			return -1;
     		} else return 0;
 		} else if (sortBy.equals("Startin Location")) {
-			
+			return compareAddress(tour1.getStartCity(), tour1.getStartAddress(), tour1.getStartAddressNumber(), tour2.getStartCity(), tour2.getStartAddress(), tour2.getStartAddressNumber());
 		} else if (sortBy.equals("Target Location")) {
-			
+			return compareAddress(tour1.getDestinationCity(), tour1.getDestinationAddress(), tour1.getDestinationAddressNumber(), tour2.getDestinationCity(), tour2.getDestinationAddress(), tour2.getDestinationAddressNumber());
 		} else if (sortBy.equals("Driver")) {
-			
+			return tour1.getDriver().compareTo(tour2.getDriver());
 		} else if (sortBy.equals("Cargo")) {
-			
+			return tour1.getCargo().compareTo(tour2.getCargo());
 		}
 		return 0;
+	}
+	
+	//TODO: Die Touren sollten zwei Address-Objekte besitzen anstatt mehrere attribute
+	//      Für diese Methode werden dann nur noch 2 Parameter benötigt, vom Typ "Address"
+	//      (Es gäbe noch weitere Vorteile, z.B. die Klasse "Tour" wäre übersichtlicher)
+	private int compareAddress(String city1, String street1, int streetnumber1, String city2, String street2, int streetnumber2) {
+		int cityCompare = city1.compareTo(city2);
+		int streetCompare = street1.compareTo(street1);
+		if (cityCompare == 0) {
+			if (streetCompare == 0) {
+				return (streetnumber1 > streetnumber2) ? 1:(streetnumber1 < streetnumber2) ? -1:0;
+			} else return streetCompare;
+		} else return cityCompare;
 	}
 }
