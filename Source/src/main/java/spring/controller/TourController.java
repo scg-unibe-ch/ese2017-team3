@@ -109,14 +109,16 @@ public class TourController {
         //prepare a list of Drivers to select from.
         List<Driver> drivers = driverService.getDrivers();
         model.addAttribute("drivers", drivers);
-
-    	if (tours.size() == 0) {
-    		model.addAttribute("activeTour", null);
-    	} else {
-    		Tour activeTour = tours.get(activeIndex);
-        	model.addAttribute("activeTour", activeTour);
+        Tour activeTour = null;
+    	if (tours.size() != 0) {
+    		for (Tour t : tours) {
+    			if (t.getId() == activeIndex) {
+    				activeTour = t;
+    				break;
+    			}
+    		}
     	}
-
+    	model.addAttribute("activeTour", activeTour);
     	return "backend/tourOverview";
     }
 

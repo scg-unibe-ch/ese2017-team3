@@ -94,7 +94,7 @@
                 </div>
 
                 <div th:if="${not #lists.isEmpty(tours)}" th:each="tour : ${tours}">
-                    <div th:with="result=${tour.id - 1}">
+                    <div th:with="result=${tour.id}">
                         <div class="notification" th:classappend="${tour.id == activeTour.id} ? is-info">
                             <a th:href="'tours/delete?index=' + ${result}" class="button delete"></a>
                             <a th:attr="onClick='paramChangerSetter(\'activeIndex\', ' + ${result} + ')'">
