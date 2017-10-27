@@ -109,19 +109,7 @@ public class TourController {
         //prepare a list of Drivers to select from.
         List<Driver> drivers = driverService.getDrivers();
         model.addAttribute("drivers", drivers);
-        Tour activeTour = null;
-    	if (tours.size() != 0) {
-    		if (activeIndex == -1) {
-    			activeTour = tours.get(0);
-    		} else {
-    			for (Tour t : tours) {
-        			if (t.getId() == activeIndex) {
-        				activeTour = t;
-        				break;
-        			}
-        		}
-    		}
-    	}
+        Tour activeTour = getTourById(activeIndex, tours);
     	model.addAttribute("activeTour", activeTour);
     	return "backend/tourOverview";
     }
@@ -131,11 +119,11 @@ public class TourController {
     public ModelAndView deleteTour(Model model, @RequestParam(required = true) int index) {
 
         List<Tour> tours = tourService.getSortedTours("");
-        Tour toDelete = tours.get(index);
+        Tour toDelete = getTourById(index, tours);
 
         tourRepository.delete(toDelete);
 
-        tours.remove(index);
+        tours.remove(toDelete);
 
         model.addAttribute("tours", tours);
         return new ModelAndView("redirect:/tours");
@@ -180,5 +168,29 @@ public class TourController {
 
         model.addAttribute("tours", tours);
         return new ModelAndView("redirect:/tours");
+    }
+    
+    /**
+     * Returns the tour in the list with the given id.
+     * 
+     * @param id     positive numbers and -1
+     * @param tours  shouldn't be null
+     * @return the first tour which have the correct id,
+     *         the first tour of the list if id is -1 and null
+     *         in all other cases.
+     */
+    private Tour getTourById(int id, List<Tour> tours) {
+    	if (tours.size() != 0) {
+    		if (id == -1) {
+    			return tours.get(0);
+    		} else {
+    			for (Tour t : tours) {
+        			if (t.getId() == id) {
+        				return t;
+        			}
+        		}
+    		}
+    	}
+    	return null;
     }
 }
