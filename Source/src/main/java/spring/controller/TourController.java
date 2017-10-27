@@ -99,7 +99,7 @@ public class TourController {
 
     // GET request to /tours will return a list of all tours
     @GetMapping(path = "/tours")
-    public String tourOverview(Model model, @RequestParam(required = false, defaultValue = "0") int activeIndex, @RequestParam(required = false, defaultValue="Date/Time") String sortBy) {
+    public String tourOverview(Model model, @RequestParam(required = false, defaultValue = "-1") int activeIndex, @RequestParam(required = false, defaultValue="Date/Time") String sortBy) {
     	
     	List<Tour> tours = tourService.getSortedTours(sortBy);
         if (!sortBy.equals("")) model.addAttribute("sortBy", sortBy);
@@ -111,11 +111,15 @@ public class TourController {
         model.addAttribute("drivers", drivers);
         Tour activeTour = null;
     	if (tours.size() != 0) {
-    		for (Tour t : tours) {
-    			if (t.getId() == activeIndex) {
-    				activeTour = t;
-    				break;
-    			}
+    		if (activeIndex == -1) {
+    			activeTour = tours.get(0);
+    		} else {
+    			for (Tour t : tours) {
+        			if (t.getId() == activeIndex) {
+        				activeTour = t;
+        				break;
+        			}
+        		}
     		}
     	}
     	model.addAttribute("activeTour", activeTour);
