@@ -86,15 +86,9 @@ public class TourController {
 
     // POST request to /deliveries with the appropriate values will create a new tour and redirect to /tours
     @PostMapping(path = "/deliveries")
-    public String deliverySubmit(@ModelAttribute Tour tour, Model model) {
+    public ModelAndView deliverySubmit(@ModelAttribute Tour tour, Model model) {
         tourRepository.save(tour);
-        List<Tour> tours = tourService.getSortedTours("");
-        
-        Tour activeTour = tours.get(0);
-    	model.addAttribute("activeTour", activeTour);
-        
-        model.addAttribute("tours", tours);
-        return "backend/tourOverview";
+        return new ModelAndView("redirect:/tours");
     }
 
     // GET request to /tours will return a list of all tours

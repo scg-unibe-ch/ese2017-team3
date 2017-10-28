@@ -12,4 +12,4 @@ This is a Spring Boot project, so you can deploy it by simply using the main cla
 ### Set up MySQL
 ```
 go to localhost/phpmyadmin and create a DB with the name ese
-user should be root and password ""
+user should be "root" and password ""
