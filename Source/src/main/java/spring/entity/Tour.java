@@ -36,7 +36,7 @@ public class Tour {
 
     // Street number of start location
     @Column (nullable = true)
-    private int startAddressNumber;
+    private String startAddressNumber;
 
     @Column (nullable = true)
     private int startZip;
@@ -54,7 +54,7 @@ public class Tour {
 	private String destinationAddress;
 
 	@Column (nullable = true)
-	private int destinationAddressNumber;
+	private String destinationAddressNumber;
 
 	@Column (nullable = true)
 	private int destinationZip;
@@ -114,7 +114,7 @@ public class Tour {
 	    return startAddress;
 	}
 
-	public int getStartAddressNumber() {
+	public String getStartAddressNumber() {
 	    return startAddressNumber;
 	}
 
@@ -140,7 +140,7 @@ public class Tour {
 	    return destinationAddress;
 	}
 
-	public int getDestinationAddressNumber() {
+	public String getDestinationAddressNumber() {
 	    return destinationAddressNumber;
 	}
 
@@ -200,7 +200,7 @@ public class Tour {
 	    this.startAddress = startAddress;
 	}
 
-	public void setStartAddressNumber(int startAddressNumber) {
+	public void setStartAddressNumber(String startAddressNumber) {
 	    this.startAddressNumber = startAddressNumber;
 	}
 
@@ -224,7 +224,7 @@ public class Tour {
 	    this.destinationAddress = destinationAddress;
 	}
 
-	public void setDestinationAddressNumber(int destinationAddressNumber) {
+	public void setDestinationAddressNumber(String destinationAddressNumber) {
 	    this.destinationAddressNumber = destinationAddressNumber;
 	}
 
