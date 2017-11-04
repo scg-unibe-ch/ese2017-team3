@@ -108,7 +108,7 @@ class TourComparator implements Comparator<Tour> {
     		} else if (tour1.getDeliveryStartTime().toNanoOfDay() < tour2.getDeliveryStartTime().toNanoOfDay()) {
     			return -1;
     		} else return 0;
-		} else if (sortBy.equals("Startin Location")) {
+		} else if (sortBy.equals("Starting Location")) {
 			return compareAddress(tour1.getStartCity(), tour1.getStartAddress(), tour1.getStartAddressNumber(), tour2.getStartCity(), tour2.getStartAddress(), tour2.getStartAddressNumber());
 		} else if (sortBy.equals("Target Location")) {
 			return compareAddress(tour1.getDestinationCity(), tour1.getDestinationAddress(), tour1.getDestinationAddressNumber(), tour2.getDestinationCity(), tour2.getDestinationAddress(), tour2.getDestinationAddressNumber());

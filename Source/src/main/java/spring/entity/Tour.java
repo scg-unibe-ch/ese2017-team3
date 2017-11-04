@@ -89,8 +89,6 @@ public class Tour {
 	    this.cargo = cargo;
 	}
 
-
-
 	public Tour(){}
 
 	public TourState getTourState() {
