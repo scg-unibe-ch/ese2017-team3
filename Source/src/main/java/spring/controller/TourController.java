@@ -115,7 +115,8 @@ public class TourController {
         List<Tour> tours = tourService.getSortedTours("");
         Tour toDelete = getTourById(index, tours);
 
-        tourRepository.delete(toDelete);
+        toDelete.setTourState(Tour.TourState.DELETED);
+        tourRepository.save(toDelete);
 
         tours.remove(toDelete);
 

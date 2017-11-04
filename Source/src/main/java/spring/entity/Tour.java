@@ -82,14 +82,25 @@ public class Tour {
 	@Column (nullable = true)
 	private String comment;
 
+	@Column (nullable = true)
+	private TourState tourState = TourState.CREATED;
+
 	public Tour(String cargo) {
 	    this.cargo = cargo;
 	}
 
 
+
 	public Tour(){}
 
-	
+	public TourState getTourState() {
+		return tourState;
+	}
+
+	public void setTourState(TourState tourState) {
+		this.tourState = tourState;
+	}
+
 	public long getId() {
 	    return id;
 	}

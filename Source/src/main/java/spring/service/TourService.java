@@ -68,10 +68,20 @@ public class TourService {
     	tourRepository.findAll().forEach(tours::add);
     	return tours;
     }
+
+    public List<Tour> getUndeletedTours() {
+    	List <Tour> tours = new ArrayList<>();
+    	for (Tour t : getTours()) {
+    		if (t.getTourState() != Tour.TourState.DELETED) {
+    			tours.add(t);
+			}
+		}
+		return tours;
+	}
     
     public List<Tour> getSortedTours(String sortBy) {
     	assert sortBy != null;
-    	List<Tour> tours = getTours();
+    	List<Tour> tours = getUndeletedTours();
     	tours.sort(new TourComparator(sortBy));
     	return tours;
     }
