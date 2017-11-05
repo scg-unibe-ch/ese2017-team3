@@ -9,18 +9,17 @@ import javax.persistence.*;
 @Entity
 public class Truck {
 
-    public enum TruckType {BIG, MEDIUM, SMALL, TINY};
 
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
     private long id;
 
     @Column(nullable = false)
-    private TruckType truckType;
+    public String truckType;
 
     public Truck() {};
 
-    public Truck(TruckType truckType) {
+    public Truck(String truckType) {
         this.truckType = truckType;
     }
 }

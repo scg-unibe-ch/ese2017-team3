@@ -19,29 +19,31 @@ public class TruckLoader implements ApplicationRunner {
 
     public void run(ApplicationArguments args) {
         //Add Trucks to DB
-        truckRepository.save(new Truck(Truck.TruckType.BIG));
-        truckRepository.save(new Truck(Truck.TruckType.BIG));
-        truckRepository.save(new Truck(Truck.TruckType.BIG));
+
+        if (truckRepository.findAll().isEmpty()) {
+            truckRepository.save(new Truck("BIG"));
+            truckRepository.save(new Truck("BIG"));
+            truckRepository.save(new Truck("BIG"));
+
+            truckRepository.save(new Truck("MEDIUM"));
+            truckRepository.save(new Truck("MEDIUM"));
+            truckRepository.save(new Truck("MEDIUM"));
 
 
-        truckRepository.save(new Truck(Truck.TruckType.MEDIUM));
-        truckRepository.save(new Truck(Truck.TruckType.MEDIUM));
-        truckRepository.save(new Truck(Truck.TruckType.MEDIUM));
+            truckRepository.save(new Truck("SMALL"));
+            truckRepository.save(new Truck("SMALL"));
+            truckRepository.save(new Truck("SMALL"));
+            truckRepository.save(new Truck("SMALL"));
+            truckRepository.save(new Truck("SMALL"));
 
 
-        truckRepository.save(new Truck(Truck.TruckType.SMALL));
-        truckRepository.save(new Truck(Truck.TruckType.SMALL));
-        truckRepository.save(new Truck(Truck.TruckType.SMALL));
-        truckRepository.save(new Truck(Truck.TruckType.SMALL));
-        truckRepository.save(new Truck(Truck.TruckType.SMALL));
-
-
-        truckRepository.save(new Truck(Truck.TruckType.TINY));
-        truckRepository.save(new Truck(Truck.TruckType.TINY));
-        truckRepository.save(new Truck(Truck.TruckType.TINY));
-        truckRepository.save(new Truck(Truck.TruckType.TINY));
-        truckRepository.save(new Truck(Truck.TruckType.TINY));
-        truckRepository.save(new Truck(Truck.TruckType.TINY));
-        truckRepository.save(new Truck(Truck.TruckType.TINY));
+            truckRepository.save(new Truck("TINY"));
+            truckRepository.save(new Truck("TINY"));
+            truckRepository.save(new Truck("TINY"));
+            truckRepository.save(new Truck("TINY"));
+            truckRepository.save(new Truck("TINY"));
+            truckRepository.save(new Truck("TINY"));
+            truckRepository.save(new Truck("TINY"));
+        }
     }
 }
