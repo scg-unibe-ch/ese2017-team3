@@ -170,4 +170,52 @@ class TourComparator implements Comparator<Tour> {
 			} else return streetCompare;
 		} else return cityCompare;
 	}
+	
+	
+	
+	//Compare-Address with Addresses
+	/*private int compareAddress(Address address1, Address address2) {
+		int cityCompare = address1.getCity().compareTo(address2.getCity());
+		int streetCompare = address1.getStreet().compareTo(address2.getStreet());
+		if (cityCompare == 0) {
+			if (streetCompare == 0) {
+				try {
+					int s1 = Integer.parseInt(address1.getStreetNumber());
+					int s2 = Integer.parseInt(address2.getStreetNumber());
+					return (s1 > s2) ? 1 : (s1 < s2) ? -1 : 0;
+				} catch (NumberFormatException nfe) {
+					// handles address numbers like for example '35A', '35a', '35 a', '35/2' etc.
+					Pattern pattern = Pattern.compile("(\\d+)(\\W*)(\\w*)");
+					Matcher m1 = pattern.matcher(address1.getStreetNumber());
+					Matcher m2 = pattern.matcher(address2.getStreetNumber());
+
+					if (m1.find() && m2.find()) {
+						int s1 = Integer.parseInt(m1.group(1));
+						int s2 = Integer.parseInt(m1.group(1));
+						if (s1 != s2) {
+							return (s1 > s2) ? 1 : (s1 < s2) ? -1 : 0;
+						} else {
+							String addressDetail1 = m1.group(3);
+							String addressDetail2 = m1.group(3);
+							String p1 = "(\\d+)";
+							String p2 = "([a-zA-Z]+)";
+
+							if (addressDetail1.matches(p1) && addressDetail2.matches(p1)) {
+								int a1 = Integer.parseInt(addressDetail1);
+								int a2 = Integer.parseInt(addressDetail2);
+								return (a1 > a2) ? 1 : (a1 < a2) ? -1 : 0;
+							} else if (addressDetail1.matches(p2) && addressDetail2.matches(p2)) {
+								return addressDetail1.compareTo(addressDetail2);
+							}
+						}
+					}
+				}
+				// Same street (in same city) but different numbering rule (e.g. '35A' vs. '35/1') -> must be input error
+				throw new NumberFormatException("Could not compare the following addresses:\n "
+												+ address1.getStreet() + " " + address1.getStreetNumber() + ",\n "
+												+ address2.getStreet() + " " + address2.getStreetNumber());
+			} else return streetCompare;
+		} else return cityCompare;
+	}*/
+	
 }
