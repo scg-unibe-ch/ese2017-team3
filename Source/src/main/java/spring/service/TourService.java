@@ -99,15 +99,19 @@ class TourComparator implements Comparator<Tour> {
 	@Override
 	public int compare(Tour tour1, Tour tour2) {
 		if (sortBy.equals("Date/Time")) {
-			if (tour1.getDeliveryStartDate().toEpochDay() > tour2.getDeliveryStartDate().toEpochDay()) {
+			if (tour1.getDeliveryStartDate().isAfter(tour2.getDeliveryStartDate())) {
     			return 1;
-    		} else if (tour1.getDeliveryStartDate().toEpochDay() < tour2.getDeliveryStartDate().toEpochDay()) {
+    		} else if (tour1.getDeliveryStartDate().isBefore(tour2.getDeliveryStartDate())) {
     			return -1;
-    		} else if (tour1.getDeliveryStartTime().toNanoOfDay() > tour2.getDeliveryStartTime().toNanoOfDay()) {
-    			return 1;
-    		} else if (tour1.getDeliveryStartTime().toNanoOfDay() < tour2.getDeliveryStartTime().toNanoOfDay()) {
-    			return -1;
-    		} else return 0;
+    		} else {
+				if (tour1.getDeliveryStartTime().isAfter(tour2.getDeliveryStartTime())) {
+					return 1;
+				} else if (tour1.getDeliveryStartTime().isBefore(tour2.getDeliveryStartTime())) {
+					return -1;
+				} else {
+					return 0;
+				}
+			}
 		} else if (sortBy.equals("Starting Location")) {
 			return compareAddress(tour1.getStartCity(), tour1.getStartAddress(), tour1.getStartAddressNumber(), tour2.getStartCity(), tour2.getStartAddress(), tour2.getStartAddressNumber());
 		} else if (sortBy.equals("Target Location")) {
