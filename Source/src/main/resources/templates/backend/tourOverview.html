@@ -53,6 +53,11 @@
                         <a href="drivers">Drivers</a>
                     </li>
                 </ul>
+                <div class="is-right">
+                    <form action="#" th:action="@{/logout}" method="post">
+                        <input type="submit" class="button is-link" value="Log Out" />
+                    </form>
+                </div>
             </nav>
         </div>
     </div>
@@ -68,9 +73,9 @@
                         </div>
                         <div class="column is-half">
                             <div class="select">
-                                <select onChange="window.location.href='tours?sortBy=' + this.value">
+                                <select onChange="paramChangerSetter('sortBy', this.value)">
                                     <option th:selected="${sortBy == 'Date/Time'}">Date/Time</option>
-                                    <option th:selected="${sortBy == 'Startin Location'}">Startin Location</option>
+                                    <option th:selected="${sortBy == 'Starting Location'}">Starting Location</option>
                                     <option th:selected="${sortBy == 'Target Location'}">Target Location</option>
                                     <option th:selected="${sortBy == 'Driver'}">Driver</option>
                                     <option th:selected="${sortBy == 'Cargo'}">Cargo</option>
@@ -94,17 +99,17 @@
                 </div>
 
                 <div th:if="${not #lists.isEmpty(tours)}" th:each="tour : ${tours}">
-                    <div th:with="result=${tour.id - 1}">
+                    <div th:with="result=${tour.id}">
                         <div class="notification" th:classappend="${tour.id == activeTour.id} ? is-info">
                             <a th:href="'tours/delete?index=' + ${result}" class="button delete"></a>
-                            <a th:href="'/tours?activeIndex=' + ${result}">
+                            <a th:attr="onClick='paramChangerSetter(\'activeIndex\', ' + ${result} + ')'">
                                 <div class="columns is-gapless">
                                     <div class="column is-half">
                                         <div class="columns is-gapless">
                                             <div class="column is-narrow">
                                                 <span class="icon"><i class="fa fa-calendar"></i>&nbsp;</span>
                                             </div>
-                                            <div class="column "><u th:text="${tour.deliveryStartTime}"></u></div>
+                                            <div class="column "><u th:text="${#temporals.format(tour.deliveryStartDate, 'dd.MM.yyyy')}"></u></div>
                                         </div>
                                     </div>
                                     <div class="column is-half">
@@ -165,18 +170,31 @@
             <div class="block">
                 <div class="box">
                     <form action="#" th:action="@{/tours/update}" th:object="${activeTour}" method="post">
+                        <input type="hidden" th:field="*{id}" />
+                        <input type="hidden" th:field="*{estimatedTime}" />
+                        <input type="hidden" th:field="*{timeFrame}" />
                         <div class="columns">
                             <div class="column is-2">Cargo:</div>
                             <div class="column is-4">
                                 <div class="field">
                                     <input class="input" type="text" th:field="*{cargo}"/>
                                 </div>
+                                <article class="message is-warning" th:if="${#fields.hasErrors('cargo')}">
+                                    <div class="message-body" th:errors="*{cargo}">
+                                        Error in numberOfAnimals
+                                    </div>
+                                </article>
                             </div>
                             <div class="column is-2">Number:</div>
                             <div class="column is-4 ">
                                 <div class="field">
                                     <input class="input" type="text" th:field="*{numberOfAnimals}"/>
                                 </div>
+                                <article class="message is-warning" th:if="${#fields.hasErrors('numberOfAnimals')}">
+                                    <div class="message-body" th:errors="*{numberOfAnimals}">
+                                        Error in numberOfAnimals
+                                    </div>
+                                </article>
                             </div>
                         </div>
                         <div class="columns  is-multiline">
@@ -185,68 +203,128 @@
                                 <div class="field">
                                     <input class="input" type="text" th:field="*{startPersonName}"/>
                                 </div>
+                                <article class="message is-warning" th:if="${#fields.hasErrors('startPersonName')}">
+                                    <div class="message-body" th:errors="*{startPersonName}">
+                                        Error in numberOfAnimals
+                                    </div>
+                                </article>
                             </div>
                             <div class="column is-2 is-center">Destination:</div>
                             <div class="column is-4 ">
                                 <div class="field">
                                     <input class="input" type="text" th:field="*{contactPersonName}"/>
                                 </div>
+                                <article class="message is-warning" th:if="${#fields.hasErrors('contactPersonName')}">
+                                    <div class="message-body" th:errors="*{contactPersonName}">
+                                        Error in numberOfAnimals
+                                    </div>
+                                </article>
                             </div>
                             <div class="column is-2"></div>
                             <div class="column is-4">
                                 <div class="field">
                                     <input class="input" type="text" th:field="*{startPersonSurname}"/>
                                 </div>
+                                <article class="message is-warning" th:if="${#fields.hasErrors('startPersonSurname')}">
+                                    <div class="message-body" th:errors="*{startPersonSurname}">
+                                        Error in numberOfAnimals
+                                    </div>
+                                </article>
                             </div>
                             <div class="column is-2"></div>
                             <div class="column is-4">
                                 <div class="field">
                                     <input class="input" type="text" th:field="*{contactPersonSurname}"/>
                                 </div>
+                                <article class="message is-warning" th:if="${#fields.hasErrors('contactPersonSurname')}">
+                                    <div class="message-body" th:errors="*{contactPersonSurname}">
+                                        Error in numberOfAnimals
+                                    </div>
+                                </article>
                             </div>
                             <div class="column is-2"></div>
                             <div class="column is-3">
                                 <div class="field">
                                     <input class="input" type="text" th:field="*{startAddress}"/>
                                 </div>
+                                <article class="message is-warning" th:if="${#fields.hasErrors('startAddress')}">
+                                    <div class="message-body" th:errors="*{startAddress}">
+                                        Error in numberOfAnimals
+                                    </div>
+                                </article>
                             </div>
                             <div class="column is-1">
                                 <div class="field">
                                     <input class="input" type="text" th:field="*{startAddressNumber}"/>
                                 </div>
+                                <article class="message is-warning" th:if="${#fields.hasErrors('startAddressNumber')}">
+                                    <div class="message-body" th:errors="*{startAddressNumber}">
+                                        Error in numberOfAnimals
+                                    </div>
+                                </article>
                             </div>
                             <div class="column is-2"></div>
                             <div class="column is-3">
                                 <div class="field">
                                     <input class="input" type="text" th:field="*{destinationAddress}"/>
                                 </div>
+                                <article class="message is-warning" th:if="${#fields.hasErrors('destinationAddress')}">
+                                    <div class="message-body" th:errors="*{destinationAddressNumber}">
+                                        Error in numberOfAnimals
+                                    </div>
+                                </article>
                             </div>
                             <div class="column is-1">
                                 <div class="field">
                                     <input class="input" type="text" th:field="*{destinationAddressNumber}"/>
                                 </div>
+                                <article class="message is-warning" th:if="${#fields.hasErrors('destinationAddressNumber')}">
+                                    <div class="message-body" th:errors="*{destinationAddressNumber}">
+                                        Error in numberOfAnimals
+                                    </div>
+                                </article>
                             </div>
                             <div class="column is-2"></div>
                             <div class="column is-2">
                                 <div class="field">
                                     <input class="input" type="text" th:field="*{startZip}"/>
                                 </div>
+                                <article class="message is-warning" th:if="${#fields.hasErrors('startZip')}">
+                                    <div class="message-body" th:errors="*{startZip}">
+                                        Error in numberOfAnimals
+                                    </div>
+                                </article>
                             </div>
                             <div class="column is-2">
                                 <div class="field">
                                     <input class="input" type="text" th:field="*{startCity}"/>
                                 </div>
+                                <article class="message is-warning" th:if="${#fields.hasErrors('startCity')}">
+                                    <div class="message-body" th:errors="*{startCity}">
+                                        Error in numberOfAnimals
+                                    </div>
+                                </article>
                             </div>
                             <div class="column is-2"></div>
                             <div class="column is-2">
                                 <div class="field">
                                     <input class="input" type="text" th:field="*{destinationZip}"/>
                                 </div>
+                                <article class="message is-warning" th:if="${#fields.hasErrors('destinationZip')}">
+                                    <div class="message-body" th:errors="*{destinationZip}">
+                                        Error in numberOfAnimals
+                                    </div>
+                                </article>
                             </div>
                             <div class="column is-2">
                                 <div class="field">
                                     <input class="input" type="text" th:field="*{destinationCity}"/>
                                 </div>
+                                <article class="message is-warning" th:if="${#fields.hasErrors('destinationCity')}">
+                                    <div class="message-body" th:errors="*{destinationCity}">
+                                        Error in numberOfAnimals
+                                    </div>
+                                </article>
                             </div>
 
                         </div>
@@ -254,14 +332,24 @@
                             <div class="column is-2">Date:</div>
                             <div class="column is-4">
                                 <div class="field">
-                                    <input class="input" type="date" th:value="*{deliveryStartDate}" id="deliveryStartDate" name="deliveryStartDate"/>
+                                    <input class="input" type="date" th:value="${#temporals.format(activeTour.deliveryStartDate, 'uuuu-MM-dd')}" th:field="*{deliveryStartDate}"/>
                                 </div>
+                                <article class="message is-warning" th:if="${#fields.hasErrors('deliveryStartDate')}">
+                                    <div class="message-body" th:errors="*{deliveryStartDate}">
+                                        Error in numberOfAnimals
+                                    </div>
+                                </article>
                             </div>
                             <div class="column is-2">Time:</div>
                             <div class="column is-4">
                                 <div class="field">
-                                    <input class="input" type="time" th:value="*{deliveryStartTime}" id="deliveryStartTime" name="deliveryStartTime"/>
+                                    <input class="input" type="time" th:value="${#temporals.format(activeTour.deliveryStartTime, 'HH:mm')}" th:field="*{deliveryStartTime}"/>
                                 </div>
+                                <article class="message is-warning" th:if="${#fields.hasErrors('deliveryStartTime')}">
+                                    <div class="message-body" th:errors="*{deliveryStartTime}">
+                                        Error in numberOfAnimals
+                                    </div>
+                                </article>
                             </div>
                         </div>
                         <div class="columns">
@@ -300,6 +388,27 @@
             $(this).parent(".notification").hide(300);
         });
     });
+    
+
+    	function paramChangerSetter(paramName, newValueForParam) {
+        	var newHref = window.location.href;
+        	var regularExpression = new RegExp(paramName + "=[a-zA-Z1-9/ (%20)]*", "g");
+        	
+        	if (regularExpression.test(newHref)) {							//update param
+        		newHref = newHref.replace(regularExpression, paramName + "=" + newValueForParam);
+        	} else {														//set param
+        		if (newHref.indexOf("?") == -1) {
+        			newHref = newHref + "?" + paramName + "=" + newValueForParam;
+        		} else {
+        		    //NOTE: The comments below are important for the Html-parser. Don't remove them
+        			newHref = newHref + /*<![CDATA[*/"&"/*]]>*/ + paramName + "=" + newValueForParam;
+        		}
+        		
+        	}
+        	window.location.href=newHref + "";
+        }
+    
+    
 </script>
 </body>
 </html>

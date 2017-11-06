@@ -5,9 +5,12 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import spring.entity.Driver;
 import spring.entity.Tour;
 import spring.repositories.TourRepository;
@@ -15,6 +18,7 @@ import spring.security.UserSecurityService;
 import spring.service.DriverService;
 import spring.service.TourService;
 
+import javax.validation.Valid;
 import java.time.DayOfWeek;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
@@ -86,15 +90,21 @@ public class TourController {
 
     // POST request to /deliveries with the appropriate values will create a new tour and redirect to /tours
     @PostMapping(path = "/deliveries")
-    public ModelAndView deliverySubmit(@ModelAttribute Tour tour, Model model) {
+    public ModelAndView deliverySubmit(@Valid @ModelAttribute Tour tour, BindingResult bindingResult, ModelMap model) {
+        if (bindingResult.hasErrors()) {
+            List<Driver> drivers = driverService.getDrivers();
+            model.addAttribute("drivers", drivers);
+            return new ModelAndView("backend/deliveries");
+        }
         tourRepository.save(tour);
         return new ModelAndView("redirect:/tours");
     }
 
+
     // GET request to /tours will return a list of all tours
     @GetMapping(path = "/tours")
-    public String tourOverview(Model model, @RequestParam(required = false, defaultValue = "0") int activeIndex, @RequestParam(required = false, defaultValue = "") String sortBy) {
-        
+    public String tourOverview(ModelMap model, @RequestParam(required = false, defaultValue = "-1") int activeIndex, @RequestParam(required = false, defaultValue="Date/Time") String sortBy) {
+    	
     	List<Tour> tours = tourService.getSortedTours(sortBy);
         if (!sortBy.equals("")) model.addAttribute("sortBy", sortBy);
         
@@ -103,15 +113,9 @@ public class TourController {
         //prepare a list of Drivers to select from.
         List<Driver> drivers = driverService.getDrivers();
         model.addAttribute("drivers", drivers);
-
-    	if (tours.size() == 0) {
-    		model.addAttribute("activeTour", null);
-    	} else {
-    		Tour activeTour = tours.get(activeIndex);
-        	model.addAttribute("activeTour", activeTour);
-    	}
-
-    	return "backend/tourOverview";
+        Tour activeTour = getTourById(activeIndex, tours);
+    	model.addAttribute("activeTour", activeTour);
+        return "backend/tourOverview";
     }
 
     // GET request on /tours/delete will delete the tour with the matching index
@@ -119,57 +123,78 @@ public class TourController {
     public ModelAndView deleteTour(Model model, @RequestParam(required = true) int index) {
 
         List<Tour> tours = tourService.getSortedTours("");
-        Tour toDelete = tours.get(index);
+        Tour toDelete = getTourById(index, tours);
 
-        tourRepository.delete(toDelete);
+        toDelete.setTourState(Tour.TourState.DELETED);
+        tourRepository.save(toDelete);
 
-        tours.remove(index);
+        tours.remove(toDelete);
 
         model.addAttribute("tours", tours);
         return new ModelAndView("redirect:/tours");
     }
 
     @PostMapping(path = "/tours/update")
-    public ModelAndView updateTour(@ModelAttribute Tour activeTour, Model model) {
+    public ModelAndView updateTour(@Valid @ModelAttribute Tour activeTour, BindingResult bindingResult, ModelMap model) {
 
-        List<Tour> tours;
+        if (bindingResult.hasErrors()) {
+            return new ModelAndView("redirect:/tours?activeIndex=" + activeTour.getId());
+        }
 
-        Tour toDelete = tourRepository.findOne(activeTour.getId() + 1);
-        toDelete.setCargo(activeTour.getCargo());
-        toDelete.setNumberOfAnimals(activeTour.getNumberOfAnimals());
-        toDelete.setStartPersonSurname(activeTour.getContactPersonSurname());
-        
-        DateTimeFormatter formatterDate = DateTimeFormatter.ofPattern("uuuu-MM-dd");
-        DateTimeFormatter formatterTime = DateTimeFormatter.ofPattern("HH:mm");
+        Tour oldTour = tourRepository.findOne(activeTour.getId());
+
+        // The following attributes are not changed, because they are not part of the form in tourOverview
         //toDelete.setId(activeTour.getId());
-        toDelete.setCargo(activeTour.getCargo());
-        toDelete.setNumberOfAnimals(activeTour.getNumberOfAnimals());
-        toDelete.setStartPersonName(activeTour.getStartPersonName());
-        toDelete.setStartPersonSurname(activeTour.getStartPersonSurname());
-        toDelete.setStartAddress(activeTour.getStartAddress());
-        toDelete.setStartAddressNumber(activeTour.getStartAddressNumber());
-        toDelete.setStartZip(activeTour.getStartZip());
-        toDelete.setStartCity(activeTour.getStartCity());
-        toDelete.setContactPersonName(activeTour.getContactPersonName());
-        toDelete.setContactPersonSurname(activeTour.getContactPersonSurname());
-        toDelete.setDestinationAddress(activeTour.getDestinationAddress());
-        toDelete.setDestinationAddressNumber(activeTour.getDestinationAddressNumber());
-        toDelete.setDestinationZip(activeTour.getDestinationZip());
-        toDelete.setDestinationCity(activeTour.getDestinationCity());
-        toDelete.setDeliveryStartDate(formatterDate.format(activeTour.getDeliveryStartDate()));
-        toDelete.setDeliveryStartTime(formatterTime.format(activeTour.getDeliveryStartTime()));
-        toDelete.setEstimatedTime(activeTour.getEstimatedTime());
-        toDelete.setTimeFrame(activeTour.getTimeFrame());
-        toDelete.setDriver(activeTour.getDriver());
-        toDelete.setComment(activeTour.getComment());
-        
-        
-        
-        tourRepository.save(toDelete);
+        //oldTour.setEstimatedTime(activeTour.getEstimatedTime());
+        //oldTour.setTimeFrame(activeTour.getTimeFrame());
+        oldTour.setCargo(activeTour.getCargo());
+        oldTour.setNumberOfAnimals(activeTour.getNumberOfAnimals());
+        oldTour.setStartPersonName(activeTour.getStartPersonName());
+        oldTour.setStartPersonSurname(activeTour.getStartPersonSurname());
+        oldTour.setStartAddress(activeTour.getStartAddress());
+        oldTour.setStartAddressNumber(activeTour.getStartAddressNumber());
+        oldTour.setStartZip(activeTour.getStartZip());
+        oldTour.setStartCity(activeTour.getStartCity());
+        oldTour.setContactPersonName(activeTour.getContactPersonName());
+        oldTour.setContactPersonSurname(activeTour.getContactPersonSurname());
+        oldTour.setDestinationAddress(activeTour.getDestinationAddress());
+        oldTour.setDestinationAddressNumber(activeTour.getDestinationAddressNumber());
+        oldTour.setDestinationZip(activeTour.getDestinationZip());
+        oldTour.setDestinationCity(activeTour.getDestinationCity());
+        oldTour.setDeliveryStartDate(activeTour.getDeliveryStartDate());
+        oldTour.setDeliveryStartTime(activeTour.getDeliveryStartTime());
+        oldTour.setDriver(activeTour.getDriver());
+        oldTour.setComment(activeTour.getComment());
 
-        tours = tourService.getSortedTours("");
+        tourRepository.save(oldTour);
+
+        List<Tour> tours = tourService.getSortedTours("");
 
         model.addAttribute("tours", tours);
-        return new ModelAndView("redirect:/tours");
+        return new ModelAndView("redirect:/tours?activeIndex=" + activeTour.getId());
+    }
+    
+    /**
+     * Returns the tour in the list with the given id.
+     * 
+     * @param id     positive numbers and -1
+     * @param tours  shouldn't be null
+     * @return the first tour which have the correct id,
+     *         the first tour of the list if id is -1 and null
+     *         in all other cases.
+     */
+    private Tour getTourById(int id, List<Tour> tours) {
+    	if (tours.size() != 0) {
+    		if (id == -1) {
+    			return tours.get(0);
+    		} else {
+    			for (Tour t : tours) {
+        			if (t.getId() == id) {
+        				return t;
+        			}
+        		}
+    		}
+    	}
+    	return null;
     }
 }

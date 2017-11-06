@@ -53,7 +53,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                     .permitAll()
                 .regexMatchers(HttpMethod.POST, "/user")
                     .permitAll()
-				.antMatchers("/deliveries","/deliveryresult", "/drivers","/tourOverview","/tours","/tours/**","/drivers/**")
+				.antMatchers("/deliveries","/deliveryresult", "/drivers","/tourOverview","/tours","/tours/**","/drivers/**","/trucks")
 					.hasRole("ADMIN")
                 .anyRequest()
                     .authenticated()
@@ -61,6 +61,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .formLogin()
                     .loginPage("/login")
                     .permitAll().successHandler(authSuccessHandler)
+                    .and()
+                .logout()
+                    .logoutUrl("/logout")
+                    .logoutSuccessUrl("/login")
                     .and()
                 .httpBasic();
     }

@@ -3,9 +3,9 @@ package spring.entity;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import javax.validation.constraints.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
 
 /**
  * Created by olulrich on 20.10.17.
@@ -19,77 +19,90 @@ public class Tour {
     @GeneratedValue(strategy= GenerationType.AUTO)
     private long id;
 
-    @Column (nullable = false)
+	@Size(min = 1, message = "Please specify the cargo for this order.")
     private String cargo;
 
-    @Column (nullable = true)
+	@Min(value = 1, message = "Please specify the number of animals for this tour.")
     private int numberOfAnimals;
 
-    @Column (nullable = true)
+    @Size(min = 1, message = "Please specify the name of the contact person at the start location.")
 	private String startPersonName;
 
-	@Column (nullable = true)
+	@Size(min = 1, message = "Please specify the surname of the contact person at the start location.")
 	private String startPersonSurname;
 
-	@Column (nullable = true)
+	@Size(min = 1, message = "Please specify the street name of the start location.")
     private String startAddress;
 
-    // Street number of start location
-    @Column (nullable = true)
-    private int startAddressNumber;
+	@Size(min = 1, message = "Please specify the street number of the start location.")
+    private String startAddressNumber;
 
-    @Column (nullable = true)
+	@NotNull (message = "Please specify the ZIP code of the start location.")
+	@Min(value = 1000, message = "You entered an invalid ZIP code.")
+	@Max(value = 9999, message = "You entered an invalid ZIP code.")
     private int startZip;
 
-    @Column (nullable = true)
+	@Size(min = 1, message = "Please specify the city of the start location.")
     private String startCity;
 
-    @Column (nullable = true)
+	@Size(min = 1, message = "Please specify the name of the contact person at the tour destination.")
 	private String contactPersonName;
 
-	@Column (nullable = true)
+	@Size(min = 1, message = "Please specify the surname of the person at the tour destionation.")
 	private String contactPersonSurname;
 
-	@Column (nullable = true)
+	@Size(min = 1, message = "Please specify the destination street.")
 	private String destinationAddress;
 
-	@Column (nullable = true)
-	private int destinationAddressNumber;
+	@Size(min = 1, message = "Please specify the street number of the tour destination.")
+	private String destinationAddressNumber;
 
-	@Column (nullable = true)
+	@NotNull (message = "Please specify the ZIP code of the tour destination.")
+	@Min(value = 1000, message = "You entered an invalid ZIP code.")
+	@Max(value = 9999, message = "You entered an invalid ZIP code.")
 	private int destinationZip;
 
-	@Column (nullable = true)
+	@Size(min = 1, message = "Please specify the city of the tour destination.")
 	private String destinationCity;
 
-	@Column (nullable = true)
+	@NotNull (message = "Please specify a start date for the tour.")
+//	@Future (message = "You can't create tours in the past.")
 	@DateTimeFormat(pattern="uuuu-MM-dd")
 	private LocalDate deliveryStartDate;
 
-	@Column (nullable = true)
+	@NotNull (message = "Please specify a start time for the tour.")
 	@DateTimeFormat(pattern="HH:mm")
 	private LocalTime deliveryStartTime;
 
-	@Column (nullable = true)
-	private float estimatedTime;
+	@NotNull (message = "Please specify the estimated time for the tour.")
+	private Double estimatedTime;
 
-	@Column (nullable = true)
+	@Size(min = 1, message = "Please specify a time frame, in which the delivery can take place.")
 	private String timeFrame;
 
-	@Column (nullable = true)
+	@Column (nullable = false)
 	private String driver;
 
-	@Column (nullable = true)
+	@Column
 	private String comment;
+
+	@Column (nullable = false)
+	private TourState tourState = TourState.CREATED;
 
 	public Tour(String cargo) {
 	    this.cargo = cargo;
 	}
 
-
 	public Tour(){}
 
-	
+	public TourState getTourState() {
+		return tourState;
+	}
+
+	public void setTourState(TourState tourState) {
+		this.tourState = tourState;
+	}
+
 	public long getId() {
 	    return id;
 	}
@@ -114,7 +127,7 @@ public class Tour {
 	    return startAddress;
 	}
 
-	public int getStartAddressNumber() {
+	public String getStartAddressNumber() {
 	    return startAddressNumber;
 	}
 
@@ -140,7 +153,7 @@ public class Tour {
 	    return destinationAddress;
 	}
 
-	public int getDestinationAddressNumber() {
+	public String getDestinationAddressNumber() {
 	    return destinationAddressNumber;
 	}
 
@@ -160,7 +173,7 @@ public class Tour {
 	    return deliveryStartTime;
 	}
 
-	public float getEstimatedTime() {
+	public Double getEstimatedTime() {
 	    return estimatedTime;
 	}
 
@@ -200,7 +213,7 @@ public class Tour {
 	    this.startAddress = startAddress;
 	}
 
-	public void setStartAddressNumber(int startAddressNumber) {
+	public void setStartAddressNumber(String startAddressNumber) {
 	    this.startAddressNumber = startAddressNumber;
 	}
 
@@ -224,7 +237,7 @@ public class Tour {
 	    this.destinationAddress = destinationAddress;
 	}
 
-	public void setDestinationAddressNumber(int destinationAddressNumber) {
+	public void setDestinationAddressNumber(String destinationAddressNumber) {
 	    this.destinationAddressNumber = destinationAddressNumber;
 	}
 
@@ -236,17 +249,15 @@ public class Tour {
 	    this.destinationCity = destinationCity;
 	}
 
-	public void setDeliveryStartDate(String dateString) {
-	    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("uuuu-MM-dd");
-	    this.deliveryStartDate = LocalDate.parse(dateString, formatter);
+	public void setDeliveryStartDate(LocalDate startDate) {
+		this.deliveryStartDate = startDate;
 	}
 
-	public void setDeliveryStartTime(String timeString) {
-	    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
-	    this.deliveryStartTime = LocalTime.parse(timeString, formatter);
+	public void setDeliveryStartTime(LocalTime startTime) {
+		this.deliveryStartTime = startTime;
 	}
 
-	public void setEstimatedTime(float estimatedTime) {
+	public void setEstimatedTime(Double estimatedTime) {
 	    this.estimatedTime = estimatedTime;
 	}
 
