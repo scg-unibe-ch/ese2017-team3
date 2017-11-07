@@ -127,54 +127,6 @@ class TourComparator implements Comparator<Tour> {
         return 0;
     }
 
-    //TODO: Die Touren sollten zwei Address-Objekte besitzen anstatt mehrere attribute
-    //      Für diese Methode werden dann nur noch 2 Parameter benötigt, vom Typ "Address"
-    //      (Es gäbe noch weitere Vorteile, z.B. die Klasse "Tour" wäre übersichtlicher)
-//    private int compareAddress(String city1, String street1, String streetnumber1, String city2, String street2, String streetnumber2) {
-//        int cityCompare = city1.compareTo(city2);
-//        int streetCompare = street1.compareTo(street1);
-//        if (cityCompare == 0) {
-//            if (streetCompare == 0) {
-//                try {
-//                    int s1 = Integer.parseInt(streetnumber1);
-//                    int s2 = Integer.parseInt(streetnumber2);
-//                    return (s1 > s2) ? 1 : (s1 < s2) ? -1 : 0;
-//                } catch (NumberFormatException nfe) {
-//                    // handles address numbers like for example '35A', '35a', '35 a', '35/2' etc.
-//                    Pattern pattern = Pattern.compile("(\\d+)(\\W*)(\\w*)");
-//                    Matcher m1 = pattern.matcher(streetnumber1);
-//                    Matcher m2 = pattern.matcher(streetnumber2);
-//
-//                    if (m1.find() && m2.find()) {
-//                        int s1 = Integer.parseInt(m1.group(1));
-//                        int s2 = Integer.parseInt(m1.group(1));
-//                        if (s1 != s2) {
-//                            return (s1 > s2) ? 1 : (s1 < s2) ? -1 : 0;
-//                        } else {
-//                            String addressDetail1 = m1.group(3);
-//                            String addressDetail2 = m1.group(3);
-//                            String p1 = "(\\d+)";
-//                            String p2 = "([a-zA-Z]+)";
-//
-//                            if (addressDetail1.matches(p1) && addressDetail2.matches(p1)) {
-//                                int a1 = Integer.parseInt(addressDetail1);
-//                                int a2 = Integer.parseInt(addressDetail2);
-//                                return (a1 > a2) ? 1 : (a1 < a2) ? -1 : 0;
-//                            } else if (addressDetail1.matches(p2) && addressDetail2.matches(p2)) {
-//                                return addressDetail1.compareTo(addressDetail2);
-//                            }
-//                        }
-//                    }
-//                }
-//                // Same street (in same city) but different numbering rule (e.g. '35A' vs. '35/1') -> must be input error
-//                throw new NumberFormatException("Could not compare the following addresses:\n "
-//                        + street1 + " " + streetnumber1 + ",\n "
-//                        + street2 + " " + streetnumber2);
-//            } else return streetCompare;
-//        } else return cityCompare;
-//    }
-
-
     //Compare-Address with Addresses
     private int compareAddress(Address address1, Address address2) {
 		int cityCompare = address1.getCity().compareTo(address2.getCity());

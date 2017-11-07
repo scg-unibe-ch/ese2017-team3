@@ -1,6 +1,10 @@
 package spring.entity;
 
 import javax.persistence.*;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Entity
 public class Address {
@@ -8,24 +12,25 @@ public class Address {
 	@Id
     @GeneratedValue(strategy= GenerationType.AUTO)
     private long id;
-	
-	@Column (nullable = true)
+
+	@Size(min = 1, message = "Please specify the name of the contact person at the start location.")
 	private String name;
 
-	@Column (nullable = true)
+	@Size(min = 1, message = "Please specify the surname of the contact person at the start location.")
 	private String surname;
 
-	@Column (nullable = true)
+	@Size(min = 1, message = "Please specify the street name of the start location.")
     private String street;
 
-    // Street number of start location
-    @Column (nullable = true)
+	@Size(min = 1, message = "Please specify the street number of the start location.")
     private String streetNumber;
 
-    @Column (nullable = true)
+	@NotNull(message = "Please specify the ZIP code of the start location.")
+	@Min(value = 1000, message = "You entered an invalid ZIP code.")
+	@Max(value = 9999, message = "You entered an invalid ZIP code.")
     private int zip;
 
-    @Column (nullable = true)
+	@Size(min = 1, message = "Please specify the city of the start location.")
     private String city;
 
 

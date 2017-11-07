@@ -34,46 +34,6 @@ public class Tour {
     @OneToOne
     private Address destinationAddress;
 
-//    @Size(min = 1, message = "Please specify the name of the contact person at the start location.")
-//	private String startPersonName;
-//
-//	@Size(min = 1, message = "Please specify the surname of the contact person at the start location.")
-//	private String startPersonSurname;
-//
-//	@Size(min = 1, message = "Please specify the street name of the start location.")
-//    private String startAddress;
-//
-//	@Size(min = 1, message = "Please specify the street number of the start location.")
-//    private String startAddressNumber;
-//
-//	@NotNull (message = "Please specify the ZIP code of the start location.")
-//	@Min(value = 1000, message = "You entered an invalid ZIP code.")
-//	@Max(value = 9999, message = "You entered an invalid ZIP code.")
-//    private int startZip;
-//
-//	@Size(min = 1, message = "Please specify the city of the start location.")
-//    private String startCity;
-//
-//	@Size(min = 1, message = "Please specify the name of the contact person at the tour destination.")
-//	private String contactPersonName;
-//
-//	@Size(min = 1, message = "Please specify the surname of the person at the tour destionation.")
-//	private String contactPersonSurname;
-//
-//	@Size(min = 1, message = "Please specify the destination street.")
-//	private String destinationAddress;
-//
-//	@Size(min = 1, message = "Please specify the street number of the tour destination.")
-//	private String destinationAddressNumber;
-//
-//	@NotNull (message = "Please specify the ZIP code of the tour destination.")
-//	@Min(value = 1000, message = "You entered an invalid ZIP code.")
-//	@Max(value = 9999, message = "You entered an invalid ZIP code.")
-//	private int destinationZip;
-//
-//	@Size(min = 1, message = "Please specify the city of the tour destination.")
-//	private String destinationCity;
-
     @NotNull(message = "Please specify a start date for the tour.")
 //	@Future (message = "You can't create tours in the past.")
     @DateTimeFormat(pattern = "uuuu-MM-dd")
@@ -124,57 +84,6 @@ public class Tour {
     public int getNumberOfAnimals() {
         return numberOfAnimals;
     }
-
-    //	public String getStartPersonName() {
-//	    return startPersonName;
-//	}
-//
-//	public String getStartPersonSurname() {
-//	    return startPersonSurname;
-//	}
-//
-//	public String getStartAddress() {
-//	    return startAddress;
-//	}
-//
-//	public String getStartAddressNumber() {
-//	    return startAddressNumber;
-//	}
-//
-//	public int getStartZip() {
-//	    return startZip;
-//	}
-//
-//	public String getStartCity() {
-//	    return startCity;
-//	}
-//
-//	public String getContactPersonName() {
-//	    return contactPersonName;
-//	}
-//
-//	public String getContactPersonSurname() {
-//	    return contactPersonSurname;
-//	}
-//
-//	public String getContactPerson() { return contactPersonName + " " + contactPersonSurname; }
-//
-//	public String getDestinationAddress() {
-//	    return destinationAddress;
-//	}
-//
-//	public String getDestinationAddressNumber() {
-//	    return destinationAddressNumber;
-//	}
-//
-//	public int getDestinationZip() {
-//	    return destinationZip;
-//	}
-//
-//	public String getDestinationCity() {
-//	    return destinationCity;
-//	}
-
 
     public Address getStartAddress() {
         return startAddress;
@@ -227,54 +136,6 @@ public class Tour {
     public void setNumberOfAnimals(int numberOfAnimals) {
         this.numberOfAnimals = numberOfAnimals;
     }
-
-//	public void setStartPersonName(String startPersonName) {
-//	    this.startPersonName = startPersonName;
-//	}
-//
-//	public void setStartPersonSurname(String startPersonSurname) {
-//	    this.startPersonSurname = startPersonSurname;
-//	}
-//
-//	public void setStartAddress(String startAddress) {
-//	    this.startAddress = startAddress;
-//	}
-//
-//	public void setStartAddressNumber(String startAddressNumber) {
-//	    this.startAddressNumber = startAddressNumber;
-//	}
-//
-//	public void setStartZip(int startZip) {
-//	    this.startZip = startZip;
-//	}
-//
-//	public void setStartCity(String startCity) {
-//	    this.startCity = startCity;
-//	}
-//
-//	public void setContactPersonName(String contactPersonName) {
-//	    this.contactPersonName = contactPersonName;
-//	}
-//
-//	public void setContactPersonSurname(String contactPersonSurname) {
-//	    this.contactPersonSurname = contactPersonSurname;
-//	}
-//
-//	public void setDestinationAddress(String destinationAddress) {
-//	    this.destinationAddress = destinationAddress;
-//	}
-//
-//	public void setDestinationAddressNumber(String destinationAddressNumber) {
-//	    this.destinationAddressNumber = destinationAddressNumber;
-//	}
-//
-//	public void setDestinationZip(int destinationZip) {
-//	    this.destinationZip = destinationZip;
-//	}
-//
-//	public void setDestinationCity(String destinationCity) {
-//	    this.destinationCity = destinationCity;
-//	}
 
     public void setDeliveryStartDate(LocalDate startDate) {
         this.deliveryStartDate = startDate;
