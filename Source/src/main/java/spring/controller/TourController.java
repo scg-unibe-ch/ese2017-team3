@@ -153,23 +153,12 @@ public class TourController {
         //toDelete.setId(activeTour.getId());
         //oldTour.setEstimatedTime(activeTour.getEstimatedTime());
         //oldTour.setTimeFrame(activeTour.getTimeFrame());
+
         oldTour.setCargo(activeTour.getCargo());
         oldTour.setNumberOfAnimals(activeTour.getNumberOfAnimals());
 
         oldTour.setStartAddress(activeTour.getStartAddress());
         oldTour.setDestinationAddress(activeTour.getDestinationAddress());
-//        oldTour.setStartPersonName(activeTour.getStartPersonName());
-//        oldTour.setStartPersonSurname(activeTour.getStartPersonSurname());
-//        oldTour.setStartAddress(activeTour.getStartAddress());
-//        oldTour.setStartAddressNumber(activeTour.getStartAddressNumber());
-//        oldTour.setStartZip(activeTour.getStartZip());
-//        oldTour.setStartCity(activeTour.getStartCity());
-//        oldTour.setContactPersonName(activeTour.getContactPersonName());
-//        oldTour.setContactPersonSurname(activeTour.getContactPersonSurname());
-//        oldTour.setDestinationAddress(activeTour.getDestinationAddress());
-//        oldTour.setDestinationAddressNumber(activeTour.getDestinationAddressNumber());
-//        oldTour.setDestinationZip(activeTour.getDestinationZip());
-//        oldTour.setDestinationCity(activeTour.getDestinationCity());
 
         oldTour.setDeliveryStartDate(activeTour.getDeliveryStartDate());
         oldTour.setDeliveryStartTime(activeTour.getDeliveryStartTime());
