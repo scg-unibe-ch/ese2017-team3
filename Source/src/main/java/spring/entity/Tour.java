@@ -28,10 +28,10 @@ public class Tour {
     private int numberOfAnimals;
 
 
-    @NotNull
+    @OneToOne
     private Address startAddress;
 
-    @NotNull
+    @OneToOne
     private Address destinationAddress;
 
 //    @Size(min = 1, message = "Please specify the name of the contact person at the start location.")
