@@ -1,10 +1,8 @@
 package spring.entity;
 
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
+@Entity
 public class Address {
 
 	@Id
@@ -12,10 +10,10 @@ public class Address {
     private long id;
 	
 	@Column (nullable = true)
-	private String personName;
+	private String name;
 
 	@Column (nullable = true)
-	private String personSurname;
+	private String surname;
 
 	@Column (nullable = true)
     private String street;
@@ -30,21 +28,21 @@ public class Address {
     @Column (nullable = true)
     private String city;
 
-    
+
     public long getId() {
 		return id;
 	}
-    
+
     public String getPerson() {
-    	return personName + " " + personSurname;
+    	return name + " " + surname;
     }
-    
-	public String getPersonName() {
-		return personName;
+
+	public String getName() {
+		return name;
 	}
 
-	public String getPersonSurname() {
-		return personSurname;
+	public String getSurname() {
+		return surname;
 	}
 
 	public String getStreet() {
@@ -63,18 +61,18 @@ public class Address {
 		return city;
 	}
 
-	
-	
+
+
 	public void setId(long id) {
 		this.id = id;
 	}
-	
-	public void setPersonName(String personName) {
-		this.personName = personName;
+
+	public void setName(String name) {
+		this.name = name;
 	}
 
-	public void setPersonSurname(String personSurname) {
-		this.personSurname = personSurname;
+	public void setSurname(String surname) {
+		this.surname = surname;
 	}
 
 	public void setStreet(String address) {

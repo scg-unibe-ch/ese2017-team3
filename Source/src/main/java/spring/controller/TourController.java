@@ -13,6 +13,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import spring.entity.Driver;
 import spring.entity.Tour;
+import spring.repositories.AddressRepository;
 import spring.repositories.TourRepository;
 import spring.security.UserSecurityService;
 import spring.service.DriverService;
@@ -39,6 +40,9 @@ public class TourController {
 
     @Autowired
     private TourService tourService;
+
+    @Autowired
+    private AddressRepository addressRepository;
 
     @Autowired
     private DriverService driverService;
@@ -96,6 +100,8 @@ public class TourController {
             model.addAttribute("drivers", drivers);
             return new ModelAndView("backend/deliveries");
         }
+        addressRepository.save(tour.getStartAddress());
+        addressRepository.save(tour.getDestinationAddress());
         tourRepository.save(tour);
         return new ModelAndView("redirect:/tours");
     }
@@ -103,18 +109,18 @@ public class TourController {
 
     // GET request to /tours will return a list of all tours
     @GetMapping(path = "/tours")
-    public String tourOverview(ModelMap model, @RequestParam(required = false, defaultValue = "-1") int activeIndex, @RequestParam(required = false, defaultValue="Date/Time") String sortBy) {
-    	
-    	List<Tour> tours = tourService.getSortedTours(sortBy);
+    public String tourOverview(ModelMap model, @RequestParam(required = false, defaultValue = "-1") int activeIndex, @RequestParam(required = false, defaultValue = "Date/Time") String sortBy) {
+
+        List<Tour> tours = tourService.getSortedTours(sortBy);
         if (!sortBy.equals("")) model.addAttribute("sortBy", sortBy);
-        
-    	model.addAttribute("tours", tours);
+
+        model.addAttribute("tours", tours);
 
         //prepare a list of Drivers to select from.
         List<Driver> drivers = driverService.getDrivers();
         model.addAttribute("drivers", drivers);
         Tour activeTour = getTourById(activeIndex, tours);
-    	model.addAttribute("activeTour", activeTour);
+        model.addAttribute("activeTour", activeTour);
         return "backend/tourOverview";
     }
 
@@ -149,23 +155,29 @@ public class TourController {
         //oldTour.setTimeFrame(activeTour.getTimeFrame());
         oldTour.setCargo(activeTour.getCargo());
         oldTour.setNumberOfAnimals(activeTour.getNumberOfAnimals());
-        oldTour.setStartPersonName(activeTour.getStartPersonName());
-        oldTour.setStartPersonSurname(activeTour.getStartPersonSurname());
+
         oldTour.setStartAddress(activeTour.getStartAddress());
-        oldTour.setStartAddressNumber(activeTour.getStartAddressNumber());
-        oldTour.setStartZip(activeTour.getStartZip());
-        oldTour.setStartCity(activeTour.getStartCity());
-        oldTour.setContactPersonName(activeTour.getContactPersonName());
-        oldTour.setContactPersonSurname(activeTour.getContactPersonSurname());
         oldTour.setDestinationAddress(activeTour.getDestinationAddress());
-        oldTour.setDestinationAddressNumber(activeTour.getDestinationAddressNumber());
-        oldTour.setDestinationZip(activeTour.getDestinationZip());
-        oldTour.setDestinationCity(activeTour.getDestinationCity());
+//        oldTour.setStartPersonName(activeTour.getStartPersonName());
+//        oldTour.setStartPersonSurname(activeTour.getStartPersonSurname());
+//        oldTour.setStartAddress(activeTour.getStartAddress());
+//        oldTour.setStartAddressNumber(activeTour.getStartAddressNumber());
+//        oldTour.setStartZip(activeTour.getStartZip());
+//        oldTour.setStartCity(activeTour.getStartCity());
+//        oldTour.setContactPersonName(activeTour.getContactPersonName());
+//        oldTour.setContactPersonSurname(activeTour.getContactPersonSurname());
+//        oldTour.setDestinationAddress(activeTour.getDestinationAddress());
+//        oldTour.setDestinationAddressNumber(activeTour.getDestinationAddressNumber());
+//        oldTour.setDestinationZip(activeTour.getDestinationZip());
+//        oldTour.setDestinationCity(activeTour.getDestinationCity());
+
         oldTour.setDeliveryStartDate(activeTour.getDeliveryStartDate());
         oldTour.setDeliveryStartTime(activeTour.getDeliveryStartTime());
         oldTour.setDriver(activeTour.getDriver());
         oldTour.setComment(activeTour.getComment());
 
+        addressRepository.save(oldTour.getStartAddress());
+        addressRepository.save(oldTour.getDestinationAddress());
         tourRepository.save(oldTour);
 
         List<Tour> tours = tourService.getSortedTours("");
@@ -173,28 +185,28 @@ public class TourController {
         model.addAttribute("tours", tours);
         return new ModelAndView("redirect:/tours?activeIndex=" + activeTour.getId());
     }
-    
+
     /**
      * Returns the tour in the list with the given id.
-     * 
-     * @param id     positive numbers and -1
-     * @param tours  shouldn't be null
+     *
+     * @param id    positive numbers and -1
+     * @param tours shouldn't be null
      * @return the first tour which have the correct id,
-     *         the first tour of the list if id is -1 and null
-     *         in all other cases.
+     * the first tour of the list if id is -1 and null
+     * in all other cases.
      */
     private Tour getTourById(int id, List<Tour> tours) {
-    	if (tours.size() != 0) {
-    		if (id == -1) {
-    			return tours.get(0);
-    		} else {
-    			for (Tour t : tours) {
-        			if (t.getId() == id) {
-        				return t;
-        			}
-        		}
-    		}
-    	}
-    	return null;
+        if (tours.size() != 0) {
+            if (id == -1) {
+                return tours.get(0);
+            } else {
+                for (Tour t : tours) {
+                    if (t.getId() == id) {
+                        return t;
+                    }
+                }
+            }
+        }
+        return null;
     }
 }
