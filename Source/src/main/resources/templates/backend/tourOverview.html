@@ -55,7 +55,7 @@
                 </ul>
                 <div class="is-right">
                     <form action="#" th:action="@{/logout}" method="post">
-                        <input type="submit" class="button is-link" value="Log Out" />
+                        <input type="submit" class="button is-link" value="Log Out"/>
                     </form>
                 </div>
             </nav>
@@ -109,7 +109,9 @@
                                             <div class="column is-narrow">
                                                 <span class="icon"><i class="fa fa-calendar"></i>&nbsp;</span>
                                             </div>
-                                            <div class="column "><u th:text="${#temporals.format(tour.deliveryStartDate, 'dd.MM.yyyy')}"></u></div>
+                                            <div class="column "><u
+                                                    th:text="${#temporals.format(tour.deliveryStartDate, 'dd.MM.yyyy')}"></u>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="column is-half">
@@ -170,9 +172,9 @@
             <div class="block">
                 <div class="box">
                     <form action="#" th:action="@{/tours/update}" th:object="${activeTour}" method="post">
-                        <input type="hidden" th:field="*{id}" />
-                        <input type="hidden" th:field="*{estimatedTime}" />
-                        <input type="hidden" th:field="*{timeFrame}" />
+                        <input type="hidden" th:field="*{id}"/>
+                        <input type="hidden" th:field="*{estimatedTime}"/>
+                        <input type="hidden" th:field="*{timeFrame}"/>
                         <div class="columns">
                             <div class="column is-2">Cargo:</div>
                             <div class="column is-4">
@@ -214,7 +216,8 @@
                                 <div class="field">
                                     <input class="input" type="text" th:field="*{destinationAddress.name}"/>
                                 </div>
-                                <article class="message is-warning" th:if="${#fields.hasErrors('destinationAddress.name')}">
+                                <article class="message is-warning"
+                                         th:if="${#fields.hasErrors('destinationAddress.name')}">
                                     <div class="message-body" th:errors="*{destinationAddress.name}">
                                         Error in numberOfAnimals
                                     </div>
@@ -225,7 +228,8 @@
                                 <div class="field">
                                     <input class="input" type="text" th:field="*{startAddress.surname}"/>
                                 </div>
-                                <article class="message is-warning" th:if="${#fields.hasErrors('startAddress.surname')}">
+                                <article class="message is-warning"
+                                         th:if="${#fields.hasErrors('startAddress.surname')}">
                                     <div class="message-body" th:errors="*{startAddress.surname}">
                                         Error in numberOfAnimals
                                     </div>
@@ -236,7 +240,8 @@
                                 <div class="field">
                                     <input class="input" type="text" th:field="*{destinationAddress.surname}"/>
                                 </div>
-                                <article class="message is-warning" th:if="${#fields.hasErrors('destinationAddress.surname')}">
+                                <article class="message is-warning"
+                                         th:if="${#fields.hasErrors('destinationAddress.surname')}">
                                     <div class="message-body" th:errors="*{destinationAddress.surname}">
                                         Error in numberOfAnimals
                                     </div>
@@ -257,7 +262,8 @@
                                 <div class="field">
                                     <input class="input" type="text" th:field="*{startAddress.streetNumber}"/>
                                 </div>
-                                <article class="message is-warning" th:if="${#fields.hasErrors('startAddress.streetNumber')}">
+                                <article class="message is-warning"
+                                         th:if="${#fields.hasErrors('startAddress.streetNumber')}">
                                     <div class="message-body" th:errors="*{startAddress.streetNumber}">
                                         Error in numberOfAnimals
                                     </div>
@@ -268,7 +274,8 @@
                                 <div class="field">
                                     <input class="input" type="text" th:field="*{destinationAddress.street}"/>
                                 </div>
-                                <article class="message is-warning" th:if="${#fields.hasErrors('destinationAddress.street')}">
+                                <article class="message is-warning"
+                                         th:if="${#fields.hasErrors('destinationAddress.street')}">
                                     <div class="message-body" th:errors="*{destinationAddress.street}">
                                         Error in numberOfAnimals
                                     </div>
@@ -278,7 +285,8 @@
                                 <div class="field">
                                     <input class="input" type="text" th:field="*{destinationAddress.streetNumber}"/>
                                 </div>
-                                <article class="message is-warning" th:if="${#fields.hasErrors('destinationAddress.streetNumber')}">
+                                <article class="message is-warning"
+                                         th:if="${#fields.hasErrors('destinationAddress.streetNumber')}">
                                     <div class="message-body" th:errors="*{destinationAddress.streetNumber}">
                                         Error in numberOfAnimals
                                     </div>
@@ -310,7 +318,8 @@
                                 <div class="field">
                                     <input class="input" type="text" th:field="*{destinationAddress.zip}"/>
                                 </div>
-                                <article class="message is-warning" th:if="${#fields.hasErrors('destinationAddress.zip')}">
+                                <article class="message is-warning"
+                                         th:if="${#fields.hasErrors('destinationAddress.zip')}">
                                     <div class="message-body" th:errors="*{destinationAddress.zip}">
                                         Error in numberOfAnimals
                                     </div>
@@ -320,7 +329,8 @@
                                 <div class="field">
                                     <input class="input" type="text" th:field="*{destinationAddress.city}"/>
                                 </div>
-                                <article class="message is-warning" th:if="${#fields.hasErrors('destinationAddress.city')}">
+                                <article class="message is-warning"
+                                         th:if="${#fields.hasErrors('destinationAddress.city')}">
                                     <div class="message-body" th:errors="*{destinationAddress.city}">
                                         Error in numberOfAnimals
                                     </div>
@@ -332,7 +342,9 @@
                             <div class="column is-2">Date:</div>
                             <div class="column is-4">
                                 <div class="field">
-                                    <input class="input" type="date" th:value="${#temporals.format(activeTour.deliveryStartDate, 'uuuu-MM-dd')}" th:field="*{deliveryStartDate}"/>
+                                    <input class="input" type="date"
+                                           th:value="${#temporals.format(activeTour.deliveryStartDate, 'uuuu-MM-dd')}"
+                                           th:field="*{deliveryStartDate}"/>
                                 </div>
                                 <article class="message is-warning" th:if="${#fields.hasErrors('deliveryStartDate')}">
                                     <div class="message-body" th:errors="*{deliveryStartDate}">
@@ -343,7 +355,9 @@
                             <div class="column is-2">Time:</div>
                             <div class="column is-4">
                                 <div class="field">
-                                    <input class="input" type="time" th:value="${#temporals.format(activeTour.deliveryStartTime, 'HH:mm')}" th:field="*{deliveryStartTime}"/>
+                                    <input class="input" type="time"
+                                           th:value="${#temporals.format(activeTour.deliveryStartTime, 'HH:mm')}"
+                                           th:field="*{deliveryStartTime}"/>
                                 </div>
                                 <article class="message is-warning" th:if="${#fields.hasErrors('deliveryStartTime')}">
                                     <div class="message-body" th:errors="*{deliveryStartTime}">
@@ -357,7 +371,8 @@
                             <div class="column">
                                 <div class="select">
                                     <select th:field="*{driver}">
-                                        <option th:if="${not #lists.isEmpty(drivers)}" th:each="driver : ${drivers}" th:value="${driver.username}" th:text="${driver.username}"></option>
+                                        <option th:if="${not #lists.isEmpty(drivers)}" th:each="driver : ${drivers}"
+                                                th:value="${driver.username}" th:text="${driver.username}"></option>
                                     </select>
                                 </div>
                             </div>
@@ -373,7 +388,8 @@
                             </div>
                         </div>
                         <div class="columns">
-                            <div class="column is-2 is-offset-10"><button type="submit" class="button is-info is-pulled-right">Save</button>
+                            <div class="column is-2 is-offset-10">
+                                <button type="submit" class="button is-info is-pulled-right">Save</button>
                             </div>
                         </div>
                     </form>
@@ -388,27 +404,27 @@
             $(this).parent(".notification").hide(300);
         });
     });
-    
 
-    	function paramChangerSetter(paramName, newValueForParam) {
-        	var newHref = window.location.href;
-        	var regularExpression = new RegExp(paramName + "=[a-zA-Z1-9/ (%20)]*", "g");
-        	
-        	if (regularExpression.test(newHref)) {							//update param
-        		newHref = newHref.replace(regularExpression, paramName + "=" + newValueForParam);
-        	} else {														//set param
-        		if (newHref.indexOf("?") == -1) {
-        			newHref = newHref + "?" + paramName + "=" + newValueForParam;
-        		} else {
-        		    //NOTE: The comments below are important for the Html-parser. Don't remove them
-        			newHref = newHref + /*<![CDATA[*/"&"/*]]>*/ + paramName + "=" + newValueForParam;
-        		}
-        		
-        	}
-        	window.location.href=newHref + "";
+
+    function paramChangerSetter(paramName, newValueForParam) {
+        var newHref = window.location.href;
+        var regularExpression = new RegExp(paramName + "=[a-zA-Z1-9/ (%20)]*", "g");
+
+        if (regularExpression.test(newHref)) {							//update param
+            newHref = newHref.replace(regularExpression, paramName + "=" + newValueForParam);
+        } else {														//set param
+            if (newHref.indexOf("?") == -1) {
+                newHref = newHref + "?" + paramName + "=" + newValueForParam;
+            } else {
+                //NOTE: The comments below are important for the Html-parser. Don't remove them
+                newHref = newHref + /*<![CDATA[*/"&"/*]]>*/ + paramName + "=" + newValueForParam;
+            }
+
         }
-    
-    
+        window.location.href = newHref + "";
+    }
+
+
 </script>
 </body>
 </html>

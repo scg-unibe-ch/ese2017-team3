@@ -6,32 +6,8 @@
     <title>AniTrans Tour Overview</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
     <link href="../../static/css/bulma.css" th:href="@{/css/bulma.css}" rel="stylesheet"/>
+    <link href="../static/css/additionalStyles.css" th:href="@{/css/additionalStyles.css}" rel="stylesheet"/>
     <script th:src="@{/js/jquery-3.2.1.min.js}" />
-    <style>
-        .tour-item {
-            cursor: pointer;
-            padding-left: 10px;
-            padding-right: 10px;
-            padding-top: 10px;
-            padding-bottom: 10px;
-            border-radius: 4px;
-        }
-
-        .tour-item:hover {
-            background-color: #D1EEEE;
-        }
-
-        .selected {
-            background-color: #D1EEEE;
-        }
-
-        .content blockquote {
-            background-color: #A4BABA;
-            border-left: 5px solid #406E6E;
-            padding: 1.25em 1.5em;
-            color: #FFFFFF;
-        }
-    </style>
 </head>
 
 <body class="login-page page-layout">
@@ -93,16 +69,16 @@
                                     <span type="time" th:text="${tour.deliveryStartTime}">Time</span>
                                 </div>
                                 <div class="column">
-                                    <span th:text="${tour.startAddress}">Address </span>
-                                    <span th:text="${tour.startAddressNumber}">Number </span><span>,</span>
-                                    <span th:text="${tour.startZip}">ZIP </span>
-                                    <span th:text="${tour.startCity}">City </span>
+                                    <span th:text="${tour.startAddress.street}">Address </span>
+                                    <span th:text="${tour.startAddress.streetNumber}">Number </span><span>,</span>
+                                    <span th:text="${tour.startAddress.zip}">ZIP </span>
+                                    <span th:text="${tour.startAddress.city}">City </span>
                                 </div>
                                 <div class="column">
-                                    <span th:text="${tour.destinationAddress}">Address </span>
-                                    <span th:text="${tour.destinationAddressNumber}">Number </span><span>,</span>
-                                    <span th:text="${tour.destinationZip}">ZIP </span>
-                                    <span th:text="${tour.destinationCity}">City </span>
+                                    <span th:text="${tour.destinationAddress.street}">Address </span>
+                                    <span th:text="${tour.destinationAddress.streetNumber}">Number </span><span>,</span>
+                                    <span th:text="${tour.destinationAddress.zip}">ZIP </span>
+                                    <span th:text="${tour.destinationAddress.city}">City </span>
                                 </div>
                             </div>
                             <div class="panel">
@@ -123,7 +99,7 @@
                                         <strong>Estimated Time: </strong><span th:text="${tour.estimatedTime}">--</span>h
                                     </div>
                                     <div class="column">
-                                        <strong>Contact Person: </strong><span type="text" th:text="${tour.contactPerson}">Person</span>
+                                        <strong>Contact Person: </strong><span type="text" th:text="${tour.destinationAddress.name}">Person</span>
                                     </div>
                                 </div>
                                 <div class="columns is-mobile">
@@ -153,16 +129,16 @@
                                     <span type="time" th:text="${tour.deliveryStartTime}">Time</span>
                                 </div>
                                 <div class="column">
-                                    <span th:text="${tour.startAddress}">Address </span>
-                                    <span th:text="${tour.startAddressNumber}">Number </span><span>,</span>
-                                    <span th:text="${tour.startZip}">ZIP </span>
-                                    <span th:text="${tour.startCity}">City </span>
+                                    <span th:text="${tour.startAddress.street}">Address </span>
+                                    <span th:text="${tour.startAddress.streetNumber}">Number </span><span>,</span>
+                                    <span th:text="${tour.startAddress.zip}">ZIP </span>
+                                    <span th:text="${tour.startAddress.city}">City </span>
                                 </div>
                                 <div class="column">
-                                    <span th:text="${tour.destinationAddress}">Address </span>
-                                    <span th:text="${tour.destinationAddressNumber}">Number </span><span>,</span>
-                                    <span th:text="${tour.destinationZip}">ZIP </span>
-                                    <span th:text="${tour.destinationCity}">City </span>
+                                    <span th:text="${tour.destinationAddress.street}">Address </span>
+                                    <span th:text="${tour.destinationAddress.streetNumber}">Number </span><span>,</span>
+                                    <span th:text="${tour.destinationAddress.zip}">ZIP </span>
+                                    <span th:text="${tour.destinationAddress.city}">City </span>
                                 </div>
                             </div>
                             <div class="panel">
@@ -183,7 +159,7 @@
                                         <strong>Estimated Time: </strong><span th:text="${tour.estimatedTime}">--</span>h
                                     </div>
                                     <div class="column">
-                                        <strong>Contact Person: </strong><span type="text" th:text="${tour.contactPerson}">Person</span>
+                                        <strong>Contact Person: </strong><span type="text" th:text="${tour.destinationAddress.name}">Person</span>
                                     </div>
                                 </div>
                                 <div class="columns is-mobile">
@@ -214,16 +190,16 @@
                                         <span type="time" th:text="${tour.deliveryStartTime}">Time</span>
                                     </div>
                                     <div class="column">
-                                        <span th:text="${tour.startAddress}">Address </span>
-                                        <span th:text="${tour.startAddressNumber}">Number </span><span>,</span>
-                                        <span th:text="${tour.startZip}">ZIP </span>
-                                        <span th:text="${tour.startCity}">City </span>
+                                        <span th:text="${tour.startAddress.street}">Address </span>
+                                        <span th:text="${tour.startAddress.streetNumber}">Number </span><span>,</span>
+                                        <span th:text="${tour.startAddress.zip}">ZIP </span>
+                                        <span th:text="${tour.startAddress.city}">City </span>
                                     </div>
                                     <div class="column">
-                                        <span th:text="${tour.destinationAddress}">Address </span>
-                                        <span th:text="${tour.destinationAddressNumber}">Number </span><span>,</span>
-                                        <span th:text="${tour.destinationZip}">ZIP </span>
-                                        <span th:text="${tour.destinationCity}">City </span>
+                                        <span th:text="${tour.destinationAddress.street}">Address </span>
+                                        <span th:text="${tour.destinationAddress.streetNumber}">Number </span><span>,</span>
+                                        <span th:text="${tour.destinationAddress.zip}">ZIP </span>
+                                        <span th:text="${tour.destinationAddress.city}">City </span>
                                     </div>
                                 </div>
                                 <div class="panel">
@@ -244,7 +220,7 @@
                                             <strong>Estimated Time: </strong><span th:text="${tour.estimatedTime}">--</span>h
                                         </div>
                                         <div class="column">
-                                            <strong>Contact Person: </strong><span type="text" th:text="${tour.contactPerson}">Person</span>
+                                            <strong>Contact Person: </strong><span type="text" th:text="${tour.destinationAddress.name}">Person</span>
                                         </div>
                                     </div>
                                     <div class="columns is-mobile">
@@ -275,16 +251,16 @@
                                     <span type="time" th:text="${tour.deliveryStartTime}">Time</span>
                                 </div>
                                 <div class="column">
-                                    <span th:text="${tour.startAddress}">Address </span>
-                                    <span th:text="${tour.startAddressNumber}">Number </span><span>,</span>
-                                    <span th:text="${tour.startZip}">ZIP </span>
-                                    <span th:text="${tour.startCity}">City </span>
+                                    <span th:text="${tour.startAddress.street}">Address </span>
+                                    <span th:text="${tour.startAddress.streetNumber}">Number </span><span>,</span>
+                                    <span th:text="${tour.startAddress.zip}">ZIP </span>
+                                    <span th:text="${tour.startAddress.city}">City </span>
                                 </div>
                                 <div class="column">
-                                    <span th:text="${tour.destinationAddress}">Address </span>
-                                    <span th:text="${tour.destinationAddressNumber}">Number </span><span>,</span>
-                                    <span th:text="${tour.destinationZip}">ZIP </span>
-                                    <span th:text="${tour.destinationCity}">City </span>
+                                    <span th:text="${tour.destinationAddress.street}">Address </span>
+                                    <span th:text="${tour.destinationAddress.streetNumber}">Number </span><span>,</span>
+                                    <span th:text="${tour.destinationAddress.zip}">ZIP </span>
+                                    <span th:text="${tour.destinationAddress.city}">City </span>
                                 </div>
                             </div>
                             <div class="panel">
@@ -305,7 +281,7 @@
                                         <strong>Estimated Time: </strong><span th:text="${tour.estimatedTime}">--</span>h
                                     </div>
                                     <div class="column">
-                                        <strong>Contact Person: </strong><span type="text" th:text="${tour.contactPerson}">Person</span>
+                                        <strong>Contact Person: </strong><span type="text" th:text="${tour.destinationAddress.name}">Person</span>
                                     </div>
                                 </div>
                                 <div class="columns is-mobile">
@@ -335,16 +311,16 @@
                                     <span type="time" th:text="${tour.deliveryStartTime}">Time</span>
                                 </div>
                                 <div class="column">
-                                    <span th:text="${tour.startAddress}">Address </span>
-                                    <span th:text="${tour.startAddressNumber}">Number </span><span>,</span>
-                                    <span th:text="${tour.startZip}">ZIP </span>
-                                    <span th:text="${tour.startCity}">City </span>
+                                    <span th:text="${tour.startAddress.street}">Address </span>
+                                    <span th:text="${tour.startAddress.streetNumber}">Number </span><span>,</span>
+                                    <span th:text="${tour.startAddress.zip}">ZIP </span>
+                                    <span th:text="${tour.startAddress.city}">City </span>
                                 </div>
                                 <div class="column">
-                                    <span th:text="${tour.destinationAddress}">Address </span>
-                                    <span th:text="${tour.destinationAddressNumber}">Number </span><span>,</span>
-                                    <span th:text="${tour.destinationZip}">ZIP </span>
-                                    <span th:text="${tour.destinationCity}">City </span>
+                                    <span th:text="${tour.destinationAddress.street}">Address </span>
+                                    <span th:text="${tour.destinationAddress.streetNumber}">Number </span><span>,</span>
+                                    <span th:text="${tour.destinationAddress.zip}">ZIP </span>
+                                    <span th:text="${tour.destinationAddress.city}">City </span>
                                 </div>
                             </div>
                             <div class="panel">
@@ -365,7 +341,7 @@
                                         <strong>Estimated Time: </strong><span th:text="${tour.estimatedTime}">--</span>h
                                     </div>
                                     <div class="column">
-                                        <strong>Contact Person: </strong><span type="text" th:text="${tour.contactPerson}">Person</span>
+                                        <strong>Contact Person: </strong><span type="text" th:text="${tour.destinationAddress.name}">Person</span>
                                     </div>
                                 </div>
                                 <div class="columns is-mobile">
@@ -395,16 +371,16 @@
                                     <span type="time" th:text="${tour.deliveryStartTime}">Time</span>
                                 </div>
                                 <div class="column">
-                                    <span th:text="${tour.startAddress}">Address </span>
-                                    <span th:text="${tour.startAddressNumber}">Number </span><span>,</span>
-                                    <span th:text="${tour.startZip}">ZIP </span>
-                                    <span th:text="${tour.startCity}">City </span>
+                                    <span th:text="${tour.startAddress.street}">Address </span>
+                                    <span th:text="${tour.startAddress.streetNumber}">Number </span><span>,</span>
+                                    <span th:text="${tour.startAddress.zip}">ZIP </span>
+                                    <span th:text="${tour.startAddress.city}">City </span>
                                 </div>
                                 <div class="column">
-                                    <span th:text="${tour.destinationAddress}">Address </span>
-                                    <span th:text="${tour.destinationAddressNumber}">Number </span><span>,</span>
-                                    <span th:text="${tour.destinationZip}">ZIP </span>
-                                    <span th:text="${tour.destinationCity}">City </span>
+                                    <span th:text="${tour.destinationAddress.street}">Address </span>
+                                    <span th:text="${tour.destinationAddress.streetNumber}">Number </span><span>,</span>
+                                    <span th:text="${tour.destinationAddress.zip}">ZIP </span>
+                                    <span th:text="${tour.destinationAddress.city}">City </span>
                                 </div>
                             </div>
                             <div class="panel">
@@ -425,7 +401,7 @@
                                         <strong>Estimated Time: </strong><span th:text="${tour.estimatedTime}">--</span>h
                                     </div>
                                     <div class="column">
-                                        <strong>Contact Person: </strong><span type="text" th:text="${tour.contactPerson}">Person</span>
+                                        <strong>Contact Person: </strong><span type="text" th:text="${tour.destinationAddress.name}">Person</span>
                                     </div>
                                 </div>
                                 <div class="columns is-mobile">
@@ -455,16 +431,16 @@
                                     <span type="time" th:text="${tour.deliveryStartTime}">Time</span>
                                 </div>
                                 <div class="column">
-                                    <span th:text="${tour.startAddress}">Address </span>
-                                    <span th:text="${tour.startAddressNumber}">Number </span><span>,</span>
-                                    <span th:text="${tour.startZip}">ZIP </span>
-                                    <span th:text="${tour.startCity}">City </span>
+                                    <span th:text="${tour.startAddress.street}">Address </span>
+                                    <span th:text="${tour.startAddress.streetNumber}">Number </span><span>,</span>
+                                    <span th:text="${tour.startAddress.zip}">ZIP </span>
+                                    <span th:text="${tour.startAddress.city}">City </span>
                                 </div>
                                 <div class="column">
-                                    <span th:text="${tour.destinationAddress}">Address </span>
-                                    <span th:text="${tour.destinationAddressNumber}">Number </span><span>,</span>
-                                    <span th:text="${tour.destinationZip}">ZIP </span>
-                                    <span th:text="${tour.destinationCity}">City </span>
+                                    <span th:text="${tour.destinationAddress.street}">Address </span>
+                                    <span th:text="${tour.destinationAddress.streetNumber}">Number </span><span>,</span>
+                                    <span th:text="${tour.destinationAddress.zip}">ZIP </span>
+                                    <span th:text="${tour.destinationAddress.city}">City </span>
                                 </div>
                             </div>
                             <div class="panel">
@@ -485,7 +461,7 @@
                                         <strong>Estimated Time: </strong><span th:text="${tour.estimatedTime}">--</span>h
                                     </div>
                                     <div class="column">
-                                        <strong>Contact Person: </strong><span type="text" th:text="${tour.contactPerson}">Person</span>
+                                        <strong>Contact Person: </strong><span type="text" th:text="${tour.destinationAddress.name}">Person</span>
                                     </div>
                                 </div>
                                 <div class="columns is-mobile">
