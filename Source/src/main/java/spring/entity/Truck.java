@@ -17,9 +17,13 @@ public class Truck {
     @Column(nullable = false)
     public String truckType;
 
+    @Column(nullable = false)
+    public Boolean available;
+
     public Truck() {};
 
-    public Truck(String truckType) {
+    public Truck(String truckType, boolean available) {
         this.truckType = truckType;
+        this.available = available;
     }
 }

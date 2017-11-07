@@ -2,12 +2,21 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
     <link rel="stylesheet" th:href="@{/css/sliderCSS.css}"/>
-    <script type="text/javascript" th:src="@{/js/sliderScript.js}" />
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script type="text/javascript" th:src="@{/js/sliderScript.js}"/>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <title>AniTrans Truck Overview</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
     <link href="../static/css/bulma.css" th:href="@{/css/bulma.css}" rel="stylesheet"/>
+
+    <style type="text/css">
+        .truckpic {
+            display: block;
+            width: 200px;
+            height: 150px;
+        }
+    </style>
+
 </head>
 <body class="login-page page-layout">
 <section class="hero is-link">
@@ -58,27 +67,66 @@
                 </ul>
                 <div class="is-right">
                     <form action="#" th:action="@{/logout}" method="post">
-                        <input type="submit" class="button is-link" value="Log Out" />
+                        <input type="submit" class="button is-link" value="Log Out"/>
                     </form>
                 </div>
             </nav>
         </div>
     </div>
 </section>
-<table class="table is-fullwidth">
-    <thead>
-    <tr>
-        <th>Name</th>
-        <th>Hiring Date</th>
-        <th></th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:if="${not #lists.isEmpty(trucks)}" th:each="truck : ${trucks}">
-        <td><p th:text="${truck.truckType}"></p></td>
-    </tr>
-    </tbody>
-</table>
 
+<h2>Available Trucks:</h2>
+
+<div class="columns is-multiline">
+    <div th:if="${not #lists.isEmpty(trucks)}" th:each="truck : ${trucks}">
+        <div th:if="${truck.truckType == 'BIG' and truck.available == true}" class="column">
+            <figure class="image is-128x128">
+                <img th:src="@{/images/bigTransporter2.jpg}"></img>
+            </figure>
+        </div>
+        <div th:if="${truck.truckType == 'MEDIUM' and truck.available == true}" class="column">
+            <figure class="image is-128x128">
+                <img th:src="@{/images/mediumTransporter2.jpg}"></img>
+            </figure>
+        </div>
+        <div th:if="${truck.truckType == 'SMALL' and truck.available == true}" class="column">
+            <figure class="image is-128x128">
+                <img th:src="@{/images/smallTransporter2.jpg}"></img>
+            </figure>
+        </div>
+        <div th:if="${truck.truckType == 'TINY' and truck.available == true}" class="column">
+            <figure class="image is-128x128">
+                <img th:src="@{/images/tinyTransporter2.jpg}"></img>
+            </figure>
+        </div>
+    </div>
+</div>
+
+<h2>Trucks in use:</h2>
+
+<div class="columns is-multiline">
+    <div th:if="${not #lists.isEmpty(trucks)}" th:each="truck : ${trucks}">
+        <div th:if="${truck.truckType == 'BIG' and truck.available == false}" class="column">
+            <figure class="image is-128x128">
+                <img th:src="@{/images/bigTransporter2.jpg}"></img>
+            </figure>
+        </div>
+        <div th:if="${truck.truckType == 'MEDIUM' and truck.available == false}" class="column">
+            <figure class="image is-128x128">
+                <img th:src="@{/images/mediumTransporter2.jpg}"></img>
+            </figure>
+        </div>
+        <div th:if="${truck.truckType == 'SMALL' and truck.available == false}" class="column">
+            <figure class="image is-128x128">
+                <img th:src="@{/images/smallTransporter2.jpg}"></img>
+            </figure>
+        </div>
+        <div th:if="${truck.truckType == 'TINY' and truck.available == false}" class="column">
+            <figure class="image is-128x128">
+                <img th:src="@{/images/tinyTransporter2.jpg}"></img>
+            </figure>
+        </div>
+    </div>
+</div>
 </body>
 </html>
