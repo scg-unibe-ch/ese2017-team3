@@ -51,6 +51,12 @@ public class Tour {
 
     @Column(nullable = false)
     private String driver;
+	@OneToOne
+	private Truck truck;
+
+	public Tour(String cargo) {
+	    this.cargo = cargo;
+	}
 
     @Column
     private String comment;
@@ -58,15 +64,19 @@ public class Tour {
     @Column(nullable = false)
     private TourState tourState = TourState.CREATED;
 
-    public Tour(String cargo) {
-        this.cargo = cargo;
-    }
+	public Truck getTruck() {
+		return truck;
+	}
+
+	public void setTruck(Truck truck) {
+		this.truck = truck;
+	}
+
+	public TourState getTourState() {
+		return tourState;
+	}
 
     public Tour() {
-    }
-
-    public TourState getTourState() {
-        return tourState;
     }
 
     public void setTourState(TourState tourState) {
