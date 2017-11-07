@@ -15,6 +15,7 @@ import spring.entity.Driver;
 import spring.entity.Tour;
 import spring.entity.Truck;
 import spring.repositories.TourRepository;
+import spring.repositories.TruckRepository;
 import spring.security.UserSecurityService;
 import spring.service.DriverService;
 import spring.service.TourService;
@@ -47,6 +48,9 @@ public class TourController {
 
     @Autowired
     private TruckService truckService;
+
+    @Autowired
+    private TruckRepository truckRepository;
 
 
     @GetMapping(path = "/week")
@@ -105,6 +109,9 @@ public class TourController {
             model.addAttribute("drivers", drivers);
             return new ModelAndView("backend/deliveries");
         }
+
+        truckService.getById(tour.getTruck().getId()).setAvailable(false);
+
         tourRepository.save(tour);
         return new ModelAndView("redirect:/tours");
     }

@@ -29,4 +29,36 @@ public class Truck {
         this.truckType = truckType;
         this.available = available;
     }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public String getTruckType() {
+        return truckType;
+    }
+
+    public void setTruckType(String truckType) {
+        this.truckType = truckType;
+    }
+
+    public Boolean getAvailable() {
+        return available;
+    }
+
+    public void setAvailable(Boolean available) {
+        this.available = available;
+    }
+
+    public Tour getTour() {
+        return tour;
+    }
+
+    public void setTour(Tour tour) {
+        this.tour = tour;
+    }
 }

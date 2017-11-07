@@ -20,4 +20,8 @@ public class TruckService {
     public List<Truck> getTrucks() {
         return truckRepository.findAll();
     }
+
+    public Truck getById(Long id) {
+        return truckRepository.findOne(id);
+    }
 }
