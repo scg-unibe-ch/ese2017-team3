@@ -1,37 +1,13 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <title>AniTrans Tour Overview</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
     <link href="../static/css/bulma.css" th:href="@{/css/bulma.css}" rel="stylesheet"/>
-    <script th:src="@{/js/jquery-3.2.1.min.js}" />
-    <style>
-        .tour-item {
-            cursor: pointer;
-            padding-left: 10px;
-            padding-right: 10px;
-            padding-top: 10px;
-            padding-bottom: 10px;
-            border-radius: 4px;
-        }
-
-        .tour-item:hover {
-            background-color: #D1EEEE;
-        }
-
-        .selected {
-            background-color: #D1EEEE;
-        }
-
-        .content blockquote {
-            background-color: #A4BABA;
-            border-left: 5px solid #406E6E;
-            padding: 1.25em 1.5em;
-            color: #FFFFFF;
-        }
-    </style>
+    <link href="../static/css/additionalStyles.css" th:href="@{/css/additionalStyles.css}" rel="stylesheet"/>
+    <script th:src="@{/js/jquery-3.2.1.min.js}"/>
 </head>
 
 <body class="login-page page-layout">
@@ -62,12 +38,12 @@
                         <a href="/week">This week</a>
                     </li>
                     <!--<li>-->
-                        <!--<a href="">Past tours</a>-->
+                    <!--<a href="">Past tours</a>-->
                     <!--</li>-->
                 </ul>
                 <div class="is-right">
                     <form action="#" th:action="@{/logout}" method="post">
-                        <input type="submit" class="button is-link" value="Log Out" />
+                        <input type="submit" class="button is-link" value="Log Out"/>
                     </form>
                 </div>
             </nav>
@@ -82,7 +58,7 @@
                 <div class="column"><strong>From</strong></div>
                 <div class="column"><strong>To</strong></div>
             </div>
-            <hr />
+            <hr/>
             <div th:if="${not #lists.isEmpty(tours)}" th:each="tour : ${tours}">
                 <div class="tour-container" th:field="${tour}">
                     <div class="tour-item">
@@ -91,22 +67,22 @@
                                 <span type="time" th:text="${tour.deliveryStartTime}">Time</span>
                             </div>
                             <div class="column">
-                                <span th:text="${tour.startAddress}">Address </span>
-                                <span th:text="${tour.startAddressNumber}">Number </span><span>,</span>
-                                <span th:text="${tour.startZip}">ZIP </span>
-                                <span th:text="${tour.startCity}">City </span>
+                                <span th:text="${tour.startAddress.street}">Address </span>
+                                <span th:text="${tour.startAddress.streetNumber}">Number </span><span>,</span>
+                                <span th:text="${tour.startAddress.zip}">ZIP </span>
+                                <span th:text="${tour.startAddress.city}">City </span>
                             </div>
                             <div class="column">
-                                <span th:text="${tour.destinationAddress}">Address </span>
-                                <span th:text="${tour.destinationAddressNumber}">Number </span><span>,</span>
-                                <span th:text="${tour.destinationZip}">ZIP </span>
-                                <span th:text="${tour.destinationCity}">City </span>
+                                <span th:text="${tour.destinationAddress.street}">Address </span>
+                                <span th:text="${tour.destinationAddress.streetNumber}">Number </span><span>,</span>
+                                <span th:text="${tour.destinationAddress.zip}">ZIP </span>
+                                <span th:text="${tour.destinationAddress.city}">City </span>
                             </div>
                         </div>
                         <div class="panel">
                             <div class="columns is-mobile">
                                 <div class="column is-one-quarter">
-                                    <strong>Species: </strong><span th:text="${tour.cargo}" />
+                                    <strong>Species: </strong><span th:text="${tour.cargo}"/>
                                 </div>
                                 <div class="column">
                                     <strong>Amount: </strong><span type="text" th:text="${tour.numberOfAnimals}"/>
@@ -121,7 +97,7 @@
                                     <strong>Estimated Time: </strong><span th:text="${tour.estimatedTime}">--</span>h
                                 </div>
                                 <div class="column">
-                                    <strong>Contact Person: </strong><span type="text" th:text="${tour.contactPerson}">Person</span>
+                                    <strong>Contact Person: </strong><span type="text" th:text="${tour.destinationAddress.name}">Person</span>
                                 </div>
                             </div>
                             <div class="columns is-mobile">
@@ -131,7 +107,7 @@
                             </div>
                         </div>
                     </div>
-                    <hr />
+                    <hr/>
                 </div>
             </div>
 
@@ -139,10 +115,10 @@
     </div>
 </div>
 <script>
-    $(document).ready(function() {
+    $(document).ready(function () {
         // Enable dropdown functionality
         $(".panel").hide();
-        $(".tour-item").click(function() {
+        $(".tour-item").click(function () {
             $(this).toggleClass("selected");
             $(this).find(".panel").slideToggle("slow");
         });
