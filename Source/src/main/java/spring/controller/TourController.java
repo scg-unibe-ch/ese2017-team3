@@ -176,6 +176,8 @@ public class TourController {
         oldTour.setDriver(activeTour.getDriver());
         oldTour.setComment(activeTour.getComment());
 
+        addressRepository.save(oldTour.getStartAddress());
+        addressRepository.save(oldTour.getDestinationAddress());
         tourRepository.save(oldTour);
 
         List<Tour> tours = tourService.getSortedTours("");
