@@ -89,11 +89,22 @@ public class Tour {
 	@Column (nullable = false)
 	private TourState tourState = TourState.CREATED;
 
+	@OneToOne
+	private Truck truck;
+
 	public Tour(String cargo) {
 	    this.cargo = cargo;
 	}
 
 	public Tour(){}
+
+	public Truck getTruck() {
+		return truck;
+	}
+
+	public void setTruck(Truck truck) {
+		this.truck = truck;
+	}
 
 	public TourState getTourState() {
 		return tourState;

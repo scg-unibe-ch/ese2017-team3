@@ -13,10 +13,12 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import spring.entity.Driver;
 import spring.entity.Tour;
+import spring.entity.Truck;
 import spring.repositories.TourRepository;
 import spring.security.UserSecurityService;
 import spring.service.DriverService;
 import spring.service.TourService;
+import spring.service.TruckService;
 
 import javax.validation.Valid;
 import java.time.DayOfWeek;
@@ -42,6 +44,9 @@ public class TourController {
 
     @Autowired
     private DriverService driverService;
+
+    @Autowired
+    private TruckService truckService;
 
 
     @GetMapping(path = "/week")
@@ -83,6 +88,10 @@ public class TourController {
         //prepare a list of Drivers to select from.
         List<Driver> drivers = driverService.getDrivers();
         model.addAttribute("drivers", drivers);
+
+        //prepare a list of Trucks to select from.
+        List<Truck> trucks = truckService.getTrucks();
+        model.addAttribute("trucks", trucks);
 
         model.addAttribute("tour", new Tour());
         return "backend/deliveries";

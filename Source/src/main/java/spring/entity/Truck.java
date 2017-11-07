@@ -12,13 +12,16 @@ public class Truck {
 
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
-    private long id;
+    public long id;
 
     @Column(nullable = false)
     public String truckType;
 
     @Column(nullable = false)
     public Boolean available;
+
+    @OneToOne(mappedBy = "truck")
+    public Tour tour;
 
     public Truck() {};
 
