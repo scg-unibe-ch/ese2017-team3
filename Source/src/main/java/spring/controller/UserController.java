@@ -14,16 +14,16 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import spring.entity.Address;
 import spring.entity.Driver;
+import spring.repositories.AddressRepository;
 import spring.repositories.DriverRepository;
+
+import javax.validation.Valid;
 
 @Controller
 @RequestMapping(path = "/user")
@@ -35,15 +35,38 @@ public class UserController {
     @Autowired
     private DriverRepository driverRepository;
 
+    @Autowired
+    private AddressRepository addressRepository;
+
+    private Address tmpAddress;
+
+    @GetMapping(path = "/register")
+    public ModelAndView addressForm() {
+        return new ModelAndView("AddressForm", "address", new Address()) ;
+    }
+
+    @PostMapping(path = "/register")
+    public ModelAndView addressSubmit(@Valid @ModelAttribute Address address, BindingResult bindingResult, ModelMap model) {
+        if (bindingResult.hasErrors()) {
+            return new ModelAndView("AddressForm");
+        }
+        tmpAddress = address;
+        return new ModelAndView("redirect:/user/create");
+    }
+
     @PreAuthorize("@userSecurityService.canCreate()")
     @GetMapping(path = "/create")
-    public ModelAndView createForm() {
+    public ModelAndView createUserForm() {
         return new ModelAndView("RegistrationForm", "user", new User("user", "", Collections.emptyList()));
     }
 
     @PreAuthorize("@userSecurityService.canCreate()")
     @PostMapping(path = "")
-    public ModelAndView create(@RequestParam String username, @RequestParam String password) {
+    public ModelAndView createUser(@RequestParam String username, @RequestParam String password) {
+
+        if (tmpAddress == null) {
+            return new ModelAndView("redirect:/user/register");
+        }
 
         // NOTE users need an authority, otherwise they are treated as non-existing
 
@@ -56,10 +79,14 @@ public class UserController {
             userDetailsManager.createUser(user);
 
             Driver driver = new Driver();
+            driver.setAddress(tmpAddress);
             driver.setUsername(username);
             driver.setHiringDate(LocalDate.now());
 
+            addressRepository.save(driver.getAddress());
             driverRepository.save(driver);
+
+            tmpAddress = null;
 
             Authentication auth = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
             SecurityContextHolder.getContext().setAuthentication(auth);

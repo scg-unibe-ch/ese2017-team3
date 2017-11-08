@@ -15,16 +15,13 @@ public class Driver {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    @Column
+
     private String username;
 
-    @Column
-    private String name;
+    @OneToOne
+    private Address address;
 
-    @Column
-    private String surname;
 
-    @Column
     private LocalDate hiringDate;
 
     public Driver() {}
@@ -57,19 +54,11 @@ public class Driver {
         this.username = username;
     }
 
-    public String getName() {
-        return name;
+    public Address getAddress() {
+        return address;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getSurname() {
-        return surname;
-    }
-
-    public void setSurname(String surname) {
-        this.surname = surname;
+    public void setAddress(Address address) {
+        this.address = address;
     }
 }

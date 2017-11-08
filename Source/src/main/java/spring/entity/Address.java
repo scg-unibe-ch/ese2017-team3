@@ -1,5 +1,7 @@
 package spring.entity;
 
+import org.hibernate.annotations.ColumnDefault;
+
 import javax.persistence.*;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
@@ -33,8 +35,26 @@ public class Address {
 	@Size(min = 1, message = "Please specify the city of the start location.")
     private String city;
 
+	private int phone=-1;
 
-    public long getId() {
+	private String email = "";
+
+	public Address() {
+	}
+
+	public Address(String name, String surname, String street, String streetNumber, int zip, String city, int phone, String email) {
+		this.name = name;
+		this.surname = surname;
+		this.street = street;
+		this.streetNumber = streetNumber;
+		this.zip = zip;
+		this.city = city;
+
+		this.phone = phone;
+		this.email = email;
+	}
+
+	public long getId() {
 		return id;
 	}
 
@@ -96,4 +116,19 @@ public class Address {
 		this.city = city;
 	}
 
+	public int getPhone() {
+		return phone;
+	}
+
+	public void setPhone(int phone) {
+		this.phone = phone;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
 }

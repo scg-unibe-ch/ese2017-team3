@@ -49,7 +49,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers( "/user/create")
+                .antMatchers( "/user/register", "/user/create")
                     .permitAll()
                 .regexMatchers(HttpMethod.POST, "/user")
                     .permitAll()
