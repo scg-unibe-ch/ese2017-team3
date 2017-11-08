@@ -20,30 +20,30 @@ public class TruckLoader implements ApplicationRunner {
     public void run(ApplicationArguments args) {
         //Add Trucks to DB
 
-        if (truckRepository.findAll().isEmpty()) {
-            truckRepository.save(new Truck("BIG"));
-            truckRepository.save(new Truck("BIG"));
-            truckRepository.save(new Truck("BIG"));
+        if (truckRepository.findAll().size() == 0) {
+            truckRepository.save(new Truck("BIG", true));
+            truckRepository.save(new Truck("BIG", true));
+            truckRepository.save(new Truck("BIG", true));
 
-            truckRepository.save(new Truck("MEDIUM"));
-            truckRepository.save(new Truck("MEDIUM"));
-            truckRepository.save(new Truck("MEDIUM"));
-
-
-            truckRepository.save(new Truck("SMALL"));
-            truckRepository.save(new Truck("SMALL"));
-            truckRepository.save(new Truck("SMALL"));
-            truckRepository.save(new Truck("SMALL"));
-            truckRepository.save(new Truck("SMALL"));
+            truckRepository.save(new Truck("MEDIUM", true));
+            truckRepository.save(new Truck("MEDIUM", true));
+            truckRepository.save(new Truck("MEDIUM", true));
 
 
-            truckRepository.save(new Truck("TINY"));
-            truckRepository.save(new Truck("TINY"));
-            truckRepository.save(new Truck("TINY"));
-            truckRepository.save(new Truck("TINY"));
-            truckRepository.save(new Truck("TINY"));
-            truckRepository.save(new Truck("TINY"));
-            truckRepository.save(new Truck("TINY"));
+            truckRepository.save(new Truck("SMALL", true));
+            truckRepository.save(new Truck("SMALL", true));
+            truckRepository.save(new Truck("SMALL", true));
+            truckRepository.save(new Truck("SMALL", true));
+            truckRepository.save(new Truck("SMALL", true));
+
+
+            truckRepository.save(new Truck("TINY", true));
+            truckRepository.save(new Truck("TINY", true));
+            truckRepository.save(new Truck("TINY", true));
+            truckRepository.save(new Truck("TINY", true));
+            truckRepository.save(new Truck("TINY", true));
+            truckRepository.save(new Truck("TINY", true));
+            truckRepository.save(new Truck("TINY", true));
         }
     }
 }

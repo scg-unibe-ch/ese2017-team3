@@ -280,6 +280,7 @@
                         </article>
                     </div>
                 </div>
+
                 <div class="columns">
                     <div class="column is-1">Driver:</div>
                     <div class="column">
@@ -291,6 +292,20 @@
                         </span>
                     </div>
                 </div>
+
+                <div class="columns">
+                    <div class="column is-1">Truck:</div>
+                    <div class="column">
+                        <span class="select is-fullwidth">
+                            <select th:field="*{truck}">
+                                <div th:if="${not #lists.isEmpty(trucks)}" th:each="truck : ${trucks}">
+                                    <option th:if="${truck.available == true}" th:value="${truck.id}" th:text="${truck.truckType}"></option>
+                                </div>
+                            </select>
+                        </span>
+                    </div>
+                </div>
+
                 <div class="columns">
                     <div class="column is-1"></div>
                     <div class="column">
