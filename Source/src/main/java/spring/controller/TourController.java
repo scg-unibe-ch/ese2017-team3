@@ -2,6 +2,7 @@ package spring.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.thymeleaf.util.DateUtils;
 import spring.entity.Driver;
 import spring.entity.Tour;
 import spring.repositories.AddressRepository;
@@ -23,7 +25,10 @@ import spring.service.TourService;
 import spring.service.TruckService;
 
 import javax.validation.Valid;
+import java.text.SimpleDateFormat;
 import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.List;
@@ -82,12 +87,46 @@ public class TourController {
     @GetMapping(path = "/today")
     public String myCurrentTours(Model model) {
         UserDetails user = userSecurityService.getAuthenticatedUser();
-        List<Tour> tours = tourService.getCurrentToursForDriver(user.getUsername());
 
+        List<Tour> tours = tourService.getCurrentToursForDriver(user.getUsername());
         model.addAttribute("tours", tours);
 
         return "frontend/myCurrentTours";
     }
+
+    @RequestMapping(value="/today", method=RequestMethod.POST, params={"successful=Successful"})
+    public String markAsSuccessful(@RequestParam Long tourId, ModelMap model) {
+        UserDetails user = userSecurityService.getAuthenticatedUser();
+        Tour successfulTour = tourRepository.findOne(tourId);
+
+        if (isAllowedToCloseTour(user, successfulTour)) {
+            successfulTour.setTourState(Tour.TourState.SUCCESSFUL);
+            tourRepository.save(successfulTour);
+            truckService.getById(successfulTour.getTruck().getId()).setAvailable(true);
+        }
+
+        List<Tour> tours = tourService.getCurrentToursForDriver(user.getUsername());
+        model.addAttribute("tours", tours);
+        return "frontend/myCurrentTours";
+    }
+
+    @RequestMapping(value="/today", method=RequestMethod.POST, params={"failed=Failed"})
+    public String markAsFailed(@RequestParam Long tourId, ModelMap model) {
+        UserDetails user = userSecurityService.getAuthenticatedUser();
+        Tour failedTour = tourRepository.findOne(tourId);
+
+        if (isAllowedToCloseTour(user, failedTour)) {
+            failedTour.setTourState(Tour.TourState.FAILED);
+            tourRepository.save(failedTour);
+            truckService.getById(failedTour.getTruck().getId()).setAvailable(true);
+        }
+
+        List<Tour> tours = tourService.getCurrentToursForDriver(user.getUsername());
+        model.addAttribute("tours", tours);
+        return "frontend/myCurrentTours";
+    }
+
+
 
     // Get request on /deliveries will return a form to create a new tour
     @GetMapping(path = "/deliveries")
@@ -189,6 +228,23 @@ public class TourController {
 
         model.addAttribute("tours", tours);
         return new ModelAndView("redirect:/tours?activeIndex=" + activeTour.getId());
+    }
+
+    /**
+     * Checks whether a <code>User</code> identified by his <code>UserDetails</code> is allowed
+     * to close e certain <code>Tour</code>.
+     * @param user the <code>UserDetails</code> of the <code>User</code>
+     * @param tour the <code>Tour</code> that the <code>User</code> wants to close
+     * @return <code>true</code> if the <code>User</code> is allowed to close the <code>Tour</code>,
+     * <br><code>false</code> otherwise.
+     */
+    private boolean isAllowedToCloseTour(UserDetails user, Tour tour) {
+        LocalDate today = LocalDate.now();
+        LocalTime now  = LocalTime.now();
+        LocalDate tourStartDate = tour.getDeliveryStartDate();
+        LocalTime tourStartTime = tour.getDeliveryStartTime();
+        String username = user.getUsername();
+        return(tour.getDriver().equals(username) && tourStartDate.isEqual(today) && tourStartTime.isBefore(now));
     }
 
     /**
