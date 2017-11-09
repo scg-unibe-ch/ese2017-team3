@@ -112,12 +112,13 @@ public class TourController {
     }
 
     @RequestMapping(value="/today", method=RequestMethod.POST, params={"failed=Failed"})
-    public String markAsFailed(@RequestParam Long tourId, ModelMap model) {
+    public String markAsFailed(@RequestParam Long tourId, @RequestParam String feedback, ModelMap model) {
         UserDetails user = userSecurityService.getAuthenticatedUser();
         Tour failedTour = tourRepository.findOne(tourId);
 
         if (isAllowedToCloseTour(user, failedTour)) {
             failedTour.setTourState(Tour.TourState.FAILED);
+            failedTour.setTourFeedback(feedback);
             tourRepository.save(failedTour);
             truckService.getById(failedTour.getTruck().getId()).setAvailable(true);
         }
