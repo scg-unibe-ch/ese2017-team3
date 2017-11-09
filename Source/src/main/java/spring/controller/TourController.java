@@ -95,12 +95,13 @@ public class TourController {
     }
 
     @RequestMapping(value="/today", method=RequestMethod.POST, params={"successful=Successful"})
-    public String markAsSuccessful(@RequestParam Long tourId, ModelMap model) {
+    public String markAsSuccessful(@RequestParam Long tourId, @RequestParam String feedback, ModelMap model) {
         UserDetails user = userSecurityService.getAuthenticatedUser();
         Tour successfulTour = tourRepository.findOne(tourId);
 
         if (isAllowedToCloseTour(user, successfulTour)) {
             successfulTour.setTourState(Tour.TourState.SUCCESSFUL);
+            successfulTour.setTourFeedback(feedback);
             tourRepository.save(successfulTour);
             truckService.getById(successfulTour.getTruck().getId()).setAvailable(true);
         }

@@ -57,13 +57,14 @@
                 <div class="column is-one-quarter"><strong>Start</strong></div>
                 <div class="column"><strong>From</strong></div>
                 <div class="column"><strong>To</strong></div>
+                <div class="column is-1" />
             </div>
             <hr/>
             <div th:if="${not #lists.isEmpty(tours)}" th:each="tour : ${tours}">
                 <div class="tour-container" th:field="${tour}">
                     <form action="#" th:action="@{/today}" method="post">
                         <div class="tour-item">
-                            <div class="columns is-mobile">
+                            <div class="columns is-mobile summary">
                                 <div class="column is-one-quarter">
                                     <span type="time" th:text="${tour.deliveryStartTime}">Time</span>
                                 </div>
@@ -79,6 +80,11 @@
                                     <span th:text="${tour.destinationAddress.zip}">ZIP </span>
                                     <span th:text="${tour.destinationAddress.city}">City </span>
                                 </div>
+                                <div class="column is-1">
+                                    <span class="icon is-right">
+                                        <i class="fa fa-lg fa-chevron-down"></i>
+                                    </span>
+                                </div>
                             </div>
                             <div class="panel">
                                 <div class="columns is-mobile">
@@ -91,6 +97,7 @@
                                     <div class="column">
                                         <strong>Time Frame: </strong><span type="text" th:text="${tour.timeFrame}">--:-- to --:--</span>
                                     </div>
+                                    <div class="column is-1" />
                                 </div>
                                 <div class="columns is-mobile">
                                     <div class="column is-one-quarter"></div>
@@ -100,6 +107,7 @@
                                     <div class="column">
                                         <strong>Contact Person: </strong><span type="text" th:text="${tour.destinationAddress.name}">Person</span>
                                     </div>
+                                    <div class="column is-1" />
                                 </div>
                                 <div class="columns is-mobile" th:unless="${tour.tourState} == ${tour.TourState.CREATED}">
                                     <div class="column">
@@ -109,6 +117,13 @@
                                 <div class="columns is-mobile">
                                     <div class="column">
                                         <blockquote type="text" th:text="${tour.comment}">Comment</blockquote>
+                                    </div>
+                                </div>
+                                <div class="columns is-mobile" th:if="${tour.tourState} == ${tour.TourState.CREATED}">
+                                    <div class="column">
+                                        <p class="control">
+                                            <textarea class="textarea" placeholder="Tour feedback" name="feedback" />
+                                        </p>
                                     </div>
                                 </div>
                                 <div class="columns is-mobile" th:if="${tour.tourState} == ${tour.TourState.CREATED}">
@@ -135,9 +150,9 @@
     $(document).ready(function () {
         // Enable dropdown functionality
         $(".panel").hide();
-        $(".tour-item").click(function () {
-            $(this).toggleClass("selected");
-            $(this).find(".panel").slideToggle("slow");
+        $(".summary").click(function () {
+            $(this).parent(".tour-item").toggleClass("selected");
+            $(this).parent(".tour-item").find(".panel").slideToggle("slow");
         });
     });
 </script>

@@ -15,8 +15,6 @@ public class Tour {
 
     public enum TourState {SUCCESSFUL, CREATED, DELETED, FAILED}
 
-    ;
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
@@ -25,8 +23,8 @@ public class Tour {
     private String cargo;
 
     @Min(value = 1, message = "Please specify the number of animals for this tour.")
+//    @Pattern(regexp = "(\\d+)", message = "You entered an invalid number.")
     private int numberOfAnimals;
-
 
     @OneToOne
     private Address startAddress;
@@ -44,6 +42,7 @@ public class Tour {
     private LocalTime deliveryStartTime;
 
     @NotNull(message = "Please specify the estimated time for the tour.")
+//    @Pattern(regexp = "(\\d+)", message = "You entered an invalid number.")
     private Double estimatedTime;
 
     @Size(min = 1, message = "Please specify a time frame, in which the delivery can take place.")
@@ -51,6 +50,7 @@ public class Tour {
 
     @Column(nullable = false)
     private String driver;
+
 	@OneToOne
 	private Truck truck;
 
@@ -59,7 +59,10 @@ public class Tour {
 	}
 
     @Column
-    private String comment;
+    private String comment = "Tour comment";
+
+    @Column
+    private String tourFeedback = "Tour feedback";
 
     @Column(nullable = false)
     private TourState tourState = TourState.CREATED;
@@ -167,7 +170,19 @@ public class Tour {
         this.driver = driver;
     }
 
+    public String getTourFeedback() {
+        return tourFeedback;
+    }
+
+    public void setTourFeedback(String tourFeedback) {
+        if (!tourFeedback.isEmpty()) {
+            this.tourFeedback = tourFeedback;
+        }
+    }
+
     public void setComment(String comment) {
-        this.comment = comment;
+	    if (!comment.isEmpty()) {
+            this.comment = comment;
+        }
     }
 }

@@ -6,7 +6,7 @@
     <title>AniTrans Tour Overview</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
     <link href="../../static/css/bulma.css" th:href="@{/css/bulma.css}" rel="stylesheet"/>
-    <link href="../static/css/additionalStyles.css" th:href="@{/css/additionalStyles.css}" rel="stylesheet"/>
+    <link href="../static/css/additionalFrontendStyles.css" th:href="@{/css/additionalFrontendStyles.css}" rel="stylesheet"/>
     <script th:src="@{/js/jquery-3.2.1.min.js}" />
 </head>
 
@@ -53,18 +53,19 @@
 <div class="block">
     <div class="box">
         <div class="content">
-            <div class="weekday-container">
+            <div class="weekday-container" id="monday">
                 <h2 class="weekday">Monday</h2>
                 <div class="columns is-mobile">
                     <div class="column is-one-quarter"><strong>Start</strong></div>
                     <div class="column"><strong>From</strong></div>
                     <div class="column"><strong>To</strong></div>
+                    <div class="column is-1" />
                 </div>
                 <hr />
                 <div th:if="${not #lists.isEmpty(monday)}" th:each="tour : ${monday}">
                     <div class="tour-container" th:field="${tour}">
                         <div class="tour-item">
-                            <div class="columns is-mobile">
+                            <div class="columns is-mobile summary">
                                 <div class="column is-one-quarter">
                                     <span type="time" th:text="${tour.deliveryStartTime}">Time</span>
                                 </div>
@@ -80,6 +81,11 @@
                                     <span th:text="${tour.destinationAddress.zip}">ZIP </span>
                                     <span th:text="${tour.destinationAddress.city}">City </span>
                                 </div>
+                                <div class="column is-1">
+                                    <span class="icon is-right">
+                                        <i class="fa fa-lg fa-chevron-down"></i>
+                                    </span>
+                                </div>
                             </div>
                             <div class="panel">
                                 <div class="columns is-mobile">
@@ -92,6 +98,7 @@
                                     <div class="column">
                                         <strong>Time Frame: </strong><span type="text" th:text="${tour.timeFrame}">--:-- to --:--</span>
                                     </div>
+                                    <div class="column is-1" />
                                 </div>
                                 <div class="columns is-mobile">
                                     <div class="column is-one-quarter"></div>
@@ -101,6 +108,7 @@
                                     <div class="column">
                                         <strong>Contact Person: </strong><span type="text" th:text="${tour.destinationAddress.name}">Person</span>
                                     </div>
+                                    <div class="column is-1" />
                                 </div>
                                 <div class="columns is-mobile">
                                     <div class="column">
@@ -113,18 +121,19 @@
                     </div>
                 </div>
             </div>
-            <div class="weekday-container">
+            <div class="weekday-container" id="tuesday">
                 <h2 class="weekday">Tuesday</h2>
                 <div class="columns is-mobile">
                     <div class="column is-one-quarter"><strong>Start</strong></div>
                     <div class="column"><strong>From</strong></div>
                     <div class="column"><strong>To</strong></div>
+                    <div class="column is-1" />
                 </div>
                 <hr />
                 <div th:if="${not #lists.isEmpty(tuesday)}" th:each="tour : ${tuesday}">
                     <div class="tour-container" th:field="${tour}">
                         <div class="tour-item">
-                            <div class="columns is-mobile">
+                            <div class="columns is-mobile summary">
                                 <div class="column is-one-quarter">
                                     <span type="time" th:text="${tour.deliveryStartTime}">Time</span>
                                 </div>
@@ -140,6 +149,11 @@
                                     <span th:text="${tour.destinationAddress.zip}">ZIP </span>
                                     <span th:text="${tour.destinationAddress.city}">City </span>
                                 </div>
+                                <div class="column is-1">
+                                    <span class="icon is-right">
+                                        <i class="fa fa-lg fa-chevron-down"></i>
+                                    </span>
+                                </div>
                             </div>
                             <div class="panel">
                                 <div class="columns is-mobile">
@@ -152,6 +166,7 @@
                                     <div class="column">
                                         <strong>Time Frame: </strong><span type="text" th:text="${tour.timeFrame}">--:-- to --:--</span>
                                     </div>
+                                    <div class="column is-1" />
                                 </div>
                                 <div class="columns is-mobile">
                                     <div class="column is-one-quarter"></div>
@@ -161,6 +176,7 @@
                                     <div class="column">
                                         <strong>Contact Person: </strong><span type="text" th:text="${tour.destinationAddress.name}">Person</span>
                                     </div>
+                                    <div class="column is-1" />
                                 </div>
                                 <div class="columns is-mobile">
                                     <div class="column">
@@ -173,19 +189,20 @@
                     </div>
                 </div>
             </div>
-            <div class="weekday-container">
+            <div class="weekday-container" id="wednesday">
                 <h2 class="weekday">Wednesday</h2>
                 <div class="weekday-panel">
                     <div class="columns is-mobile">
                         <div class="column is-one-quarter"><strong>Start</strong></div>
                         <div class="column"><strong>From</strong></div>
                         <div class="column"><strong>To</strong></div>
+                        <div class="column is-1" />
                     </div>
                     <hr />
                     <div th:if="${not #lists.isEmpty(wednesday)}" th:each="tour : ${wednesday}">
                         <div class="tour-container" th:field="${tour}">
                             <div class="tour-item">
-                                <div class="columns is-mobile">
+                                <div class="columns is-mobile summary">
                                     <div class="column is-one-quarter">
                                         <span type="time" th:text="${tour.deliveryStartTime}">Time</span>
                                     </div>
@@ -201,6 +218,11 @@
                                         <span th:text="${tour.destinationAddress.zip}">ZIP </span>
                                         <span th:text="${tour.destinationAddress.city}">City </span>
                                     </div>
+                                    <div class="column is-1">
+                                    <span class="icon is-right">
+                                        <i class="fa fa-lg fa-chevron-down"></i>
+                                    </span>
+                                    </div>
                                 </div>
                                 <div class="panel">
                                     <div class="columns is-mobile">
@@ -213,6 +235,7 @@
                                         <div class="column">
                                             <strong>Time Frame: </strong><span type="text" th:text="${tour.timeFrame}">--:-- to --:--</span>
                                         </div>
+                                        <div class="column is-1" />
                                     </div>
                                     <div class="columns is-mobile">
                                         <div class="column is-one-quarter"></div>
@@ -222,9 +245,10 @@
                                         <div class="column">
                                             <strong>Contact Person: </strong><span type="text" th:text="${tour.destinationAddress.name}">Person</span>
                                         </div>
+                                        <div class="column is-1" />
                                     </div>
                                     <div class="columns is-mobile">
-                                        <div class="colu    mn">
+                                        <div class="column">
                                             <blockquote type="text" th:text="${tour.comment}">Comment</blockquote>
                                         </div>
                                     </div>
@@ -235,18 +259,19 @@
                     </div>
                 </div>
             </div>
-            <div class="weekday-container">
+            <div class="weekday-container" id="thursday">
                 <h2 class="weekday">Thursday</h2>
                 <div class="columns is-mobile">
                     <div class="column is-one-quarter"><strong>Start</strong></div>
                     <div class="column"><strong>From</strong></div>
                     <div class="column"><strong>To</strong></div>
+                    <div class="column is-1" />
                 </div>
                 <hr />
                 <div th:if="${not #lists.isEmpty(thursday)}" th:each="tour : ${thursday}">
                     <div class="tour-container" th:field="${tour}">
                         <div class="tour-item">
-                            <div class="columns is-mobile">
+                            <div class="columns is-mobile summary">
                                 <div class="column is-one-quarter">
                                     <span type="time" th:text="${tour.deliveryStartTime}">Time</span>
                                 </div>
@@ -262,6 +287,11 @@
                                     <span th:text="${tour.destinationAddress.zip}">ZIP </span>
                                     <span th:text="${tour.destinationAddress.city}">City </span>
                                 </div>
+                                <div class="column is-1">
+                                    <span class="icon is-right">
+                                        <i class="fa fa-lg fa-chevron-down"></i>
+                                    </span>
+                                </div>
                             </div>
                             <div class="panel">
                                 <div class="columns is-mobile">
@@ -274,6 +304,7 @@
                                     <div class="column">
                                         <strong>Time Frame: </strong><span type="text" th:text="${tour.timeFrame}">--:-- to --:--</span>
                                     </div>
+                                    <div class="column is-1" />
                                 </div>
                                 <div class="columns is-mobile">
                                     <div class="column is-one-quarter"></div>
@@ -283,6 +314,7 @@
                                     <div class="column">
                                         <strong>Contact Person: </strong><span type="text" th:text="${tour.destinationAddress.name}">Person</span>
                                     </div>
+                                    <div class="column is-1" />
                                 </div>
                                 <div class="columns is-mobile">
                                     <div class="column">
@@ -295,18 +327,19 @@
                     </div>
                 </div>
             </div>
-            <div class="weekday-container">
+            <div class="weekday-container" id="friday">
                 <h2 class="weekday">Friday</h2>
                 <div class="columns is-mobile">
                     <div class="column is-one-quarter"><strong>Start</strong></div>
                     <div class="column"><strong>From</strong></div>
                     <div class="column"><strong>To</strong></div>
+                    <div class="column is-1" />
                 </div>
                 <hr />
                 <div th:if="${not #lists.isEmpty(friday)}" th:each="tour : ${friday}">
                     <div class="tour-container" th:field="${tour}">
                         <div class="tour-item">
-                            <div class="columns is-mobile">
+                            <div class="columns is-mobile summary">
                                 <div class="column is-one-quarter">
                                     <span type="time" th:text="${tour.deliveryStartTime}">Time</span>
                                 </div>
@@ -322,6 +355,11 @@
                                     <span th:text="${tour.destinationAddress.zip}">ZIP </span>
                                     <span th:text="${tour.destinationAddress.city}">City </span>
                                 </div>
+                                <div class="column is-1">
+                                    <span class="icon is-right">
+                                        <i class="fa fa-lg fa-chevron-down"></i>
+                                    </span>
+                                </div>
                             </div>
                             <div class="panel">
                                 <div class="columns is-mobile">
@@ -334,6 +372,7 @@
                                     <div class="column">
                                         <strong>Time Frame: </strong><span type="text" th:text="${tour.timeFrame}">--:-- to --:--</span>
                                     </div>
+                                    <div class="column is-1" />
                                 </div>
                                 <div class="columns is-mobile">
                                     <div class="column is-one-quarter"></div>
@@ -343,6 +382,7 @@
                                     <div class="column">
                                         <strong>Contact Person: </strong><span type="text" th:text="${tour.destinationAddress.name}">Person</span>
                                     </div>
+                                    <div class="column is-1" />
                                 </div>
                                 <div class="columns is-mobile">
                                     <div class="column">
@@ -355,18 +395,19 @@
                     </div>
                 </div>
             </div>
-            <div class="weekday-container">
+            <div class="weekday-container" id="saturday">
                 <h2 class="weekday">Saturday</h2>
                 <div class="columns is-mobile">
                     <div class="column is-one-quarter"><strong>Start</strong></div>
                     <div class="column"><strong>From</strong></div>
                     <div class="column"><strong>To</strong></div>
+                    <div class="column is-1" />
                 </div>
                 <hr />
                 <div th:if="${not #lists.isEmpty(saturday)}" th:each="tour : ${saturday}">
                     <div class="tour-container" th:field="${tour}">
                         <div class="tour-item">
-                            <div class="columns is-mobile">
+                            <div class="columns is-mobile summary">
                                 <div class="column is-one-quarter">
                                     <span type="time" th:text="${tour.deliveryStartTime}">Time</span>
                                 </div>
@@ -382,6 +423,11 @@
                                     <span th:text="${tour.destinationAddress.zip}">ZIP </span>
                                     <span th:text="${tour.destinationAddress.city}">City </span>
                                 </div>
+                                <div class="column is-1">
+                                    <span class="icon is-right">
+                                        <i class="fa fa-lg fa-chevron-down"></i>
+                                    </span>
+                                </div>
                             </div>
                             <div class="panel">
                                 <div class="columns is-mobile">
@@ -394,6 +440,7 @@
                                     <div class="column">
                                         <strong>Time Frame: </strong><span type="text" th:text="${tour.timeFrame}">--:-- to --:--</span>
                                     </div>
+                                    <div class="column is-1" />
                                 </div>
                                 <div class="columns is-mobile">
                                     <div class="column is-one-quarter"></div>
@@ -403,6 +450,7 @@
                                     <div class="column">
                                         <strong>Contact Person: </strong><span type="text" th:text="${tour.destinationAddress.name}">Person</span>
                                     </div>
+                                    <div class="column is-1" />
                                 </div>
                                 <div class="columns is-mobile">
                                     <div class="column">
@@ -415,18 +463,19 @@
                     </div>
                 </div>
             </div>
-            <div class="weekday-container">
+            <div class="weekday-container" id="sunday">
                 <h2 class="weekday">Sunday</h2>
                 <div class="columns is-mobile">
                     <div class="column is-one-quarter"><strong>Start</strong></div>
                     <div class="column"><strong>From</strong></div>
                     <div class="column"><strong>To</strong></div>
+                    <div class="column is-1" />
                 </div>
                 <hr />
                 <div th:if="${not #lists.isEmpty(sunday)}" th:each="tour : ${sunday}">
                     <div class="tour-container" th:field="${tour}">
                         <div class="tour-item">
-                            <div class="columns is-mobile">
+                            <div class="columns is-mobile summary">
                                 <div class="column is-one-quarter">
                                     <span type="time" th:text="${tour.deliveryStartTime}">Time</span>
                                 </div>
@@ -442,6 +491,11 @@
                                     <span th:text="${tour.destinationAddress.zip}">ZIP </span>
                                     <span th:text="${tour.destinationAddress.city}">City </span>
                                 </div>
+                                <div class="column is-1">
+                                    <span class="icon is-right">
+                                        <i class="fa fa-lg fa-chevron-down"></i>
+                                    </span>
+                                </div>
                             </div>
                             <div class="panel">
                                 <div class="columns is-mobile">
@@ -454,6 +508,7 @@
                                     <div class="column">
                                         <strong>Time Frame: </strong><span type="text" th:text="${tour.timeFrame}">--:-- to --:--</span>
                                     </div>
+                                    <div class="column is-1" />
                                 </div>
                                 <div class="columns is-mobile">
                                     <div class="column is-one-quarter"></div>
@@ -463,6 +518,7 @@
                                     <div class="column">
                                         <strong>Contact Person: </strong><span type="text" th:text="${tour.destinationAddress.name}">Person</span>
                                     </div>
+                                    <div class="column is-1" />
                                 </div>
                                 <div class="columns is-mobile">
                                     <div class="column">
@@ -482,15 +538,10 @@
     $(document).ready(function() {
 
         $(".panel").hide();
-
-        $(".tour-item").click(function() {
-            $(this).toggleClass("selected");
-            $(this).find(".panel").slideToggle("slow");
+        $(".summary").click(function () {
+            $(this).parent(".tour-item").toggleClass("selected");
+            $(this).parent(".tour-item").find(".panel").slideToggle("slow");
         });
-
-//        $(".weekday-container").click(function() {
-//            $(this).find(".weekday-panel").slideToggle("slow");
-//        });
     });
 </script>
 </body>
