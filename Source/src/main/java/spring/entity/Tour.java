@@ -185,4 +185,31 @@ public class Tour {
             this.comment = comment;
         }
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Tour tour = (Tour) o;
+
+        if (getId() != tour.getId()) return false;
+        if (getNumberOfAnimals() != tour.getNumberOfAnimals()) return false;
+        if (getCargo() != null ? !getCargo().equals(tour.getCargo()) : tour.getCargo() != null) return false;
+        if (getDeliveryStartDate() != null ? !getDeliveryStartDate().equals(tour.getDeliveryStartDate()) : tour.getDeliveryStartDate() != null)
+            return false;
+        if (getDeliveryStartTime() != null ? !getDeliveryStartTime().equals(tour.getDeliveryStartTime()) : tour.getDeliveryStartTime() != null)
+            return false;
+        if (getEstimatedTime() != null ? !getEstimatedTime().equals(tour.getEstimatedTime()) : tour.getEstimatedTime() != null)
+            return false;
+        if (getTimeFrame() != null ? !getTimeFrame().equals(tour.getTimeFrame()) : tour.getTimeFrame() != null)
+            return false;
+        if (getDriver() != null ? !getDriver().equals(tour.getDriver()) : tour.getDriver() != null) return false;
+        if (getTruck() != null ? !getTruck().equals(tour.getTruck()) : tour.getTruck() != null) return false;
+        if (getComment() != null ? !getComment().equals(tour.getComment()) : tour.getComment() != null) return false;
+        if (getTourFeedback() != null ? !getTourFeedback().equals(tour.getTourFeedback()) : tour.getTourFeedback() != null)
+            return false;
+        return getTourState() == tour.getTourState();
+    }
+
 }

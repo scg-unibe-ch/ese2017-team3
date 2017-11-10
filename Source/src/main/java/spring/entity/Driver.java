@@ -72,4 +72,21 @@ public class Driver {
     public void setSurname(String surname) {
         this.surname = surname;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Driver driver = (Driver) o;
+
+        if (getId() != driver.getId()) return false;
+        if (getUsername() != null ? !getUsername().equals(driver.getUsername()) : driver.getUsername() != null)
+            return false;
+        if (getName() != null ? !getName().equals(driver.getName()) : driver.getName() != null) return false;
+        if (getSurname() != null ? !getSurname().equals(driver.getSurname()) : driver.getSurname() != null)
+            return false;
+        return hiringDate != null ? hiringDate.equals(driver.hiringDate) : driver.hiringDate == null;
+    }
+
 }
