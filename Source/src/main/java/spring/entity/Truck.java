@@ -61,4 +61,17 @@ public class Truck {
     public void setTour(Tour tour) {
         this.tour = tour;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Truck truck = (Truck) o;
+
+        if (getId() != truck.getId()) return false;
+        if (getTruckType() != null ? !getTruckType().equals(truck.getTruckType()) : truck.getTruckType() != null)
+            return false;
+        return getAvailable() != null ? getAvailable().equals(truck.getAvailable()) : truck.getAvailable() == null;
+    }
 }
