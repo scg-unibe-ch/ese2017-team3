@@ -3,6 +3,7 @@ package spring.entity;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import javax.validation.Valid;
 import javax.validation.constraints.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -27,9 +28,11 @@ public class Tour {
     private int numberOfAnimals;
 
     @OneToOne
+    @Valid
     private Address startAddress;
 
     @OneToOne
+    @Valid
     private Address destinationAddress;
 
     @NotNull(message = "Please specify a start date for the tour.")
