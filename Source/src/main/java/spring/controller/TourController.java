@@ -13,6 +13,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.thymeleaf.util.DateUtils;
+import spring.entity.Address;
 import spring.entity.Driver;
 import spring.entity.Tour;
 import spring.repositories.AddressRepository;
@@ -210,20 +211,25 @@ public class TourController {
         //toDelete.setId(activeTour.getId());
         //oldTour.setEstimatedTime(activeTour.getEstimatedTime());
         //oldTour.setTimeFrame(activeTour.getTimeFrame());
+        //oldTour.setTruck(activeTour.getTruck());
 
         oldTour.setCargo(activeTour.getCargo());
         oldTour.setNumberOfAnimals(activeTour.getNumberOfAnimals());
 
-        oldTour.setStartAddress(activeTour.getStartAddress());
-        oldTour.setDestinationAddress(activeTour.getDestinationAddress());
+        Address startAddress = oldTour.getStartAddress();
+        Address destinationAddress = oldTour.getDestinationAddress();
+        startAddress.copyFieldsFromAddress(activeTour.getStartAddress());
+        destinationAddress.copyFieldsFromAddress(activeTour.getDestinationAddress());
+//        oldTour.setStartAddress(activeTour.getStartAddress());
+//        oldTour.setDestinationAddress(activeTour.getDestinationAddress());
 
         oldTour.setDeliveryStartDate(activeTour.getDeliveryStartDate());
         oldTour.setDeliveryStartTime(activeTour.getDeliveryStartTime());
         oldTour.setDriver(activeTour.getDriver());
         oldTour.setComment(activeTour.getComment());
 
-        addressRepository.save(oldTour.getStartAddress());
-        addressRepository.save(oldTour.getDestinationAddress());
+        addressRepository.save(startAddress);
+        addressRepository.save(destinationAddress);
         tourRepository.save(oldTour);
 
         List<Tour> tours = tourService.getSortedTours("");
