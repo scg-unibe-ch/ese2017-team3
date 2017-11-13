@@ -55,12 +55,22 @@ public class TourController {
     private TruckRepository truckRepository;
 
 
+    @GetMapping(path = "/upcoming")
+    public String myUpcomingTours(Model model, @RequestParam(required = false, defaultValue = "Date/Time") String sortBy) {
+        UserDetails user = userSecurityService.getAuthenticatedUser();
+
+        List<Tour> upcomingTours = tourService.getSortedUpcomingTours(user.getUsername(), sortBy);
+        if (!sortBy.equals("")) model.addAttribute("sortBy", sortBy);
+        model.addAttribute("upcomingTours", upcomingTours);
+
+        return "frontend/myUpcomingTours";
+    }
+
     @GetMapping(path = "/past")
     public String myPastTours(Model model, @RequestParam(required = false, defaultValue = "Date/Time") String sortBy) {
         UserDetails user = userSecurityService.getAuthenticatedUser();
 
         List<Tour> pastTours = tourService.getSortedPastTours(user.getUsername(), sortBy);
-        List<Tour> tours = tourService.getSortedTours(sortBy);
         if (!sortBy.equals("")) model.addAttribute("sortBy", sortBy);
         model.addAttribute("pastTours", pastTours);
 
