@@ -36,8 +36,11 @@
                     <li>
                         <a href="/week">This week</a>
                     </li>
+                    <li>
+                        <a href="/upcoming">Upcoming tours</a>
+                    </li>
                     <li class="is-active">
-                    <a href="#">Past tours</a>
+                    <a>Past tours</a>
                     </li>
                 </ul>
                 <div class="is-right">
@@ -116,7 +119,7 @@
                                     </div>
                                     <div class="column is-3">
                                         <strong>Tour State: </strong>
-                                        <span th:classappend="${tour.tourState} == ${tour.tourState.SUCCESSFUL} ? success : failure" th:text="${tour.tourState}" />
+                                        <span th:classappend="${(tour.tourState == tour.TourState.SUCCESSFUL ? 'success' : '') + (tour.tourState == tour.TourState.FAILED ? 'failure' : '')}" th:text="${tour.tourState}" />
                                     </div>
                                     <div class="column is-1" />
                                 </div>

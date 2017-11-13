@@ -22,6 +22,8 @@ public interface TourRepository extends CrudRepository<Tour, Long> {
 
 	public List<Tour> findByTourState(Tour.TourState tourState);
 
+	public List<Tour> findByDriverAndTourState(String username, Tour.TourState tourState);
+
 	public List<Tour> findByDriverAndTourStateOrTourState(String username, Tour.TourState t1, Tour.TourState t2);
 
 }

@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <title>AniTrans Tour Overview</title>
+    <title>My current tours</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
     <link href="../static/css/bulma.css" th:href="@{/css/bulma.css}" rel="stylesheet"/>
     <link href="../static/css/additionalFrontendStyles.css" th:href="@{/css/additionalFrontendStyles.css}" rel="stylesheet"/>
@@ -36,6 +36,9 @@
                     </li>
                     <li>
                         <a href="/week">This week</a>
+                    </li>
+                    <li>
+                        <a href="/upcoming">Upcoming tours</a>
                     </li>
                     <li>
                     <a href="/past">Past tours</a>
@@ -111,7 +114,7 @@
                                 </div>
                                 <div class="columns is-mobile" th:unless="${tour.tourState} == ${tour.TourState.CREATED}">
                                     <div class="column">
-                                        <strong>Tour State: </strong><span th:classappend="${tour.tourState} == ${tour.tourState.SUCCESSFUL} ? success : failure" th:text="${tour.tourState}" />
+                                        <strong>Tour State: </strong><span th:classappend="${(tour.tourState == tour.TourState.SUCCESSFUL ? 'success' : '') + (tour.tourState == tour.TourState.FAILED ? 'failure' : '')}" th:text="${tour.tourState}" />
                                     </div>
                                 </div>
                                 <div class="columns is-mobile">

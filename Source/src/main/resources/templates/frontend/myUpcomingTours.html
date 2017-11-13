@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>My upcoming tours</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+    <link href="../../static/css/bulma.css" th:href="@{/css/bulma.css}" rel="stylesheet"/>
+    <link href="../static/css/additionalFrontendStyles.css" th:href="@{/css/additionalFrontendStyles.css}" rel="stylesheet"/>
+    <script th:src="@{/js/jquery-3.2.1.min.js}" />
+</head>
+<body class="login-page page-layout">
+<section class="hero is-link is-small">
+    <div class="hero-body">
+        <div class="container">
+            <div class="columns is-gapless">
+                <div class="column">
+                    <p class="title">
+                        AniTrans
+                    </p>
+                    <p class="subtitle">
+                        Your tour overview
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="hero-foot">
+        <div class="container">
+            <nav class="tabs is-boxed">
+                <ul>
+                    <li>
+                        <a href="/today">Today</a>
+                    </li>
+                    <li>
+                        <a href="/week">This week</a>
+                    </li>
+                    <li class="is-active">
+                        <a>Upcoming tours</a>
+                    </li>
+                    <li>
+                        <a href="/past">Past tours</a>
+                    </li>
+                </ul>
+                <div class="is-right">
+                    <form action="#" th:action="@{/logout}" method="post">
+                        <input type="submit" class="button is-link" value="Log Out" />
+                    </form>
+                </div>
+            </nav>
+        </div>
+    </div>
+</section>
+<div class="block">
+    <div class="box">
+        <div class="content">
+            <div class="columns is-mobile">
+                <div class="column">
+                    <strong>Sort by: </strong><br />
+                    <div class="select">
+                        <select onChange="paramChangerSetter('sortBy', this.value)">
+                            <option th:selected="${sortBy == 'Date/Time'}">Date/Time</option>
+                            <option th:selected="${sortBy == 'Starting Location'}">Starting Canton</option>
+                            <option th:selected="${sortBy == 'Target Location'}">Target Canton</option>
+                            <option th:selected="${sortBy == 'Cargo'}">Cargo</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="columns is-mobile">
+                <div class="column"><strong>Date</strong></div>
+                <div class="column"><strong>Species</strong></div>
+                <div class="column is-3"><strong>From</strong></div>
+                <div class="column is-3"><strong>To</strong></div>
+                <div class="column is-1" />
+            </div>
+            <hr />
+            <div th:if="${not #lists.isEmpty(upcomingTours)}" th:each="tour : ${upcomingTours}">
+                <div class="tour-container" th:field="${tour}">
+                    <div class="tour-item">
+                        <div class="columns is-mobile summary">
+                            <div class="column">
+                                <span type="date" th:text="${tour.deliveryStartDate}">Date</span>
+                            </div>
+                            <div class="column">
+                                <span th:text="${tour.cargo}">Species</span>
+                            </div>
+                            <div class="column is-3">
+                                <span th:text="${tour.startAddress.street}">Address </span>
+                                <span th:text="${tour.startAddress.streetNumber}">Number </span><span>,</span>
+                                <span th:text="${tour.startAddress.zip}">ZIP </span>
+                                <span th:text="${tour.startAddress.city}">City </span>
+                            </div>
+                            <div class="column is-3">
+                                <span th:text="${tour.destinationAddress.street}">Address </span>
+                                <span th:text="${tour.destinationAddress.streetNumber}">Number </span><span>,</span>
+                                <span th:text="${tour.destinationAddress.zip}">ZIP </span>
+                                <span th:text="${tour.destinationAddress.city}">City </span>
+                            </div>
+                            <div class="column is-1">
+                                    <span class="icon is-right">
+                                        <i class="fa fa-lg fa-chevron-down"></i>
+                                    </span>
+                            </div>
+                        </div>
+                        <div class="panel">
+                            <div class="columns is-mobile">
+                                <div class="column">
+                                    <strong>Time: </strong><span type="time" th:text="${tour.deliveryStartTime}" />
+                                </div>
+                                <div class="column">
+                                    <strong>Amount: </strong><span type="text" th:text="${tour.numberOfAnimals}"/>
+                                </div>
+                                <div class="column is-6">
+                                    <strong>Contact Person: </strong>
+                                    <span th:text="${tour.destinationAddress.name}" />
+                                    <span th:text="${tour.destinationAddress.surname}" />
+                                </div>
+                                <div class="column is-1" />
+                            </div>
+                            <div class="columns is-mobile">
+                                <div class="column">
+                                    <strong>Comment: </strong>
+                                    <div class="box is-message">
+                                        <span th:text="${tour.comment}" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <hr />
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function() {
+
+        $(".panel").hide();
+        $(".summary").click(function () {
+            $(this).parent(".tour-item").toggleClass("selected");
+            $(this).parent(".tour-item").find(".panel").slideToggle("slow");
+        });
+    });
+
+    function paramChangerSetter(paramName, newValueForParam) {
+        var newHref = window.location.href;
+        var regularExpression = new RegExp(paramName + "=[a-zA-Z1-9/ (%20)]*", "g");
+
+        if (regularExpression.test(newHref)) {							//update param
+            newHref = newHref.replace(regularExpression, paramName + "=" + newValueForParam);
+        } else {														//set param
+            if (newHref.indexOf("?") == -1) {
+                newHref = newHref + "?" + paramName + "=" + newValueForParam;
+            } else {
+                //NOTE: The comments below are important for the Html-parser. Don't remove them
+                newHref = newHref + /*<![CDATA[*/"&"/*]]>*/ + paramName + "=" + newValueForParam;
+            }
+
+        }
+        window.location.href = newHref + "";
+    }
+</script>
+</body>
+
+</html>
