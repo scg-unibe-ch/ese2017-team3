@@ -7,6 +7,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.security.core.userdetails.UserDetails;
 import spring.entity.Address;
 import spring.entity.Driver;
@@ -191,8 +192,12 @@ public class TourController {
         //prepare a list of Drivers to select from.
         List<Driver> drivers = driverService.getDrivers();
         model.addAttribute("drivers", drivers);
-        Tour activeTour = getTourById(activeIndex, tours);
-        model.addAttribute("activeTour", activeTour);
+       
+        if (model.get("activeTour") == null) {
+          Tour activeTour = getTourById(activeIndex, tours);
+          model.addAttribute("activeTour", activeTour);
+        }
+        
         return "backend/tourOverview";
     }
 
@@ -216,9 +221,12 @@ public class TourController {
     }
 
     @PostMapping(path = "/tours/update")
-    public ModelAndView updateTour(@Valid @ModelAttribute Tour activeTour, BindingResult bindingResult, ModelMap model) {
+    public ModelAndView updateTour(@Valid @ModelAttribute Tour activeTour, BindingResult bindingResult, ModelMap model, RedirectAttributes redattributes) {
 
         if (bindingResult.hasErrors()) {
+        	redattributes.addFlashAttribute("org.springframework.validation.BindingResult.activeTour", bindingResult);
+        	redattributes.addFlashAttribute("activeTour", activeTour);
+        	
             return new ModelAndView("redirect:/tours?activeIndex=" + activeTour.getId());
         }
 
