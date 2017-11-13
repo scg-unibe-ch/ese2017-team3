@@ -1,9 +1,6 @@
 package spring.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -11,8 +8,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import org.thymeleaf.util.DateUtils;
 import spring.entity.Address;
 import spring.entity.Driver;
 import spring.entity.Tour;
@@ -26,12 +21,9 @@ import spring.service.TourService;
 import spring.service.TruckService;
 
 import javax.validation.Valid;
-import java.text.SimpleDateFormat;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -62,6 +54,18 @@ public class TourController {
     @Autowired
     private TruckRepository truckRepository;
 
+
+    @GetMapping(path = "/past")
+    public String myPastTours(Model model, @RequestParam(required = false, defaultValue = "Date/Time") String sortBy) {
+        UserDetails user = userSecurityService.getAuthenticatedUser();
+
+        List<Tour> pastTours = tourService.getSortedPastTours(user.getUsername(), sortBy);
+        List<Tour> tours = tourService.getSortedTours(sortBy);
+        if (!sortBy.equals("")) model.addAttribute("sortBy", sortBy);
+        model.addAttribute("pastTours", pastTours);
+
+        return "frontend/myPastTours";
+    }
 
     @GetMapping(path = "/week")
     public String myWeeklyTours(Model model) {

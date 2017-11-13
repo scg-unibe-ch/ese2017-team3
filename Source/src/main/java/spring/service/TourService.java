@@ -51,6 +51,14 @@ public class TourService {
         return tours;
     }
 
+    private List<Tour> getPastToursForDriver(String username) {
+        List<Tour> tours = new ArrayList<Tour>();
+        tourRepository.findByDriverAndTourStateOrTourState(username,
+                Tour.TourState.SUCCESSFUL,
+                Tour.TourState.FAILED).forEach(tours::add);
+        return tours;
+    }
+
     /**
      * Returns a <code>List</code> of <code>Tours</code> that are assigned to this driver
      * and are scheduled for this week
@@ -88,6 +96,14 @@ public class TourService {
         tours.sort(new TourComparator(sortBy));
         return tours;
     }
+
+    public List<Tour> getSortedPastTours(String username, String sortBy) {
+        assert sortBy != null;
+        List<Tour> tours = getPastToursForDriver(username);
+        tours.sort(new TourComparator(sortBy));
+        return tours;
+    }
+
 
 }
 
