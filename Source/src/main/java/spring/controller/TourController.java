@@ -194,6 +194,9 @@ public class TourController {
         Tour toDelete = getTourById(index, tours);
 
         toDelete.setTourState(Tour.TourState.DELETED);
+        Truck truck = toDelete.getTruck();
+        truck.setAvailable(true);
+        truckRepository.save(truck);
         tourRepository.save(toDelete);
 
         tours.remove(toDelete);
