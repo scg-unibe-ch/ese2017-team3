@@ -15,16 +15,13 @@ public class Driver {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    @Column
+
     private String username;
 
-    @Column
-    private String name;
+    @OneToOne
+    private Address address;
 
-    @Column
-    private String surname;
 
-    @Column
     private LocalDate hiringDate;
 
     public Driver() {}
@@ -57,20 +54,12 @@ public class Driver {
         this.username = username;
     }
 
-    public String getName() {
-        return name;
+    public Address getAddress() {
+        return address;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getSurname() {
-        return surname;
-    }
-
-    public void setSurname(String surname) {
-        this.surname = surname;
+    public void setAddress(Address address) {
+        this.address = address;
     }
 
     @Override
@@ -83,8 +72,8 @@ public class Driver {
         if (getId() != driver.getId()) return false;
         if (getUsername() != null ? !getUsername().equals(driver.getUsername()) : driver.getUsername() != null)
             return false;
-        if (getName() != null ? !getName().equals(driver.getName()) : driver.getName() != null) return false;
-        if (getSurname() != null ? !getSurname().equals(driver.getSurname()) : driver.getSurname() != null)
+        if (address.getName() != null ? !address.getName().equals(driver.address.getName()) : driver.address.getName() != null) return false;
+        if (address.getSurname() != null ? !address.getSurname().equals(driver.address.getSurname()) : driver.address.getSurname() != null)
             return false;
         return hiringDate != null ? hiringDate.equals(driver.hiringDate) : driver.hiringDate == null;
     }

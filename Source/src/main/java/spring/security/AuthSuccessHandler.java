@@ -1,7 +1,6 @@
 package spring.security;
 
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.web.DefaultRedirectStrategy;
@@ -9,6 +8,7 @@ import org.springframework.security.web.RedirectStrategy;
 import org.springframework.security.web.WebAttributes;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
+import spring.repositories.DriverRepository;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -21,6 +21,9 @@ public class AuthSuccessHandler implements AuthenticationSuccessHandler {
 //    protected Log logger = LogFactory.getLog(this.getClass());
 
     private RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
+
+    @Autowired
+    DriverRepository driverRepository;
 
 
     @Override
@@ -71,6 +74,7 @@ public class AuthSuccessHandler implements AuthenticationSuccessHandler {
             throw new IllegalStateException();
         }
     }
+
 
     protected void clearAuthenticationAttributes(HttpServletRequest request) {
         HttpSession session = request.getSession(false);
