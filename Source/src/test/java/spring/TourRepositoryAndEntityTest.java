@@ -36,8 +36,8 @@ public class TourRepositoryAndEntityTest {
         driver.setUsername("Alfi");
         driver.setId(1);
         driver.setHiringDate(LocalDate.now());
-        driver.setName("Alfredo");
-        driver.setSurname("Gorgonzola");
+        driver.getAddress().setName("Alfredo");
+        driver.getAddress().setSurname("Gorgonzola");
 
         truck.setAvailable(true);
         truck.setId(1);
