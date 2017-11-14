@@ -116,6 +116,7 @@ public class Address {
 		this.city = city;
 	}
 
+
 	public int getPhone() {
 		return phone;
 	}
@@ -129,6 +130,15 @@ public class Address {
 	}
 
 	public void setEmail(String email) {
-		this.email = email;
+		this.email = email;}
+
+	public void copyFieldsFromAddress(Address anotherAddress) {
+    	this.setName(anotherAddress.getName());
+    	this.setSurname(anotherAddress.getSurname());
+    	this.setStreet(anotherAddress.getStreet());
+    	this.setStreetNumber(anotherAddress.getStreetNumber());
+    	this.setZip(anotherAddress.getZip());
+    	this.setCity(anotherAddress.getCity());
+
 	}
 }

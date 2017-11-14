@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>AniTrans Tour Overview</title>
+    <title>My weekly tours</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
     <link href="../../static/css/bulma.css" th:href="@{/css/bulma.css}" rel="stylesheet"/>
     <link href="../static/css/additionalFrontendStyles.css" th:href="@{/css/additionalFrontendStyles.css}" rel="stylesheet"/>
@@ -35,11 +35,14 @@
                         <a href="/today">Today</a>
                     </li>
                     <li class="is-active">
-                        <a href="">This week</a>
+                        <a>This week</a>
                     </li>
-                    <!--<li>-->
-                    <!--<a href="">Past tours</a>-->
-                    <!--</li>-->
+                    <li>
+                        <a href="/upcoming">Upcoming tours</a>
+                    </li>
+                    <li>
+                    <a href="/past">Past tours</a>
+                    </li>
                 </ul>
                 <div class="is-right">
                     <form action="#" th:action="@{/logout}" method="post">
@@ -112,7 +115,7 @@
                                 </div>
                                 <div class="columns is-mobile">
                                     <div class="column">
-                                        <blockquote type="text" th:text="${tour.comment}">Comment</blockquote>
+                                        <div class="box is-message" th:text="${tour.comment}">Comment</div>
                                     </div>
                                 </div>
                             </div>
@@ -180,7 +183,7 @@
                                 </div>
                                 <div class="columns is-mobile">
                                     <div class="column">
-                                        <blockquote type="text" th:text="${tour.comment}">Comment</blockquote>
+                                        <div class="box is-message" th:text="${tour.comment}">Comment</div>
                                     </div>
                                 </div>
                             </div>
@@ -249,7 +252,7 @@
                                     </div>
                                     <div class="columns is-mobile">
                                         <div class="column">
-                                            <blockquote type="text" th:text="${tour.comment}">Comment</blockquote>
+                                            <div class="box is-message" th:text="${tour.comment}">Comment</div>
                                         </div>
                                     </div>
                                 </div>
@@ -318,7 +321,7 @@
                                 </div>
                                 <div class="columns is-mobile">
                                     <div class="column">
-                                        <blockquote type="text" th:text="${tour.comment}">Comment</blockquote>
+                                        <div class="box is-message" th:text="${tour.comment}">Comment</div>
                                     </div>
                                 </div>
                             </div>
@@ -386,7 +389,7 @@
                                 </div>
                                 <div class="columns is-mobile">
                                     <div class="column">
-                                        <blockquote type="text" th:text="${tour.comment}">Comment</blockquote>
+                                        <div class="box is-message" th:text="${tour.comment}">Comment</div>
                                     </div>
                                 </div>
                             </div>
@@ -454,7 +457,7 @@
                                 </div>
                                 <div class="columns is-mobile">
                                     <div class="column">
-                                        <blockquote type="text" th:text="${tour.comment}">Comment</blockquote>
+                                        <div class="box is-message" th:text="${tour.comment}">Comment</div>
                                     </div>
                                 </div>
                             </div>
@@ -522,7 +525,7 @@
                                 </div>
                                 <div class="columns is-mobile">
                                     <div class="column">
-                                        <blockquote type="text" th:text="${tour.comment}">Comment</blockquote>
+                                        <div class="box is-message" th:text="${tour.comment}">Comment</div>
                                     </div>
                                 </div>
                             </div>

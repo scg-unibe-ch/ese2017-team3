@@ -291,6 +291,11 @@
                             </select>
                         </span>
                     </div>
+                    <article class="message is-warning" th:if="${#fields.hasErrors('driver')}">
+                            <div class="message-body" th:errors="*{driver}">
+                                Error in field driver
+                            </div>
+                    </article>
                 </div>
 
                 <div class="columns">
@@ -302,9 +307,16 @@
                                     <option th:if="${truck.available == true}" th:value="${truck.id}" th:text="${truck.truckType}"></option>
                                 </div>
                             </select>
+                            
                         </span>
                     </div>
+                    <article class="message is-warning" th:if="${#fields.hasErrors('truck')}">
+                            <div class="message-body" th:errors="*{truck}">
+                                Error in field truck
+                            </div>
+                    </article>
                 </div>
+                
 
                 <div class="columns">
                     <div class="column is-1"></div>

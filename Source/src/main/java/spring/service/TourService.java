@@ -3,13 +3,12 @@ package spring.service;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.List;
+import java.time.LocalTime;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.tomcat.jni.Local;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -51,6 +50,37 @@ public class TourService {
         return tours;
     }
 
+    private List<Tour> getPastToursForDriver(String username) {
+        List<Tour> tours = getUndeletedToursForDriver(username);
+        LocalDate today = LocalDate.now();
+        LocalTime now = LocalTime.now();
+        Iterator<Tour> iterator = tours.iterator();
+        while (iterator.hasNext()) {
+            Tour t = iterator.next();
+            LocalDate date = t.getDeliveryStartDate();
+            LocalTime time = t.getDeliveryStartTime();
+            if (date.isAfter(today) || (date.equals(today) && time.isAfter(now))) {
+                iterator.remove();
+            }
+        }
+        return tours;
+    }
+
+    private List<Tour> getUpcomingToursForDriver(String username) {
+        List<Tour> tours = tourRepository.findByDriverAndTourState(username, Tour.TourState.CREATED);
+        LocalDate today = LocalDate.now();
+        LocalTime now = LocalTime.now();
+        Iterator<Tour> iterator = tours.iterator();
+        while (iterator.hasNext()) {
+            Tour t = iterator.next();
+            LocalDate date = t.getDeliveryStartDate();
+            LocalTime time = t.getDeliveryStartTime();
+            if (date.isBefore(today) || (date.equals(today) && time.isBefore(now))) {
+                iterator.remove();
+            }
+        }
+        return tours;
+    }
     /**
      * Returns a <code>List</code> of <code>Tours</code> that are assigned to this driver
      * and are scheduled for this week
@@ -82,6 +112,18 @@ public class TourService {
         return tours;
     }
 
+    private List<Tour> getUndeletedToursForDriver(String username) {
+        List<Tour> tours = getToursForDriver(username);
+        Iterator<Tour> iterator = tours.iterator();
+        while (iterator.hasNext()) {
+            Tour t = iterator.next();
+            if (t.getTourState() == Tour.TourState.DELETED) {
+                iterator.remove();
+            }
+        }
+        return tours;
+    }
+
     public List<Tour> getSortedTours(String sortBy) {
         assert sortBy != null;
         List<Tour> tours = getUndeletedTours();
@@ -89,6 +131,20 @@ public class TourService {
         return tours;
     }
 
+    public List<Tour> getSortedPastTours(String username, String sortBy) {
+        assert sortBy != null;
+        List<Tour> tours = getPastToursForDriver(username);
+        tours.sort(new TourComparator(sortBy));
+        return tours;
+    }
+
+
+    public List<Tour> getSortedUpcomingTours(String username, String sortBy) {
+        assert sortBy != null;
+        List<Tour> tours = getUpcomingToursForDriver(username);
+        tours.sort(new TourComparator(sortBy));
+        return tours;
+    }
 }
 
 class TourComparator implements Comparator<Tour> {
