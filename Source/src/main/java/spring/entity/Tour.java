@@ -3,6 +3,7 @@ package spring.entity;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import javax.validation.Valid;
 import javax.validation.constraints.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -27,9 +28,11 @@ public class Tour {
     private int numberOfAnimals;
 
     @OneToOne
+    @Valid
     private Address startAddress;
 
     @OneToOne
+    @Valid
     private Address destinationAddress;
 
     @NotNull(message = "Please specify a start date for the tour.")
@@ -48,9 +51,12 @@ public class Tour {
     @Size(min = 1, message = "Please specify a time frame, in which the delivery can take place.")
     private String timeFrame;
 
-    @Column(nullable = false)
+    //@Column(nullable = false)
+    @NotNull(message = "There is no driver which can drive the Tour. Please consider to hire some drivers")
     private String driver;
 
+    
+    @NotNull(message = "There are no trucks left. Please consider buying more trucks :P")
 	@OneToOne
 	private Truck truck;
 

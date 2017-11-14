@@ -1,18 +1,15 @@
 package spring.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import org.thymeleaf.util.DateUtils;
+import org.springframework.security.core.userdetails.UserDetails;
+import spring.entity.Address;
 import spring.entity.Driver;
 import spring.entity.Tour;
 import spring.repositories.AddressRepository;
@@ -25,12 +22,9 @@ import spring.service.TourService;
 import spring.service.TruckService;
 
 import javax.validation.Valid;
-import java.text.SimpleDateFormat;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -61,6 +55,28 @@ public class TourController {
     @Autowired
     private TruckRepository truckRepository;
 
+
+    @GetMapping(path = "/upcoming")
+    public String myUpcomingTours(Model model, @RequestParam(required = false, defaultValue = "Date/Time") String sortBy) {
+        UserDetails user = userSecurityService.getAuthenticatedUser();
+
+        List<Tour> upcomingTours = tourService.getSortedUpcomingTours(user.getUsername(), sortBy);
+        if (!sortBy.equals("")) model.addAttribute("sortBy", sortBy);
+        model.addAttribute("upcomingTours", upcomingTours);
+
+        return "frontend/myUpcomingTours";
+    }
+
+    @GetMapping(path = "/past")
+    public String myPastTours(Model model, @RequestParam(required = false, defaultValue = "Date/Time") String sortBy) {
+        UserDetails user = userSecurityService.getAuthenticatedUser();
+
+        List<Tour> pastTours = tourService.getSortedPastTours(user.getUsername(), sortBy);
+        if (!sortBy.equals("")) model.addAttribute("sortBy", sortBy);
+        model.addAttribute("pastTours", pastTours);
+
+        return "frontend/myPastTours";
+    }
 
     @GetMapping(path = "/week")
     public String myWeeklyTours(Model model) {
@@ -176,8 +192,12 @@ public class TourController {
         //prepare a list of Drivers to select from.
         List<Driver> drivers = driverService.getDrivers();
         model.addAttribute("drivers", drivers);
-        Tour activeTour = getTourById(activeIndex, tours);
-        model.addAttribute("activeTour", activeTour);
+       
+        if (model.get("activeTour") == null) {
+          Tour activeTour = getTourById(activeIndex, tours);
+          model.addAttribute("activeTour", activeTour);
+        }
+        
         return "backend/tourOverview";
     }
 
@@ -189,6 +209,9 @@ public class TourController {
         Tour toDelete = getTourById(index, tours);
 
         toDelete.setTourState(Tour.TourState.DELETED);
+        Truck truck = toDelete.getTruck();
+        truck.setAvailable(true);
+        truckRepository.save(truck);
         tourRepository.save(toDelete);
 
         tours.remove(toDelete);
@@ -198,9 +221,12 @@ public class TourController {
     }
 
     @PostMapping(path = "/tours/update")
-    public ModelAndView updateTour(@Valid @ModelAttribute Tour activeTour, BindingResult bindingResult, ModelMap model) {
+    public ModelAndView updateTour(@Valid @ModelAttribute Tour activeTour, BindingResult bindingResult, ModelMap model, RedirectAttributes redattributes) {
 
         if (bindingResult.hasErrors()) {
+        	redattributes.addFlashAttribute("org.springframework.validation.BindingResult.activeTour", bindingResult);
+        	redattributes.addFlashAttribute("activeTour", activeTour);
+        	
             return new ModelAndView("redirect:/tours?activeIndex=" + activeTour.getId());
         }
 
@@ -210,20 +236,25 @@ public class TourController {
         //toDelete.setId(activeTour.getId());
         //oldTour.setEstimatedTime(activeTour.getEstimatedTime());
         //oldTour.setTimeFrame(activeTour.getTimeFrame());
+        //oldTour.setTruck(activeTour.getTruck());
 
         oldTour.setCargo(activeTour.getCargo());
         oldTour.setNumberOfAnimals(activeTour.getNumberOfAnimals());
 
-        oldTour.setStartAddress(activeTour.getStartAddress());
-        oldTour.setDestinationAddress(activeTour.getDestinationAddress());
+        Address startAddress = oldTour.getStartAddress();
+        Address destinationAddress = oldTour.getDestinationAddress();
+        startAddress.copyFieldsFromAddress(activeTour.getStartAddress());
+        destinationAddress.copyFieldsFromAddress(activeTour.getDestinationAddress());
+//        oldTour.setStartAddress(activeTour.getStartAddress());
+//        oldTour.setDestinationAddress(activeTour.getDestinationAddress());
 
         oldTour.setDeliveryStartDate(activeTour.getDeliveryStartDate());
         oldTour.setDeliveryStartTime(activeTour.getDeliveryStartTime());
         oldTour.setDriver(activeTour.getDriver());
         oldTour.setComment(activeTour.getComment());
 
-        addressRepository.save(oldTour.getStartAddress());
-        addressRepository.save(oldTour.getDestinationAddress());
+        addressRepository.save(startAddress);
+        addressRepository.save(destinationAddress);
         tourRepository.save(oldTour);
 
         List<Tour> tours = tourService.getSortedTours("");
