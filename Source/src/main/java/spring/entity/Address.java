@@ -36,14 +36,14 @@ public class Address {
     @Size(min = 1, message = "Please specify the city of the start location.")
     private String city;
 
-    private int phone = -1;
+    private String phone = "";
 
     private String email = "";
 
     public Address() {
     }
 
-    public Address(String name, String surname, String street, String streetNumber, int zip, String city, int phone, String email) {
+    public Address(String name, String surname, String street, String streetNumber, int zip, String city, String phone, String email) {
         this.name = name;
         this.surname = surname;
         this.street = street;
@@ -117,11 +117,11 @@ public class Address {
     }
 
 
-    public int getPhone() {
+    public String getPhone() {
         return phone;
     }
 
-    public void setPhone(int phone) {
+    public void setPhone(String phone) {
         this.phone = phone;
     }
 
