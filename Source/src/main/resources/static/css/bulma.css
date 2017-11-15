@@ -3,6 +3,10 @@
   max-height: 90vh;
 }
 
+option.selected {
+  border-bottom: 1px dotted #000;
+  font-weight: bold;
+}
 
 /*! bulma.io v0.6.0 | MIT License | github.com/jgthms/bulma */
 @-webkit-keyframes spinAround {

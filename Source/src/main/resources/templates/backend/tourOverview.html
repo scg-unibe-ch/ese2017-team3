@@ -384,8 +384,10 @@
                             <div class="column">
                                 <div class="select">
                                     <select th:field="*{truck}">
+                                        <option th:if="${activeTour.truck != null}" th:value="${activeTour.truck.id}"
+                                                th:text="${activeTour.truck.truckType}" class="selected"></option>
                                         <div th:if="${not #lists.isEmpty(trucks)}" th:each="truck : ${trucks}">
-                                            <option th:if="${truck.available == true}" th:value="${truck.id}"
+                                            <option th:if="${truck.available == true}" th:unless="${truck.id == activeTour.truck.id}" th:value="${truck.id}"
                                                     th:text="${truck.truckType}"></option>
                                         </div>
                                     </select>
