@@ -167,7 +167,9 @@ public class TourController {
     public ModelAndView deliverySubmit(@Valid @ModelAttribute Tour tour, BindingResult bindingResult, ModelMap model) {
         if (bindingResult.hasErrors()) {
             List<Driver> drivers = driverService.getDrivers();
+            List<Truck> trucks = truckService.getTrucks();
             model.addAttribute("drivers", drivers);
+            model.addAttribute("trucks", trucks);
             return new ModelAndView("backend/deliveries");
         }
         addressRepository.save(tour.getStartAddress());
