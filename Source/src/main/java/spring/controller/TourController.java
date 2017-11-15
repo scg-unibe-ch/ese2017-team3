@@ -194,7 +194,11 @@ public class TourController {
         //prepare a list of Drivers to select from.
         List<Driver> drivers = driverService.getDrivers();
         model.addAttribute("drivers", drivers);
-       
+
+        //prepare list of trucks to select from.
+        List<Truck> trucks = truckService.getTrucks();
+        model.addAttribute("trucks", trucks);
+
         if (model.get("activeTour") == null) {
           Tour activeTour = getTourById(activeIndex, tours);
           model.addAttribute("activeTour", activeTour);
@@ -238,7 +242,11 @@ public class TourController {
         //toDelete.setId(activeTour.getId());
         //oldTour.setEstimatedTime(activeTour.getEstimatedTime());
         //oldTour.setTimeFrame(activeTour.getTimeFrame());
-        //oldTour.setTruck(activeTour.getTruck());
+
+        oldTour.getTruck().setAvailable(true);
+
+        oldTour.setTruck(activeTour.getTruck());
+        activeTour.getTruck().setAvailable(false);
 
         oldTour.setCargo(activeTour.getCargo());
         oldTour.setNumberOfAnimals(activeTour.getNumberOfAnimals());

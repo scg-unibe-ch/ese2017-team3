@@ -178,7 +178,6 @@
                         <input type="hidden" th:field="*{id}"/>
                         <input type="hidden" th:field="*{estimatedTime}"/>
                         <input type="hidden" th:field="*{timeFrame}"/>
-                        <input type="hidden" th:field="*{truck}" />
                         <div class="columns">
                             <div class="column is-2">Cargo:</div>
                             <div class="column is-4">
@@ -380,12 +379,25 @@
                                     </select>
                                 </div>
                             </div>
+
+                            <div class="column is-2">Truck:</div>
+                            <div class="column">
+                                <div class="select">
+                                    <select th:field="*{truck}">
+                                        <div th:if="${not #lists.isEmpty(trucks)}" th:each="truck : ${trucks}">
+                                            <option th:if="${truck.available == true}" th:value="${truck.id}"
+                                                    th:text="${truck.truckType}"></option>
+                                        </div>
+                                    </select>
+                                </div>
+                            </div>
                         </div>
                         <div class="columns">
                             <div class="column is-2">Comment:</div>
                             <div class="column">
                                 <p class="control">
-                                    <textarea class="textarea" type="text" th:value="*{comment}" th:field="*{comment}"></textarea>
+                                    <textarea class="textarea" type="text" th:value="*{comment}"
+                                              th:field="*{comment}"></textarea>
                                 </p>
                             </div>
                         </div>
