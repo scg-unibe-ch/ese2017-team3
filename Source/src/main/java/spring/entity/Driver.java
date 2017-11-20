@@ -72,8 +72,8 @@ public class Driver {
         if (getId() != driver.getId()) return false;
         if (getUsername() != null ? !getUsername().equals(driver.getUsername()) : driver.getUsername() != null)
             return false;
-        if (address.getName() != null ? !address.getName().equals(driver.address.getName()) : driver.address.getName() != null) return false;
-        if (address.getSurname() != null ? !address.getSurname().equals(driver.address.getSurname()) : driver.address.getSurname() != null)
+        if (address.getLastname() != null ? !address.getLastname().equals(driver.address.getLastname()) : driver.address.getLastname() != null) return false;
+        if (address.getFirstname() != null ? !address.getFirstname().equals(driver.address.getFirstname()) : driver.address.getFirstname() != null)
             return false;
         return hiringDate != null ? hiringDate.equals(driver.hiringDate) : driver.hiringDate == null;
     }

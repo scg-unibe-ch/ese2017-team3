@@ -17,10 +17,10 @@ public class Address {
     private long id;
 
     @Size(min = 1, message = "Please specify the name of the contact person at the start location.")
-    private String name;
+    private String lastname;
 
     @Size(min = 1, message = "Please specify the surname of the contact person at the start location.")
-    private String surname;
+    private String firstname;
 
     @Size(min = 1, message = "Please specify the street name of the start location.")
     private String street;
@@ -43,9 +43,9 @@ public class Address {
     public Address() {
     }
 
-    public Address(String name, String surname, String street, String streetNumber, int zip, String city, String phone, String email) {
-        this.name = name;
-        this.surname = surname;
+    public Address(String lastname, String firstname, String street, String streetNumber, int zip, String city, String phone, String email) {
+        this.lastname = lastname;
+        this.firstname = firstname;
         this.street = street;
         this.streetNumber = streetNumber;
         this.zip = zip;
@@ -60,15 +60,15 @@ public class Address {
     }
 
     public String getPerson() {
-        return name + " " + surname;
+        return lastname + " " + firstname;
     }
 
-    public String getName() {
-        return name;
+    public String getLastname() {
+        return lastname;
     }
 
-    public String getSurname() {
-        return surname;
+    public String getFirstname() {
+        return firstname;
     }
 
     public String getStreet() {
@@ -92,12 +92,12 @@ public class Address {
         this.id = id;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setLastname(String lastname) {
+        this.lastname = lastname;
     }
 
-    public void setSurname(String surname) {
-        this.surname = surname;
+    public void setFirstname(String firstname) {
+        this.firstname = firstname;
     }
 
     public void setStreet(String address) {
@@ -134,8 +134,8 @@ public class Address {
     }
 
     public void copyFieldsFromAddress(Address anotherAddress) {
-        this.setName(anotherAddress.getName());
-        this.setSurname(anotherAddress.getSurname());
+        this.setLastname(anotherAddress.getLastname());
+        this.setFirstname(anotherAddress.getFirstname());
         this.setStreet(anotherAddress.getStreet());
         this.setStreetNumber(anotherAddress.getStreetNumber());
         this.setZip(anotherAddress.getZip());

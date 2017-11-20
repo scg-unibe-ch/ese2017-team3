@@ -196,10 +196,10 @@
                                     <div class="column is-4">Start:</div>
                                     <div class="column">
                                         <div class="field">
-                                            <input class="input" type="text" th:field="*{startAddress.name}" />
+                                            <input class="input" type="text" th:field="*{startAddress.lastname}" />
                                         </div>
-                                        <article class="message is-warning" th:if="${#fields.hasErrors('startAddress.name')}">
-                                            <div class="message-body" th:errors="*{startAddress.name}" />
+                                        <article class="message is-warning" th:if="${#fields.hasErrors('startAddress.lastname')}">
+                                            <div class="message-body" th:errors="*{startAddress.lastname}" />
                                         </article>
                                     </div>
                                 </div>
@@ -207,10 +207,10 @@
                                     <div class="column is-4" />
                                     <div class="column">
                                         <div class="field">
-                                            <input class="input" type="text" th:field="*{startAddress.surname}" />
+                                            <input class="input" type="text" th:field="*{startAddress.firstname}" />
                                         </div>
-                                        <article class="message is-warning" th:if="${#fields.hasErrors('startAddress.surname')}">
-                                            <div class="message-body" th:errors="*{startAddress.surname}" />
+                                        <article class="message is-warning" th:if="${#fields.hasErrors('startAddress.firstname')}">
+                                            <div class="message-body" th:errors="*{startAddress.firstname}" />
                                         </article>
                                     </div>
                                 </div>
@@ -293,10 +293,10 @@
                                     <div class="column is-4">Destination:</div>
                                     <div class="column">
                                         <div class="field">
-                                            <input class="input" type="text" th:field="*{destinationAddress.name}" />
+                                            <input class="input" type="text" th:field="*{destinationAddress.lastname}" />
                                         </div>
-                                        <article class="message is-warning" th:if="${#fields.hasErrors('destinationAddress.name')}">
-                                            <div class="message-body" th:errors="*{destinationAddress.name}" />
+                                        <article class="message is-warning" th:if="${#fields.hasErrors('destinationAddress.lastname')}">
+                                            <div class="message-body" th:errors="*{destinationAddress.lastname}" />
                                         </article>
                                     </div>
                                 </div>
@@ -304,10 +304,10 @@
                                     <div class="column is-4" />
                                     <div class="column">
                                         <div class="field">
-                                            <input class="input" type="text" th:field="*{destinationAddress.surname}" />
+                                            <input class="input" type="text" th:field="*{destinationAddress.firstname}" />
                                         </div>
-                                        <article class="message is-warning" th:if="${#fields.hasErrors('destinationAddress.surname')}">
-                                            <div class="message-body" th:errors="*{destinationAddress.surname}" />
+                                        <article class="message is-warning" th:if="${#fields.hasErrors('destinationAddress.firstname')}">
+                                            <div class="message-body" th:errors="*{destinationAddress.firstname}" />
                                         </article>
                                     </div>
                                 </div>

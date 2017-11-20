@@ -69,8 +69,8 @@
     <thead>
     <tr>
         <th>Username</th>
-        <th>Name</th>
-        <th>Surname</th>
+        <th>Lastname</th>
+        <th>Firstname</th>
         <th>Street</th>
         <th>No°</th>
         <th>ZIP</th>
@@ -84,8 +84,8 @@
     <tbody>
     <tr th:if="${not #lists.isEmpty(drivers)}" th:each="driver : ${drivers}">
         <td><p th:text="${driver.username}"></p></td>
-        <td><p th:text="${driver.address.getName()}"></p></td>
-        <td><p th:text="${driver.address.getSurname()}"></p></td>
+        <td><p th:text="${driver.address.getLastname()}"></p></td>
+        <td><p th:text="${driver.address.getFirstname()}"></p></td>
         <td><p th:text="${driver.address.getStreet()}"></p></td>
         <td><p th:text="${driver.address.getStreetNumber()}"></p></td>
         <td><p th:text="${driver.address.getZip()}"></p></td>
