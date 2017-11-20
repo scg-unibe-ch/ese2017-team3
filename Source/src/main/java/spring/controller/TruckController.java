@@ -23,7 +23,7 @@ public class TruckController {
     @GetMapping(path = "/trucks")
     public String truckOverview(Model model) {
 
-        List<Truck> truckList = truckService.getTrucks();
+        List<Truck> truckList = truckService.getSortedTrucks();
 
         model.addAttribute("trucks", truckList);
 

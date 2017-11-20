@@ -21,6 +21,8 @@ public class TruckService {
         return truckRepository.findAll();
     }
 
+    public List<Truck> getSortedTrucks() {return truckRepository.findAllByOrderByTruckTypeDesc(); }
+
     public Truck getById(Long id) {
         return truckRepository.findOne(id);
     }

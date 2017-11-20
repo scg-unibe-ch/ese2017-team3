@@ -7,6 +7,9 @@ import org.springframework.stereotype.Component;
 import spring.entity.Truck;
 import spring.repositories.TruckRepository;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by olulrich on 05.11.17.
  */
@@ -21,29 +24,29 @@ public class TruckLoader implements ApplicationRunner {
         //Add Trucks to DB
 
         if (truckRepository.findAll().size() == 0) {
-            truckRepository.save(new Truck("BIG", true));
-            truckRepository.save(new Truck("BIG", true));
-            truckRepository.save(new Truck("BIG", true));
+            truckRepository.save(new Truck("BIG", "bigTransporter2.jpg", true));
+            truckRepository.save(new Truck("BIG", "bigTransporter2.jpg", true));
+            truckRepository.save(new Truck("BIG", "bigTransporter2.jpg", true));
 
-            truckRepository.save(new Truck("MEDIUM", true));
-            truckRepository.save(new Truck("MEDIUM", true));
-            truckRepository.save(new Truck("MEDIUM", true));
-
-
-            truckRepository.save(new Truck("SMALL", true));
-            truckRepository.save(new Truck("SMALL", true));
-            truckRepository.save(new Truck("SMALL", true));
-            truckRepository.save(new Truck("SMALL", true));
-            truckRepository.save(new Truck("SMALL", true));
+            truckRepository.save(new Truck("MEDIUM", "mediumTransporter2.jpg", true));
+            truckRepository.save(new Truck("MEDIUM", "mediumTransporter2.jpg", true));
+            truckRepository.save(new Truck("MEDIUM", "mediumTransporter2.jpg", true));
 
 
-            truckRepository.save(new Truck("TINY", true));
-            truckRepository.save(new Truck("TINY", true));
-            truckRepository.save(new Truck("TINY", true));
-            truckRepository.save(new Truck("TINY", true));
-            truckRepository.save(new Truck("TINY", true));
-            truckRepository.save(new Truck("TINY", true));
-            truckRepository.save(new Truck("TINY", true));
+            truckRepository.save(new Truck("SMALL", "smallTransporter2.jpg", true));
+            truckRepository.save(new Truck("SMALL", "smallTransporter2.jpg", true));
+            truckRepository.save(new Truck("SMALL", "smallTransporter2.jpg", true));
+            truckRepository.save(new Truck("SMALL", "smallTransporter2.jpg", true));
+            truckRepository.save(new Truck("SMALL", "smallTransporter2.jpg", true));
+
+
+            truckRepository.save(new Truck("TINY", "tinyTransporter2.jpg", true));
+            truckRepository.save(new Truck("TINY", "tinyTransporter2.jpg", true));
+            truckRepository.save(new Truck("TINY", "tinyTransporter2.jpg", true));
+            truckRepository.save(new Truck("TINY", "tinyTransporter2.jpg", true));
+            truckRepository.save(new Truck("TINY", "tinyTransporter2.jpg", true));
+            truckRepository.save(new Truck("TINY", "tinyTransporter2.jpg", true));
+            truckRepository.save(new Truck("TINY", "tinyTransporter2.jpg", true));
         }
     }
 }
