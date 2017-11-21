@@ -15,20 +15,21 @@ public class Truck {
 
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
-    public long id;
+    private long id;
 
     @Column(nullable = false)
-    public String truckType;
+    private String truckType;
 
     @Column(nullable = false)
-    public Boolean available;
+    private Boolean available;
 
     @Column(nullable = false)
-    @Pattern(regexp = "([^\\s]+(\\.(?i)(jpg|png|gif|bmp))$)")
-    public String imageName = "standard.png";
+    private long imageId;
+
 
     @OneToMany(mappedBy = "truck")
     public List<Tour> tours;
+
 
     public Truck() {};
 
@@ -37,9 +38,9 @@ public class Truck {
         this.available = available;
     }
 
-    public Truck(String truckType, String imageName, boolean available) {
+    public Truck(String truckType, long imageId, boolean available) {
         this.truckType = truckType;
-        this.imageName = imageName;
+        this.imageId = imageId;
         this.available = available;
     }
 
@@ -67,12 +68,12 @@ public class Truck {
         this.available = available;
     }
 
-    public String getImageName() {
-        return imageName;
+    public long getImageId() {
+        return imageId;
     }
 
-    public void setImageName(String imageName) {
-        this.imageName = imageName;
+    public void setImageId(long imageId) {
+        this.imageId = imageId;
     }
 
     public List<Tour> getTours() {

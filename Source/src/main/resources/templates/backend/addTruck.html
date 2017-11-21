@@ -52,11 +52,11 @@
                     <li>
                         <a href="drivers">Drivers</a>
                     </li>
-                    <li class="is-active">
-                        <a>Trucks</a>
-                    </li>
                     <li>
-                        <a href="addTruck">Add Truck</a>
+                        <a href="trucks">Trucks</a>
+                    </li>
+                    <li class="is-active">
+                        <a>Add Truck</a>
                     </li>
                 </ul>
                 <div class="is-right">
@@ -69,31 +69,58 @@
     </div>
 </section>
 <div class="anitrans-content">
-    <h2 class="title">Available Trucks:</h2>
-
-    <div class="columns is-multiline">
-        <div th:if="${not #lists.isEmpty(trucks)}" th:each="truck : ${trucks}">
-            <div th:if="${truck.available == true}" class="column">
-                <div th:each="image : ${images}">
-                    <figure th:if="${image.key == truck.imageId}" class="image is-128x128">
-                        <img th:src="@{'data:image/jpeg;base64,'+${image.value}}" />
-                    </figure>
-                </div>
+    <div class="columns">
+        <div class="column is-one-third">
+            <h1 class="title">Add new truck</h1>
+            <div th:if="${message}">
+                <h2 th:text="${message}"/>
             </div>
-        </div>
-    </div>
-
-    <h2 class="title">Trucks in use:</h2>
-
-    <div class="columns is-multiline">
-        <div th:if="${not #lists.isEmpty(trucks)}" th:each="truck : ${trucks}">
-            <div th:if="${truck.available == false}" class="column">
-                <div th:each="image : ${images}">
-                    <figure th:if="${image.key == truck.imageId}" class="image is-128x128">
-                        <img th:src="@{'data:image/jpeg;base64,'+${image.value}}" />
-                    </figure>
+            <form method="POST" enctype="multipart/form-data" th:action="@{/addTruck}">
+                <div>
+                    <div class="field">
+                        <label class="label">Truck name</label>
+                        <div class="control has-icons-left">
+                            <input class="input" type="text" name="truckType" placeholder="name or specification"/>
+                            <span class="icon is-small is-left">
+                                <i class="fa fa-truck"></i>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label class="label">Amount</label>
+                        <div class="control has-icons-left">
+                            <input class="input" type="text" name="amount" placeholder="amount of trucks to add"/>
+                            <span class="icon is-small is-left">
+                                <i class="fa fa-hashtag"></i>
+                            </span>
+                        </div>
+                    </div>
                 </div>
-            </div>
+                <br/>
+                <div>
+                    <div class="field">
+                        <div class="file is-boxed is-medium">
+                            <label class="file-label">
+                                <input class="file-input" type="file" name="file" />
+                                <span class="file-cta">
+                                        <span class="file-icon">
+                                          <i class="fa fa-upload"></i>
+                                        </span>
+                                        <span class="file-label">Choose truck image</span>
+                                      </span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <br/>
+                <div class="columns">
+                    <div class="column is-half">
+                        <div class="control">
+                            <button class="button is-link" type="submit">Add Truck</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
         </div>
     </div>
 </div>
