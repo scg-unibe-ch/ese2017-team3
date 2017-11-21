@@ -23,7 +23,7 @@ public class Tour {
     @Size(min = 1, message = "Please specify the cargo for this order.")
     private String cargo;
 
-    @Min(value = 1, message = "Please specify the number of animals for this tour.")
+        @Min(value = 1, message = "Please specify the number of animals for this tour.")
 //    @Pattern(regexp = "(\\d+)", message = "You entered an invalid number.")
     private int numberOfAnimals;
 
