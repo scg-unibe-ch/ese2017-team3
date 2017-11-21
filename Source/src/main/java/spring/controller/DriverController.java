@@ -1,7 +1,6 @@
 package spring.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -73,15 +72,32 @@ public class DriverController {
         return new ModelAndView("redirect:/drivers");
     }
 
+    @GetMapping(path = "/drivers/promote")
+    public ModelAndView promoteDriver(Model model, @RequestParam String username) {
+
+        List<Driver> drivers = driverService.getDrivers();
+
+        Driver promotedDriver = driverRepository.findDriverByUsername(username);
+        driverRepository.delete(promotedDriver);
+
+        UserDetails driverWithNewRole = userDetailsManager.loadUserByUsername(username);
+
+        userDetailsManager.deleteUser(username);
+
+        User user = new User(driverWithNewRole.getUsername(), driverWithNewRole.getPassword(), Collections.singletonList(new SimpleGrantedAuthority("ROLE_ADMIN")));
+        userDetailsManager.createUser(user);
+
+        model.addAttribute("drivers", drivers);
+        return new ModelAndView("redirect:/drivers");
+    }
+
     @GetMapping(path = "/address")
-    public String setupAddressData(Model model){
+    public String setupAddressData(Model model) {
 
         model.addAttribute("address", new Address());
 
         return "AddressForm";
     }
-
-
 
 
     // POST request to /deliveries with the appropriate values will create a new tour and redirect to /tours
