@@ -1,9 +1,5 @@
 package spring.controller;
 
-import java.sql.Date;
-import java.time.LocalDate;
-import java.util.Collections;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -14,16 +10,17 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import spring.entity.Driver;
+import spring.entity.WrappedUser;
 import spring.repositories.DriverRepository;
+
+import javax.validation.Valid;
+import java.time.LocalDate;
+import java.util.Collections;
 
 @Controller
 @RequestMapping(path = "/user")
@@ -38,19 +35,32 @@ public class UserController {
     @PreAuthorize("@userSecurityService.canCreate()")
     @GetMapping(path = "/register")
     public ModelAndView createForm() {
-        return new ModelAndView("RegistrationForm", "user", new User("user", "", Collections.emptyList()));
+        return new ModelAndView("RegistrationForm", "wrappedUser", new WrappedUser());
     }
 
     @PreAuthorize("@userSecurityService.canCreate()")
-    @PostMapping(path = "")
-    public ModelAndView create(@RequestParam String username, @RequestParam String password) {
+    @PostMapping(path = "/register")
+    public ModelAndView create(@RequestParam String username, @RequestParam String password, @RequestParam String regCode) {
 
         // NOTE users need an authority, otherwise they are treated as non-existing
 
-        if (userDetailsManager.userExists(username)) {
+//        if (bindingResult.hasErrors()) {
+//            return new ModelAndView("redirect:/register");
+//        }
 
+        if (!regCode.equals("") && !regCode.equals("asdf123")){
+            return new ModelAndView("error");
+        }
+
+        if (userDetailsManager.userExists(username)) {
             return new ModelAndView("duplicateUser");
 
+        } else if (regCode.equals("asdf123")) {
+            User user = new User(username, password, Collections.singletonList(new SimpleGrantedAuthority("ROLE_ADMIN")));
+            userDetailsManager.createUser(user);
+            Authentication auth = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
+            SecurityContextHolder.getContext().setAuthentication(auth);
+            return new ModelAndView("redirect:/tours");
         } else {
             User user = new User(username, password, Collections.singletonList(new SimpleGrantedAuthority("ROLE_DRIVER")));
             userDetailsManager.createUser(user);
