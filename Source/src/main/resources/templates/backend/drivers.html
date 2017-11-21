@@ -79,7 +79,7 @@
         <th>Phone</th>
         <th>Hiring Date</th>
         <th/>
-        <th></th>
+        <th/>
     </tr>
     </thead>
     <tbody>
@@ -94,10 +94,10 @@
         <td><p th:text="${driver.address.getEmail()}"></p></td>
         <td><p th:text="${driver.address.getPhone()}"></p></td>
         <td><p th:text="${driver.getHiringDateString()}"></p></td>
+        <td><a th:href="'drivers/promote?username='+${driver.username}" class="button is-info"><i
+                class="fa fa-arrow-circle-o-up"></i>&nbsp;Promote to Admin</a></td>
         <td><a th:href="'drivers/delete?username=' + ${driver.username}" class="button is-danger"><i
                 class="fa fa-fire"></i>&nbsp;Fire</a></td>
-        <td><a th:href="'drivers/promote?username='+${driver.username}" class="button is-danger"><i
-                class="fa fa-arrow-circle-o-up"></i>&nbsp;Promote</a></td>
     </tr>
     </tbody>
 </table>
