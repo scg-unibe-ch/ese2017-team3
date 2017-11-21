@@ -1,5 +1,7 @@
 package spring.entity;
 
+import java.util.List;
+
 import javax.persistence.*;
 import javax.validation.constraints.Pattern;
 
@@ -24,8 +26,10 @@ public class Truck {
     @Column(nullable = false)
     private long imageId;
 
-    @OneToOne(mappedBy = "truck")
-    private Tour tour;
+
+    @OneToMany(mappedBy = "truck")
+    public List<Tour> tours;
+
 
     public Truck() {};
 
@@ -72,12 +76,12 @@ public class Truck {
         this.imageId = imageId;
     }
 
-    public Tour getTour() {
-        return tour;
+    public List<Tour> getTours() {
+        return tours;
     }
 
-    public void setTour(Tour tour) {
-        this.tour = tour;
+    public void setTours(List<Tour> tours) {
+        this.tours = tours;
     }
 
     @Override

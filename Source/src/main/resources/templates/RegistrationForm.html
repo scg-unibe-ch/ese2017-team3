@@ -23,7 +23,8 @@
             <div class="columns">
                 <div class="column is-one-third is-offset-one-third login-box">
                     <h1 class="title">Register</h1>
-                    <form th:action="@{/user}" th:object="${user}" method="post">
+                    <form th:action="@{/user/register}" th:object="${wrappedUser}" method="post">
+
                         <div>
                             <div class="field">
                                 <label class="label">Username</label>
@@ -48,6 +49,21 @@
                                 </div>
                             </div>
                             <p th:each="error: ${#fields.errors('password')}" th:text="${error}">Validation error</p>
+                        </div>
+                        <br/>
+                        <div>
+                            <div class="field">
+                                <label class="label">Registration Code</label>
+                                <div class="control has-icons-left">
+                                    <input class="input" type="text" placeholder="Leave Empty if you've got none" th:field="*{regCode}"/>
+                                    <span class="icon is-small is-left">
+                                        <i class="fa fa-code"></i>
+                                    </span>
+                                </div>
+                            </div>
+                            <article class="message is-warning" th:if="${#fields.hasErrors('regCode')}">
+                                <div class="message-body" th:errors="*{regCode}" />
+                            </article>
                         </div>
                         <br/>
                         <div class="control">

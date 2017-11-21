@@ -267,6 +267,17 @@
                                     </div>
                                 </div>
                                 <div class="columns">
+                                    <div class="column is-4">Estimated Time:</div>
+                                    <div class="column">
+                                        <div class="field">
+                                            <input class="input" type="text" th:field="*{estimatedTime}" />
+                                        </div>
+                                        <article class="message is-warning" th:if="${#fields.hasErrors('estimatedTime')}">
+                                            <div class="message-body" th:errors="*{estimatedTime}" />
+                                        </article>
+                                    </div>
+                                </div>
+                                <div class="columns">
                                     <div class="column is-4">Driver:</div>
                                     <div class="column">
                                         <div class="select">
@@ -360,6 +371,17 @@
                                         </div>
                                         <article class="message is-warning" th:if="${#fields.hasErrors('deliveryStartTime')}">
                                             <div class="message-body" th:errors="*{deliveryStartTime}" />
+                                        </article>
+                                    </div>
+                                </div>
+                                <div class="columns">
+                                    <div class="column is-4">Time Frame:</div>
+                                    <div class="column">
+                                        <div class="field">
+                                            <input class="input" type="text" th:field="*{timeFrame}" />
+                                        </div>
+                                        <article class="message is-warning" th:if="${#fields.hasErrors('timeFrame')}">
+                                            <div class="message-body" th:errors="*{timeFrame}" />
                                         </article>
                                     </div>
                                 </div>

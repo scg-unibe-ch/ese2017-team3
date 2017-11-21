@@ -175,7 +175,7 @@ public class TourController {
         addressRepository.save(tour.getStartAddress());
         addressRepository.save(tour.getDestinationAddress());
 
-        if (tour.getTruck() != null) truckService.getById(tour.getTruck().getId()).setAvailable(false);
+        truckService.getById(tour.getTruck().getId()).setAvailable(false);
         
         tourRepository.save(tour);
         return new ModelAndView("redirect:/tours");
@@ -215,14 +215,10 @@ public class TourController {
         Tour toDelete = getTourById(index, tours);
 
         Truck truck = toDelete.getTruck();
-        if (truck != null) {
-          truck.setAvailable(true);
-          truckRepository.save(truck);
-        }
+        truck.setAvailable(true);
+        truckRepository.save(truck);
         toDelete.setTourState(Tour.TourState.DELETED);
-        toDelete.setTruck(null);
         tourRepository.save(toDelete);
-
         
         tours.remove(toDelete);
 
