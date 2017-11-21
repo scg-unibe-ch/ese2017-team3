@@ -56,8 +56,8 @@ public class Tour {
     private String driver;
 
     
-    //@NotNull(message = "There are no trucks left. Please consider buying more trucks :P")
-	@OneToOne
+    @NotNull(message = "There are no trucks left. Please consider buying more trucks :P")
+	@ManyToOne
 	private Truck truck;
 
 	public Tour(String cargo) {
