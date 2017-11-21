@@ -27,19 +27,19 @@
                         <div>
                             <div class="field">
                                 <div class="control">
-                                    <input class="input" type="text" placeholder="Name" th:field="*{name}"/>
+                                    <input class="input" type="text" placeholder="Firstname" th:field="*{firstname}"/>
                                 </div>
                             </div>
-                            <p th:each="error: ${#fields.errors('name')}" th:text="${error}">Validation error</p>
+                            <p th:each="error: ${#fields.errors('firstname')}" th:text="${error}">Validation error</p>
                         </div>
                         <br/>
                         <div>
                             <div class="field">
                                 <div class="control">
-                                    <input class="input" type="text" placeholder="Surname" th:field="*{surname}"/>
+                                    <input class="input" type="text" placeholder="Lastname" th:field="*{lastname}"/>
                                 </div>
                             </div>
-                            <p th:each="error: ${#fields.errors('surname')}" th:text="${error}">Validation error</p>
+                            <p th:each="error: ${#fields.errors('lastname')}" th:text="${error}">Validation error</p>
                         </div>
                         <br/>
                         <div class="columns">
@@ -54,7 +54,7 @@
                             <div class="column is-one-third">
                                 <div class="field">
                                     <div class="control">
-                                        <input class="input" type="text" placeholder="No" th:field="*{streetNumber}"/>
+                                        <input class="input" type="text" placeholder="Nr." th:field="*{streetNumber}"/>
                                     </div>
                                 </div>
                                 <p th:each="error: ${#fields.errors('streetNumber')}" th:text="${error}">Validation

@@ -70,24 +70,9 @@
 
 <div class="columns is-multiline">
     <div th:if="${not #lists.isEmpty(trucks)}" th:each="truck : ${trucks}">
-        <div th:if="${truck.truckType == 'BIG' and truck.available == true}" class="column">
+        <div th:if="${truck.available == true}" class="column">
             <figure class="image is-128x128">
-                <img th:src="@{/images/bigTransporter2.jpg}"></img>
-            </figure>
-        </div>
-        <div th:if="${truck.truckType == 'MEDIUM' and truck.available == true}" class="column">
-            <figure class="image is-128x128">
-                <img th:src="@{/images/mediumTransporter2.jpg}"></img>
-            </figure>
-        </div>
-        <div th:if="${truck.truckType == 'SMALL' and truck.available == true}" class="column">
-            <figure class="image is-128x128">
-                <img th:src="@{/images/smallTransporter2.jpg}"></img>
-            </figure>
-        </div>
-        <div th:if="${truck.truckType == 'TINY' and truck.available == true}" class="column">
-            <figure class="image is-128x128">
-                <img th:src="@{/images/tinyTransporter2.jpg}"></img>
+                <img th:src="@{/images/trucks/{filename}(filename=${truck.imageName})}" />
             </figure>
         </div>
     </div>
@@ -97,24 +82,9 @@
 
 <div class="columns is-multiline">
     <div th:if="${not #lists.isEmpty(trucks)}" th:each="truck : ${trucks}">
-        <div th:if="${truck.truckType == 'BIG' and truck.available == false}" class="column">
+        <div th:if="${truck.available == false}" class="column">
             <figure class="image is-128x128">
-                <img th:src="@{/images/bigTransporter2.jpg}"></img>
-            </figure>
-        </div>
-        <div th:if="${truck.truckType == 'MEDIUM' and truck.available == false}" class="column">
-            <figure class="image is-128x128">
-                <img th:src="@{/images/mediumTransporter2.jpg}"></img>
-            </figure>
-        </div>
-        <div th:if="${truck.truckType == 'SMALL' and truck.available == false}" class="column">
-            <figure class="image is-128x128">
-                <img th:src="@{/images/smallTransporter2.jpg}"></img>
-            </figure>
-        </div>
-        <div th:if="${truck.truckType == 'TINY' and truck.available == false}" class="column">
-            <figure class="image is-128x128">
-                <img th:src="@{/images/tinyTransporter2.jpg}"></img>
+                <img th:src="@{/images/trucks/{filename}(filename=${truck.imageName})}" />
             </figure>
         </div>
     </div>

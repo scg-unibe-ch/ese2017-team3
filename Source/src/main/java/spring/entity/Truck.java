@@ -1,6 +1,7 @@
 package spring.entity;
 
 import javax.persistence.*;
+import javax.validation.constraints.Pattern;
 
 /**
  * Created by olulrich on 05.11.17.
@@ -20,6 +21,10 @@ public class Truck {
     @Column(nullable = false)
     public Boolean available;
 
+    @Column(nullable = false)
+    @Pattern(regexp = "([^\\s]+(\\.(?i)(jpg|png|gif|bmp))$)")
+    public String imageName = "standard.png";
+
     @OneToOne(mappedBy = "truck")
     public Tour tour;
 
@@ -27,6 +32,12 @@ public class Truck {
 
     public Truck(String truckType, boolean available) {
         this.truckType = truckType;
+        this.available = available;
+    }
+
+    public Truck(String truckType, String imageName, boolean available) {
+        this.truckType = truckType;
+        this.imageName = imageName;
         this.available = available;
     }
 
@@ -52,6 +63,14 @@ public class Truck {
 
     public void setAvailable(Boolean available) {
         this.available = available;
+    }
+
+    public String getImageName() {
+        return imageName;
+    }
+
+    public void setImageName(String imageName) {
+        this.imageName = imageName;
     }
 
     public Tour getTour() {

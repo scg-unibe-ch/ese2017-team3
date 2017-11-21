@@ -175,8 +175,8 @@ public class TourController {
         addressRepository.save(tour.getStartAddress());
         addressRepository.save(tour.getDestinationAddress());
 
-        truckService.getById(tour.getTruck().getId()).setAvailable(false);
-
+        if (tour.getTruck() != null) truckService.getById(tour.getTruck().getId()).setAvailable(false);
+        
         tourRepository.save(tour);
         return new ModelAndView("redirect:/tours");
     }
@@ -194,7 +194,11 @@ public class TourController {
         //prepare a list of Drivers to select from.
         List<Driver> drivers = driverService.getDrivers();
         model.addAttribute("drivers", drivers);
-       
+
+        //prepare list of trucks to select from.
+        List<Truck> trucks = truckService.getTrucks();
+        model.addAttribute("trucks", trucks);
+
         if (model.get("activeTour") == null) {
           Tour activeTour = getTourById(activeIndex, tours);
           model.addAttribute("activeTour", activeTour);
@@ -210,12 +214,16 @@ public class TourController {
         List<Tour> tours = tourService.getSortedTours("");
         Tour toDelete = getTourById(index, tours);
 
-        toDelete.setTourState(Tour.TourState.DELETED);
         Truck truck = toDelete.getTruck();
-        truck.setAvailable(true);
-        truckRepository.save(truck);
+        if (truck != null) {
+          truck.setAvailable(true);
+          truckRepository.save(truck);
+        }
+        toDelete.setTourState(Tour.TourState.DELETED);
+        toDelete.setTruck(null);
         tourRepository.save(toDelete);
 
+        
         tours.remove(toDelete);
 
         model.addAttribute("tours", tours);
@@ -238,7 +246,11 @@ public class TourController {
         //toDelete.setId(activeTour.getId());
         //oldTour.setEstimatedTime(activeTour.getEstimatedTime());
         //oldTour.setTimeFrame(activeTour.getTimeFrame());
-        //oldTour.setTruck(activeTour.getTruck());
+
+        oldTour.getTruck().setAvailable(true);
+
+        oldTour.setTruck(activeTour.getTruck());
+        activeTour.getTruck().setAvailable(false);
 
         oldTour.setCargo(activeTour.getCargo());
         oldTour.setNumberOfAnimals(activeTour.getNumberOfAnimals());

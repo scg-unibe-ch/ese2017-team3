@@ -36,8 +36,8 @@ public class TourRepositoryAndEntityTest {
         driver.setUsername("Alfi");
         driver.setId(1);
         driver.setHiringDate(LocalDate.now());
-        driver.getAddress().setName("Alfredo");
-        driver.getAddress().setSurname("Gorgonzola");
+        driver.getAddress().setLastname("Alfredo");
+        driver.getAddress().setFirstname("Gorgonzola");
 
         truck.setAvailable(true);
         truck.setId(1);
@@ -45,16 +45,16 @@ public class TourRepositoryAndEntityTest {
 
         startAddress.setId(1);
         startAddress.setCity("Narnia");
-        startAddress.setName("Gowen");
-        startAddress.setSurname("Geter");
+        startAddress.setLastname("Gowen");
+        startAddress.setFirstname("Geter");
         startAddress.setZip(1001);
         startAddress.setStreet("Rhubarb Hill");
         startAddress.setStreetNumber("12A");
 
         endAddress.setId(1);
         endAddress.setCity("Bielefeld");
-        endAddress.setName("Sam");
-        endAddress.setSurname("Sung");
+        endAddress.setLastname("Sam");
+        endAddress.setFirstname("Sung");
         endAddress.setZip(1001);
         endAddress.setStreet("Galaxy Avenue");
         endAddress.setStreetNumber("8E");
