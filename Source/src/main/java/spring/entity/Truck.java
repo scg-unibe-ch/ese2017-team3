@@ -1,5 +1,7 @@
 package spring.entity;
 
+import java.util.List;
+
 import javax.persistence.*;
 import javax.validation.constraints.Pattern;
 
@@ -25,8 +27,8 @@ public class Truck {
     @Pattern(regexp = "([^\\s]+(\\.(?i)(jpg|png|gif|bmp))$)")
     public String imageName = "standard.png";
 
-    @OneToOne(mappedBy = "truck")
-    public Tour tour;
+    @OneToMany(mappedBy = "truck")
+    public List<Tour> tours;
 
     public Truck() {};
 
@@ -73,12 +75,12 @@ public class Truck {
         this.imageName = imageName;
     }
 
-    public Tour getTour() {
-        return tour;
+    public List<Tour> getTours() {
+        return tours;
     }
 
-    public void setTour(Tour tour) {
-        this.tour = tour;
+    public void setTours(List<Tour> tours) {
+        this.tours = tours;
     }
 
     @Override

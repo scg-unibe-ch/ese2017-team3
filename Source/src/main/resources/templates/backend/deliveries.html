@@ -286,6 +286,9 @@
                                     </select>
                                 </span>
                             </div>
+                            <article class="message is-warning" th:if="${#fields.hasErrors('truck')}">
+                                    <div class="message-body" th:errors="*{truck}" />
+                            </article>
                         </div>
                     </div>
                 </div>
