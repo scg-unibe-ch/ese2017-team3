@@ -12,11 +12,9 @@ import org.springframework.web.multipart.support.StandardServletMultipartResolve
 import org.thymeleaf.extras.java8time.dialect.Java8TimeDialect;
 import spring.entity.Truck;
 import spring.repositories.TruckRepository;
-import spring.storage.StorageProperties;
-import spring.storage.StorageService;
+
 
 @SpringBootApplication
-@EnableConfigurationProperties(StorageProperties.class)
 public class Application {
 
     // Add java 8 time API support for thymeleaf
