@@ -71,6 +71,12 @@ public class TruckController {
                                    @RequestParam("truckType") String truckType,
                                    RedirectAttributes redirectAttributes) {
 
+        if (amount <= 0) {
+            redirectAttributes.addFlashAttribute("errorMessage",
+                    "Error creating new truck: amount of trucks must be at least one.");
+            return "redirect:/addTruck";
+        }
+
         try {
             Image img = imageRepository.save(new Image(file.getBytes()));
 
@@ -78,11 +84,11 @@ public class TruckController {
                 truckRepository.save(new Truck(truckType, img.getId(), true));
             }
 
-            redirectAttributes.addFlashAttribute("message",
+            redirectAttributes.addFlashAttribute("creationMessage",
                     "You successfully created " + amount + " new trucks!");
-            return "redirect:/addTruck";
+            return "redirect:/trucks";
         } catch (IOException e) {
-            redirectAttributes.addFlashAttribute("message",
+            redirectAttributes.addFlashAttribute("errorMessage",
                     "There was an error while adding the new truck, please try again.");
             return "redirect:/addTruck";
         }
