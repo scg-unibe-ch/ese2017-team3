@@ -11,6 +11,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import spring.entity.Address;
@@ -47,6 +48,10 @@ public class UserController {
     public ModelAndView create(@Valid @ModelAttribute WrappedRegistration wrappedRegistration, /*@RequestParam String username, @RequestParam String password, @RequestParam String regCode,*/ BindingResult bindingResult) {
 
         // NOTE users need an authority, otherwise they are treated as non-existing
+
+        if (wrappedRegistration.password.length()<=6 || wrappedRegistration.username.length()<=6)
+            bindingResult.addError(new ObjectError("username", "username must be at least 6 characters"));
+            bindingResult.addError(new ObjectError("password", "password must be at least 6 characters"));
 
         if (bindingResult.hasErrors()) {
             return new ModelAndView("redirect:/register");
