@@ -55,9 +55,6 @@
                     <li class="is-active">
                         <a>Trucks</a>
                     </li>
-                    <li>
-                        <a href="addTruck">Add Truck</a>
-                    </li>
                 </ul>
                 <div class="is-right">
                     <form action="#" th:action="@{/logout}" method="post">
@@ -69,10 +66,19 @@
     </div>
 </section>
 <div class="anitrans-content">
+    <div class="notification is-success" th:if="${creationMessage}">
+        <strong th:text="${creationMessage}"/>
+    </div>
     <h2 class="title">Available Trucks:</h2>
-
     <div class="columns is-multiline">
-        <div th:if="${not #lists.isEmpty(trucks)}" th:each="truck : ${trucks}">
+        <a href="addTruck">
+            <div class="img-hover">
+                <figure class="image is-128x128">
+                    <img th:src="@{/images/plus-icon.png}" />
+                </figure>
+            </div>
+        </a>
+        <div th:if="${not #lists.isEmpty(trucks)}" class="img-hover" th:each="truck : ${trucks}">
             <div th:if="${truck.available == true}" class="column">
                 <div th:each="image : ${images}">
                     <figure th:if="${image.key == truck.imageId}" class="image is-128x128">
@@ -86,7 +92,7 @@
     <h2 class="title">Trucks in use:</h2>
 
     <div class="columns is-multiline">
-        <div th:if="${not #lists.isEmpty(trucks)}" th:each="truck : ${trucks}">
+        <div th:if="${not #lists.isEmpty(trucks)}" class="img-hover" th:each="truck : ${trucks}">
             <div th:if="${truck.available == false}" class="column">
                 <div th:each="image : ${images}">
                     <figure th:if="${image.key == truck.imageId}" class="image is-128x128">

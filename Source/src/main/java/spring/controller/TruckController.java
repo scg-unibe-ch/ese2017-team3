@@ -5,12 +5,17 @@ import org.springframework.security.crypto.codec.Base64;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import spring.entity.Image;
 import spring.entity.Truck;
 import spring.repositories.ImageRepository;
 import spring.repositories.TruckRepository;
 import spring.service.TruckService;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -24,6 +29,9 @@ public class TruckController {
 
     @Autowired
     TruckService truckService;
+
+    @Autowired
+    TruckRepository truckRepository;
 
     @Autowired
     ImageRepository imageRepository;
@@ -49,6 +57,41 @@ public class TruckController {
         model.addAttribute("images", truckIdsAndImages);
 
         return "backend/trucks";
+    }
+
+
+    @GetMapping("/addTruck")
+    public String listUploadedFiles(Model model) throws IOException {
+        return "backend/addTruck";
+    }
+
+    @PostMapping("/addTruck")
+    public String handleFileUpload(@RequestParam("file") MultipartFile file,
+                                   @RequestParam("amount") Integer amount,
+                                   @RequestParam("truckType") String truckType,
+                                   RedirectAttributes redirectAttributes) {
+
+        if (amount <= 0) {
+            redirectAttributes.addFlashAttribute("errorMessage",
+                    "Error creating new truck: amount of trucks must be at least one.");
+            return "redirect:/addTruck";
+        }
+
+        try {
+            Image img = imageRepository.save(new Image(file.getBytes()));
+
+            for (int i=0; i<amount; i++) {
+                truckRepository.save(new Truck(truckType, img.getId(), true));
+            }
+
+            redirectAttributes.addFlashAttribute("creationMessage",
+                    "You successfully created " + amount + " new trucks!");
+            return "redirect:/trucks";
+        } catch (IOException e) {
+            redirectAttributes.addFlashAttribute("errorMessage",
+                    "There was an error while adding the new truck, please try again.");
+            return "redirect:/addTruck";
+        }
     }
 
 }

@@ -108,7 +108,9 @@
                                         <strong>Estimated Time: </strong><span th:text="${tour.estimatedTime}">--</span>h
                                     </div>
                                     <div class="column">
-                                        <strong>Contact Person: </strong><span type="text" th:text="${tour.destinationAddress.lastname}">Person</span>
+                                        <strong>Contact Person: </strong>
+                                        <span th:text="${tour.destinationAddress.firstname}" />
+                                        <span th:text="${tour.destinationAddress.lastname}" />
                                     </div>
                                     <div class="column is-1" />
                                 </div>
