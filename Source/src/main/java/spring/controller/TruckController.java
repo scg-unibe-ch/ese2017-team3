@@ -61,7 +61,7 @@ public class TruckController {
 
 
     @GetMapping("/addTruck")
-    public String listUploadedFiles(Model model) throws IOException {
+    public String loadAddTruckTemplate(Model model)  {
         return "backend/addTruck";
     }
 
@@ -69,6 +69,10 @@ public class TruckController {
     public String handleFileUpload(@RequestParam("file") MultipartFile file,
                                    @RequestParam("amount") Integer amount,
                                    @RequestParam("truckType") String truckType,
+                                   @RequestParam("length") double length,
+                                   @RequestParam("width") double width,
+                                   @RequestParam("payload") double payload,
+                                   @RequestParam("description") String description,
                                    RedirectAttributes redirectAttributes) {
 
         if (amount <= 0) {
@@ -77,11 +81,34 @@ public class TruckController {
             return "redirect:/addTruck";
         }
 
+        String errorMessage = "";
+
+        if (length <= 0) {
+            errorMessage += "Truck length must be positive!\n";
+        }
+        if (width <= 0) {
+            errorMessage += "Truck width must be positive!\n";
+        }
+        if (payload <= 0) {
+            errorMessage += "Truck weight must be positive!\n";
+        }
+
+        if (!errorMessage.isEmpty()) {
+            redirectAttributes.addFlashAttribute("errorMessage",
+                    errorMessage);
+            return "redirect:/addTruck";
+        }
+
         try {
             Image img = imageRepository.save(new Image(file.getBytes()));
 
             for (int i=0; i<amount; i++) {
-                truckRepository.save(new Truck(truckType, img.getId(), true));
+                Truck t = new Truck(truckType, img.getId(), true);
+                t.setLength(length);
+                t.setWidth(width);
+                t.setPayload(payload);
+                t.setDescription((description == null) ? "" : description);
+                truckRepository.save(t);
             }
 
             redirectAttributes.addFlashAttribute("creationMessage",

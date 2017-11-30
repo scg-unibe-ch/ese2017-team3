@@ -58,19 +58,39 @@ public class TruckLoader implements ApplicationRunner {
                 Image tiny = imageRepository.save(new Image(tinyTruckFile));
 
                 for(int i=0; i<3; i++) {
-                    truckRepository.save(new Truck("BIG", big.getId(), true));
+                    Truck t = new Truck("BIG", big.getId(), true);
+                    t.setLength(15.65);
+                    t.setWidth(2.55);
+                    t.setPayload(40000);
+                    t.setDescription("A big truck with a lot of space.");
+                    truckRepository.save(t);
                 }
 
                 for(int i=0; i<3; i++) {
-                    truckRepository.save(new Truck("MEDIUM", medium.getId(), true));
+                    Truck t = new Truck("MEDIUM", medium.getId(), true);
+                    t.setLength(12);
+                    t.setWidth(2.55);
+                    t.setPayload(36000);
+                    t.setDescription("Perfect for the transport of medium sized animals.");
+                    truckRepository.save(t);
                 }
 
                 for(int i=0; i<5; i++) {
-                    truckRepository.save(new Truck("SMALL", small.getId(), true));
+                    Truck t = new Truck("SMALL", small.getId(), true);
+                    t.setLength(10);
+                    t.setWidth(2.55);
+                    t.setPayload(25000);
+                    t.setDescription("Small but powerful.");
+                    truckRepository.save(t);
                 }
 
                 for(int i=0; i<7; i++) {
-                    truckRepository.save(new Truck("TINY", tiny.getId(), true));
+                    Truck t = new Truck("TINY", tiny.getId(), true);
+                    t.setLength(8);
+                    t.setWidth(2.55);
+                    t.setPayload(18000);
+                    t.setDescription("Only for minor payloads.");
+                    truckRepository.save(t);
                 }
 
             } catch (IOException e) {

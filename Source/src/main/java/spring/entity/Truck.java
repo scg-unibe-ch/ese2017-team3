@@ -3,7 +3,6 @@ package spring.entity;
 import java.util.List;
 
 import javax.persistence.*;
-import javax.validation.constraints.Pattern;
 
 /**
  * Created by olulrich on 05.11.17.
@@ -26,6 +25,17 @@ public class Truck {
     @Column(nullable = false)
     private long imageId;
 
+    @Column
+    private double length;
+
+    @Column
+    private double width;
+
+    @Column
+    private double payload;
+
+    @Column
+    private String description = "";
 
     @OneToMany(mappedBy = "truck")
     public List<Tour> tours;
@@ -82,6 +92,38 @@ public class Truck {
 
     public void setTours(List<Tour> tours) {
         this.tours = tours;
+    }
+
+    public double getLength() {
+        return length;
+    }
+
+    public void setLength(double length) {
+        this.length = length;
+    }
+
+    public double getWidth() {
+        return width;
+    }
+
+    public void setWidth(double width) {
+        this.width = width;
+    }
+
+    public double getPayload() {
+        return payload;
+    }
+
+    public void setPayload(double payload) {
+        this.payload = payload;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     @Override
