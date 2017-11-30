@@ -1,8 +1,8 @@
 package spring;
 
 import static org.junit.Assert.*;
-import org.junit.Before;
-import org.junit.Test;
+
+import org.junit.*;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -77,7 +77,6 @@ public class EntityTest {
         driver.setUsername("Alfi");
         driver.setHiringDate(LocalDate.now());
         driver.setAddress(driverAddress);
-
         driverRepository.save(driver);
 
         truck.setAvailable(true);
@@ -97,22 +96,32 @@ public class EntityTest {
         tourRepository.save(tour);
     }
 
+    @After
+    public void resetTables() {
+        tourRepository.delete(tour);
+        truckRepository.delete(truck);
+        driverRepository.delete(driver);
+        addressRepository.delete(startAddress);
+        addressRepository.delete(endAddress);
+        addressRepository.delete(driverAddress);
+    }
+
     @Test
     public void retrieveSameTour() {
-        Tour found = tourRepository.findOne(new Long(1));
-        assertEquals(found, tour);
+        Tour found = tourRepository.findOne(tour.getId());
+        assertEquals(tour, found);
     }
 
     @Test
     public void retrieveSameDriver() {
-        Driver found = driverRepository.findOne(new Long(1));
-        assertEquals(found, driver);
+        Driver found = driverRepository.findOne(driver.getId());
+        assertEquals(driver, found);
     }
 
     @Test
     public void retrieveSameTruck() {
-        Truck found = truckRepository.findByTruckType("TestTruck").get(0);
-        assertEquals(found, truck);
+        Truck found = truckRepository.findOne(truck.getId());
+        assertEquals(truck, found);
     }
 
     @Test
