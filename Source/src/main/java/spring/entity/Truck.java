@@ -92,8 +92,10 @@ public class Truck {
         Truck truck = (Truck) o;
 
         if (getId() != truck.getId()) return false;
+        if (getImageId() != truck.getImageId()) return false;
         if (getTruckType() != null ? !getTruckType().equals(truck.getTruckType()) : truck.getTruckType() != null)
             return false;
         return getAvailable() != null ? getAvailable().equals(truck.getAvailable()) : truck.getAvailable() == null;
     }
+
 }

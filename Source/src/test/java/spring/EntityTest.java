@@ -18,12 +18,14 @@ import spring.repositories.TruckRepository;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = Application.class)
-public class TourRepositoryAndEntityTest {
+public class EntityTest {
 
-    // TODO: Add startAddress and endAddress to tour, as soon as Address entity works as expected
 
     private Tour tour = new Tour();
     private Truck truck = new Truck();
@@ -79,7 +81,7 @@ public class TourRepositoryAndEntityTest {
         driverRepository.save(driver);
 
         truck.setAvailable(true);
-        truck.setTruckType("BIG");
+        truck.setTruckType("TestTruck");
         truckRepository.save(truck);
 
         tour.setCargo("Monkey");
@@ -96,9 +98,35 @@ public class TourRepositoryAndEntityTest {
     }
 
     @Test
-    public void saveAndRetrieve() {
+    public void retrieveSameTour() {
         Tour found = tourRepository.findOne(new Long(1));
         assertEquals(found, tour);
     }
 
+    @Test
+    public void retrieveSameDriver() {
+        Driver found = driverRepository.findOne(new Long(1));
+        assertEquals(found, driver);
+    }
+
+    @Test
+    public void retrieveSameTruck() {
+        Truck found = truckRepository.findByTruckType("TestTruck").get(0);
+        assertEquals(found, truck);
+    }
+
+    @Test
+    public void retrieveSameAddresses() {
+        Iterable<Address> found = addressRepository.findAll();
+        List<Address> saved = new ArrayList<>();
+        saved.add(startAddress);
+        saved.add(endAddress);
+        saved.add(driverAddress);
+
+        Iterator<Address> iterator = found.iterator();
+        while (iterator.hasNext()) {
+            Address addr = iterator.next();
+            assertTrue("Retrieved Address from repository equals a saved one.", saved.contains(addr));
+        }
+    }
 }

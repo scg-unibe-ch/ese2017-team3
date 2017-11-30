@@ -17,4 +17,6 @@ public interface TruckRepository extends CrudRepository<Truck, Long> {
 
     List<Truck> findAllByOrderByTruckTypeDesc();
 
+    List<Truck> findByTruckType(String truckType);
+
 }

@@ -140,6 +140,27 @@ public class Address {
         this.setStreetNumber(anotherAddress.getStreetNumber());
         this.setZip(anotherAddress.getZip());
         this.setCity(anotherAddress.getCity());
-
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Address address = (Address) o;
+
+        if (getId() != address.getId()) return false;
+        if (getZip() != address.getZip()) return false;
+        if (getLastname() != null ? !getLastname().equals(address.getLastname()) : address.getLastname() != null)
+            return false;
+        if (getFirstname() != null ? !getFirstname().equals(address.getFirstname()) : address.getFirstname() != null)
+            return false;
+        if (getStreet() != null ? !getStreet().equals(address.getStreet()) : address.getStreet() != null) return false;
+        if (getStreetNumber() != null ? !getStreetNumber().equals(address.getStreetNumber()) : address.getStreetNumber() != null)
+            return false;
+        if (getCity() != null ? !getCity().equals(address.getCity()) : address.getCity() != null) return false;
+        if (getPhone() != null ? !getPhone().equals(address.getPhone()) : address.getPhone() != null) return false;
+        return getEmail() != null ? getEmail().equals(address.getEmail()) : address.getEmail() == null;
+    }
+
 }

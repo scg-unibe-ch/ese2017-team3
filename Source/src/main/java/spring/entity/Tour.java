@@ -202,6 +202,10 @@ public class Tour {
         if (getId() != tour.getId()) return false;
         if (getNumberOfAnimals() != tour.getNumberOfAnimals()) return false;
         if (getCargo() != null ? !getCargo().equals(tour.getCargo()) : tour.getCargo() != null) return false;
+        if (getStartAddress() != null ? !getStartAddress().equals(tour.getStartAddress()) : tour.getStartAddress() != null)
+            return false;
+        if (getDestinationAddress() != null ? !getDestinationAddress().equals(tour.getDestinationAddress()) : tour.getDestinationAddress() != null)
+            return false;
         if (getDeliveryStartDate() != null ? !getDeliveryStartDate().equals(tour.getDeliveryStartDate()) : tour.getDeliveryStartDate() != null)
             return false;
         if (getDeliveryStartTime() != null ? !getDeliveryStartTime().equals(tour.getDeliveryStartTime()) : tour.getDeliveryStartTime() != null)
