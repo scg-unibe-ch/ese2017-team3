@@ -82,6 +82,7 @@
                                     <option th:selected="${sortBy == 'Target Location'}">Target Location</option>
                                     <option th:selected="${sortBy == 'Driver'}">Driver</option>
                                     <option th:selected="${sortBy == 'Cargo'}">Cargo</option>
+                                    <option th:selected="${sortBy == 'State'}">State</option>
                                 </select>
                             </div>
 
@@ -104,7 +105,7 @@
                 <div th:if="${not #lists.isEmpty(tours)}" th:each="tour : ${tours}">
                     <div th:with="result=${tour.id}">
                         <div class="notification" th:classappend="${tour.id == activeTour.id} ? is-info">
-                            <a th:href="'tours/delete?index=' + ${result}" class="button delete"></a>
+                            <a th:href="'tours/delete?index=' + ${result}" th:disabled="${tourHasStarted}" class="button delete"></a>
                             <a th:attr="onClick='paramChangerSetter(\'activeIndex\', ' + ${result} + ')'">
                                 <div class="columns is-gapless">
                                     <div class="column is-half">
@@ -113,7 +114,7 @@
                                                 <span class="icon"><i class="fa fa-calendar"></i>&nbsp;</span>
                                             </div>
                                             <div class="column "><u
-                                                    th:text="${#temporals.format(tour.deliveryStartDate, 'dd.MM.yyyy')}"></u>
+                                                    th:text="${#temporals.format(tour.startDate, 'dd.MM.yyyy')}"></u>
                                             </div>
                                         </div>
                                     </div>
@@ -257,10 +258,10 @@
                                 <div class="column is-4">Date:</div>
                                 <div class="column">
                                     <div class="field">
-                                        <input class="input" type="date" th:value="${#temporals.format(activeTour.deliveryStartDate, 'uuuu-MM-dd')}" th:field="*{deliveryStartDate}" disabled="disabled"/>
+                                        <input class="input" type="date" th:value="${#temporals.format(activeTour.startDate, 'uuuu-MM-dd')}" th:field="*{startDate}" disabled="disabled"/>
                                     </div>
                                     <article class="message is-warning" th:if="${#fields.hasErrors('deliveryStartDate')}">
-                                        <div class="message-body" th:errors="*{deliveryStartDate}" />
+                                        <div class="message-body" th:errors="*{startDate}" />
                                     </article>
                                 </div>
                             </div>
@@ -365,10 +366,10 @@
                                 <div class="column is-4">Time:</div>
                                 <div class="column">
                                     <div class="field">
-                                        <input class="input" type="time" th:value="${#temporals.format(activeTour.deliveryStartTime, 'HH:mm')}" th:field="*{deliveryStartTime}" disabled="disabled"/>
+                                        <input class="input" type="time" th:value="${#temporals.format(activeTour.startTime, 'HH:mm')}" th:field="*{startTime}" disabled="disabled"/>
                                     </div>
                                     <article class="message is-warning" th:if="${#fields.hasErrors('deliveryStartTime')}">
-                                        <div class="message-body" th:errors="*{deliveryStartTime}" />
+                                        <div class="message-body" th:errors="*{startTime}" />
                                     </article>
                                 </div>
                             </div>
@@ -491,10 +492,10 @@
                                     <div class="column is-4">Date:</div>
                                     <div class="column">
                                         <div class="field">
-                                            <input class="input" type="date" th:value="${#temporals.format(activeTour.deliveryStartDate, 'uuuu-MM-dd')}" th:field="*{deliveryStartDate}" />
+                                            <input class="input" type="date" th:value="${#temporals.format(activeTour.startDate, 'uuuu-MM-dd')}" th:field="*{startDate}" />
                                         </div>
                                         <article class="message is-warning" th:if="${#fields.hasErrors('deliveryStartDate')}">
-                                            <div class="message-body" th:errors="*{deliveryStartDate}" />
+                                            <div class="message-body" th:errors="*{startDate}" />
                                         </article>
                                     </div>
                                 </div>
@@ -599,10 +600,10 @@
                                     <div class="column is-4">Time:</div>
                                     <div class="column">
                                         <div class="field">
-                                            <input class="input" type="time" th:value="${#temporals.format(activeTour.deliveryStartTime, 'HH:mm')}" th:field="*{deliveryStartTime}" />
+                                            <input class="input" type="time" th:value="${#temporals.format(activeTour.startTime, 'HH:mm')}" th:field="*{startTime}" />
                                         </div>
                                         <article class="message is-warning" th:if="${#fields.hasErrors('deliveryStartTime')}">
-                                            <div class="message-body" th:errors="*{deliveryStartTime}" />
+                                            <div class="message-body" th:errors="*{startTime}" />
                                         </article>
                                     </div>
                                 </div>
