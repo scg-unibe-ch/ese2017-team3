@@ -11,8 +11,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import spring.entity.Driver;
+import spring.entity.Tour;
 import spring.repositories.AddressRepository;
 import spring.repositories.DriverRepository;
+import spring.repositories.TourRepository;
 import spring.security.UserSecurityService;
 import spring.service.DriverService;
 
@@ -39,6 +41,9 @@ public class DriverController {
     UserDetailsManager userDetailsManager;
     
     @Autowired
+    TourRepository tourRepository;
+    
+    @Autowired
     private UserSecurityService userSecurityService;
     
     
@@ -58,6 +63,12 @@ public class DriverController {
         List<Driver> drivers = driverService.getDrivers();
         
         Driver toDelete = driverRepository.findDriverByUsername(username);
+        List<Tour> toursOfDeletedDriver = tourRepository.findByDriver(username);
+        
+        for(Tour tour:toursOfDeletedDriver){
+            tour.setTourState(Tour.TourState.INCOMPLETE);
+        }
+        
         driverRepository.delete(toDelete);
         
         userDetailsManager.deleteUser(username);
