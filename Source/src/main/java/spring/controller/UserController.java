@@ -10,12 +10,14 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import spring.entity.Address;
 import spring.entity.Driver;
-import spring.entity.WrappedUser;
+import spring.entity.WrappedRegistration;
+import spring.repositories.AddressRepository;
 import spring.repositories.DriverRepository;
 
 import javax.validation.Valid;
@@ -32,43 +34,53 @@ public class UserController {
     @Autowired
     private DriverRepository driverRepository;
 
+    @Autowired
+    private AddressRepository addressRepository;
+
     @PreAuthorize("@userSecurityService.canCreate()")
     @GetMapping(path = "/register")
     public ModelAndView createForm() {
-        return new ModelAndView("RegistrationForm", "wrappedUser", new WrappedUser());
+        return new ModelAndView("RegistrationForm", "wrappedUser", new WrappedRegistration());
     }
 
     @PreAuthorize("@userSecurityService.canCreate()")
     @PostMapping(path = "/register")
-    public ModelAndView create(@RequestParam String username, @RequestParam String password, @RequestParam String regCode) {
+    public ModelAndView create(@Valid @ModelAttribute WrappedRegistration wrappedRegistration, /*@RequestParam String username, @RequestParam String password, @RequestParam String regCode,*/ BindingResult bindingResult) {
 
         // NOTE users need an authority, otherwise they are treated as non-existing
 
-//        if (bindingResult.hasErrors()) {
-//            return new ModelAndView("redirect:/register");
-//        }
+        if (wrappedRegistration.password.length()<=6 || wrappedRegistration.username.length()<=6)
+            bindingResult.addError(new ObjectError("username", "username must be at least 6 characters"));
+            bindingResult.addError(new ObjectError("password", "password must be at least 6 characters"));
 
-        if (!regCode.equals("") && !regCode.equals("asdf123")){
+        if (bindingResult.hasErrors()) {
+            return new ModelAndView("redirect:/register");
+        }
+
+        if (!wrappedRegistration.regCode.equals("") && !wrappedRegistration.regCode.equals("asdf123")){
             return new ModelAndView("error");
         }
 
-        if (userDetailsManager.userExists(username)) {
+        if (userDetailsManager.userExists(wrappedRegistration.username)) {
             return new ModelAndView("duplicateUser");
 
-        } else if (regCode.equals("asdf123")) {
-            User user = new User(username, password, Collections.singletonList(new SimpleGrantedAuthority("ROLE_ADMIN")));
+        } else if (wrappedRegistration.regCode.equals("asdf123")) {
+            User user = new User(wrappedRegistration.username, wrappedRegistration.password, Collections.singletonList(new SimpleGrantedAuthority("ROLE_ADMIN")));
             userDetailsManager.createUser(user);
             Authentication auth = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
             SecurityContextHolder.getContext().setAuthentication(auth);
             return new ModelAndView("redirect:/tours");
         } else {
-            User user = new User(username, password, Collections.singletonList(new SimpleGrantedAuthority("ROLE_DRIVER")));
+            User user = new User(wrappedRegistration.username, wrappedRegistration.password, Collections.singletonList(new SimpleGrantedAuthority("ROLE_DRIVER")));
             userDetailsManager.createUser(user);
+            Address address = wrappedRegistration.address;
 
             Driver driver = new Driver();
-            driver.setUsername(username);
+            driver.setUsername(wrappedRegistration.username);
             driver.setHiringDate(LocalDate.now());
+            driver.setAddress(address);
 
+            addressRepository.save(address);
             driverRepository.save(driver);
 
             Authentication auth = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
