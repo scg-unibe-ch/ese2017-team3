@@ -23,11 +23,10 @@
             <div class="columns">
                 <div class="column is-one-third is-offset-one-third login-box">
                     <h1 class="title">Register</h1>
-                    <form th:action="@{/user/register}" th:object="${wrappedUser}" method="post">
+                    <form th:action="@{/user/register}" th:object="${wrappedRegistration}" method="post">
 
                         <div>
                             <div class="field">
-                                <label class="label">Username</label>
                                 <div class="control has-icons-left">
                                     <input class="input" type="text" placeholder="Username" th:field="*{username}"/>
                                     <span class="icon is-small is-left">
@@ -40,7 +39,6 @@
                         <br/>
                         <div>
                             <div class="field">
-                                <label class="label">Password</label>
                                 <div class="control has-icons-left">
                                     <input class="input" type="password" placeholder="Password" th:field="*{password}"/>
                                     <span class="icon is-small is-left">
@@ -53,7 +51,6 @@
                         <br/>
                         <div>
                             <div class="field">
-                                <label class="label">Registration Code</label>
                                 <div class="control has-icons-left">
                                     <input class="input" type="text" placeholder="Leave Empty if you've got none" th:field="*{regCode}"/>
                                     <span class="icon is-small is-left">
@@ -66,8 +63,84 @@
                             </article>
                         </div>
                         <br/>
+                        <div>
+                            <div class="field">
+                                <div class="control">
+                                    <input class="input" type="text" placeholder="Firstname" th:field="*{address.firstname}"/>
+                                </div>
+                            </div>
+                            <p th:each="error: ${#fields.errors('address.firstname')}" th:text="${error}">Validation error</p>
+                        </div>
+                        <br/>
+                        <div>
+                            <div class="field">
+                                <div class="control">
+                                    <input class="input" type="text" placeholder="Lastname" th:field="*{address.lastname}"/>
+                                </div>
+                            </div>
+                            <p th:each="error: ${#fields.errors('address.lastname')}" th:text="${error}">Validation error</p>
+                        </div>
+                        <br/>
+                        <div class="columns">
+                            <div class="column is-two-thirds">
+                                <div class="field">
+                                    <div class="control">
+                                        <input class="input" type="text" placeholder="Street" th:field="*{address.street}"/>
+                                    </div>
+                                </div>
+                                <p th:each="error: ${#fields.errors('address.street')}" th:text="${error}">Validation error</p>
+                            </div>
+                            <div class="column is-one-third">
+                                <div class="field">
+                                    <div class="control">
+                                        <input class="input" type="text" placeholder="Nr." th:field="*{address.streetNumber}"/>
+                                    </div>
+                                </div>
+                                <p th:each="error: ${#fields.errors('address.streetNumber')}" th:text="${error}">Validation
+                                    error</p>
+                            </div>
+                        </div>
+
+                        <div class="columns">
+                            <div class="column is-one-third">
+                                <div class="field">
+                                    <div class="control">
+                                        <input class="input" type="text" placeholder="Zip" th:field="*{address.zip}"/>
+                                    </div>
+                                </div>
+                                <p th:each="error: ${#fields.errors('address.zip')}" th:text="${error}">Validation error</p>
+                            </div>
+                            <div class="column is-two-thirds">
+                                <div class="field">
+                                    <div class="control">
+                                        <input class="input" type="text" placeholder="City" th:field="*{address.city}"/>
+                                    </div>
+                                </div>
+                                <p th:each="error: ${#fields.errors('address.city')}" th:text="${error}">Validation
+                                    error</p>
+                            </div>
+                        </div>
+
+                        <div>
+                            <div class="field">
+                                <div class="control">
+                                    <input class="input" type="text" placeholder="Phone" th:field="*{address.phone}"/>
+                                </div>
+                            </div>
+                            <p th:each="error: ${#fields.errors('address.phone')}" th:text="${error}">Validation error</p>
+                        </div>
+                        <br/>
+                        <div>
+                            <div class="field">
+                                <div class="control">
+                                    <input class="input" type="text" placeholder="E-Mail" th:field="*{address.email}"/>
+                                </div>
+                            </div>
+                            <p th:each="error: ${#fields.errors('address.email')}" th:text="${error}">Validation error</p>
+                        </div>
+                        <br/>
                         <div class="control">
-                            <button class="button is-link" type="submit">Register</button>
+                            <button class="button is-link is-pulled-right" type="submit">Register</button>
                         </div>
                     </form>
                 </div>
