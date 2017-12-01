@@ -41,6 +41,8 @@ public class TruckController {
 
         List<Truck> truckList = truckService.getSortedTrucks();
         List<Long> truckImageIds = new ArrayList<>();
+        List<String> truckTypes = new ArrayList<>();
+        List<Truck> distinctTrucks = new ArrayList<>();
         HashMap<Long, String> truckIdsAndImages = new HashMap<>();
         for(Truck t : truckList) {
             if (!truckImageIds.contains(t.getImageId())) {
@@ -50,10 +52,15 @@ public class TruckController {
                 String base64Encoded = new String(temp, "UTF-8");
                 truckIdsAndImages.put(t.getImageId(), base64Encoded);
             }
+            if (!truckTypes.contains(t.getTruckType())) {
+                truckTypes.add(t.getTruckType());
+                distinctTrucks.add(t);
+            }
         }
 
 
         model.addAttribute("trucks", truckList);
+        model.addAttribute("distinctTrucks", distinctTrucks);
         model.addAttribute("images", truckIdsAndImages);
 
         return "backend/trucks";

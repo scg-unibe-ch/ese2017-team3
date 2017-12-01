@@ -203,7 +203,14 @@ public class TourController {
           Tour activeTour = getTourById(activeIndex, tours);
           model.addAttribute("activeTour", activeTour);
         }
-        
+
+        LocalDate today = LocalDate.now();
+        LocalTime now = LocalTime.now();
+        Tour active = getTourById(activeIndex, tours);
+        boolean hasStarted = active.getDeliveryStartDate().isBefore(today)
+                || (active.getDeliveryStartDate().isEqual(today) && active.getDeliveryStartTime().isBefore(now));
+        model.addAttribute("tourHasStarted", hasStarted);
+
         return "backend/tourOverview";
     }
 

@@ -1,3 +1,57 @@
+@import url('https://fonts.googleapis.com/css?family=Varela');
+
+.column.has-vertically-aligned-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.show {
+  cursor: pointer;
+}
+
+.truck-info {
+  background-color:#789F8A;
+  color: #E2D8A3;
+  cursor:default;
+  display:none;
+  position:fixed;
+  text-align:left;
+  bottom: 0;
+  width:100%;
+  height: 250px;
+  z-index:50;
+  padding: 25px 25px;
+
+}
+
+.truck-info .columns {
+  height: 100%;
+}
+
+.truck-info span.info-title {
+  font-family: 'Varela', sans-serif;
+  font-weight: 600;
+  font-size: 30px;
+  color: #E2D8A3;
+}
+
+.truck-info strong {
+  color: #E2D8A3;
+  font-family: monospace;
+}
+
+.truck-info span {
+  font-family: monospace;
+}
+
+.close-info {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  cursor: pointer;
+  color: white;
+}
 
 /* --- START OF FILE INPUT CSS --- */
 
