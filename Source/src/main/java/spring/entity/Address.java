@@ -16,24 +16,24 @@ public class Address {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    @Size(min = 1, message = "Please specify the name of the contact person at the start location.")
+    @Size(min = 1, message = "Please specify the lastname")
     private String lastname;
 
-    @Size(min = 1, message = "Please specify the surname of the contact person at the start location.")
+    @Size(min = 1, message = "Please specify the firstname.")
     private String firstname;
 
-    @Size(min = 1, message = "Please specify the street name of the start location.")
+    @Size(min = 1, message = "Please specify the street name.")
     private String street;
 
-    @Size(min = 1, message = "Please specify the street number of the start location.")
+    @Size(min = 1, message = "Please specify the street number.")
     private String streetNumber;
 
-    @NotNull(message = "Please specify the ZIP code of the start location.")
+    @NotNull(message = "Please enter the Zip-Code")
     @Min(value = 1000, message = "You entered an invalid ZIP code.")
     @Max(value = 9999, message = "You entered an invalid ZIP code.")
     private int zip;
 
-    @Size(min = 1, message = "Please specify the city of the start location.")
+    @Size(min = 1, message = "Please specify the city")
     private String city;
 
     private String phone = "";
