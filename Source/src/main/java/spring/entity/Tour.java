@@ -14,7 +14,7 @@ import java.time.LocalTime;
 @Entity
 public class Tour {
 
-    public enum TourState {SUCCESSFUL, CREATED, DELETED, FAILED}
+    public enum TourState {INCOMPLETE, CREATED, FAILED, SUCCESSFUL, DELETED}
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -81,7 +81,7 @@ public class Tour {
 		this.truck = truck;
 	}
 
-	public TourState getTourState() {
+	public TourState getState() {
 		return tourState;
 	}
 
@@ -219,7 +219,7 @@ public class Tour {
         if (getComment() != null ? !getComment().equals(tour.getComment()) : tour.getComment() != null) return false;
         if (getTourFeedback() != null ? !getTourFeedback().equals(tour.getTourFeedback()) : tour.getTourFeedback() != null)
             return false;
-        return getTourState() == tour.getTourState();
+        return getState() == tour.getState();
     }
 
 }
