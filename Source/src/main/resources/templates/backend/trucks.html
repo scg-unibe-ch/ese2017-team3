@@ -3,10 +3,12 @@
 <head>
     <link rel="stylesheet" th:href="@{/css/sliderCSS.css}"/>
     <script type="text/javascript" th:src="@{/js/sliderScript.js}"/>
+    <script th:src="@{/js/jquery-3.2.1.min.js}"/>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <title>AniTrans Truck Overview</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="https://cdn.materialdesignicons.com/2.0.46/css/materialdesignicons.min.css"/>
     <link href="../static/css/bulma.css" th:href="@{/css/bulma.css}" rel="stylesheet"/>
 </head>
 <body class="login-page page-layout">
@@ -80,7 +82,7 @@
         </a>
         <div th:if="${not #lists.isEmpty(trucks)}" class="img-hover" th:each="truck : ${trucks}">
             <div th:if="${truck.available == true}" class="column">
-                <div th:each="image : ${images}">
+                <div class="show" th:each="image : ${images}" th:attr="data-truck-type=${truck.truckType}">
                     <figure th:if="${image.key == truck.imageId}" class="image is-128x128">
                         <img th:src="@{'data:image/jpeg;base64,'+${image.value}}" />
                     </figure>
@@ -94,7 +96,7 @@
     <div class="columns is-multiline">
         <div th:if="${not #lists.isEmpty(trucks)}" class="img-hover" th:each="truck : ${trucks}">
             <div th:if="${truck.available == false}" class="column">
-                <div th:each="image : ${images}">
+                <div class="show" th:each="image : ${images}" th:attr="data-truck-type=${truck.truckType}">
                     <figure th:if="${image.key == truck.imageId}" class="image is-128x128">
                         <img th:src="@{'data:image/jpeg;base64,'+${image.value}}" />
                     </figure>
@@ -103,5 +105,54 @@
         </div>
     </div>
 </div>
+<div th:if="${not #lists.isEmpty(distinctTrucks)}" th:each="truck : ${distinctTrucks}">
+    <div class="truck-info" th:attr="data-truck-type=${truck.truckType}">
+            <span class="icon is-medium close-info">
+                <i class="mdi mdi-24px mdi-close-circle"></i>
+            </span>
+        <div class="columns">
+            <div class="column is-2 has-vertically-aligned-content">
+                <div th:each="image : ${images}">
+                    <figure th:if="${image.key == truck.imageId}" class="image is-128x128">
+                        <img th:src="@{'data:image/jpeg;base64,'+${image.value}}" />
+                    </figure>
+                </div>
+            </div>
+            <div class="column">
+                <span class="info-title">Truck Information</span>
+                <br/>
+                <strong>Truck type:</strong>
+                <span th:text="${truck.truckType}" />
+                <br />
+                <strong>Width:</strong>
+                <span th:text="${truck.width}" />
+                <br />
+                <strong>Length:</strong>
+                <span th:text="${truck.length}" />
+                <br />
+                <strong>Payload:</strong>
+                <span th:text="${truck.payload}" />
+                <br />
+                <strong>Description:</strong>
+                <span th:text="${truck.description}" />
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function() {
+        $("div:empty").remove();
+        $(".show").click(function() {
+            $(".truck-info").hide();
+            var type = $(this).attr("data-truck-type");
+            var truckInfo = ".truck-info[data-truck-type='" + type + "']";
+            $(truckInfo).slideDown(500);
+        });
+        $(".close-info").click(function() {
+            $(this).parent().slideUp(500);
+        });
+    });
+</script>
 </body>
 </html>
