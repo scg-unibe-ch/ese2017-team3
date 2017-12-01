@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <title>AniTrans Truck Overview</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="https://cdn.materialdesignicons.com/2.0.46/css/materialdesignicons.min.css"/>
     <link href="../static/css/bulma.css" th:href="@{/css/bulma.css}" rel="stylesheet"/>
     <script th:src="@{/js/jquery-3.2.1.min.js}"/>
 </head>
@@ -74,33 +75,83 @@
             </div>
             <h1 class="title">Add new truck</h1>
             <form method="POST" enctype="multipart/form-data" th:action="@{/addTruck}">
-                <div>
-                    <div class="field">
-                        <label class="label">Truck name</label>
-                        <div class="control has-icons-left">
-                            <input class="input" type="text" name="truckType" placeholder="name or specification"/>
-                            <span class="icon is-small is-left">
+                <div class="columns">
+                    <div class="column">
+                        <div class="field">
+                            <label class="label">Truck name</label>
+                            <div class="control has-icons-left">
+                                <input class="input" type="text" name="truckType" placeholder="name or specification"/>
+                                <span class="icon is-small is-left">
                                 <i class="fa fa-truck"></i>
                             </span>
-                        </div>
-                    </div>
-                    <div class="field">
-                        <label class="label">Amount</label>
-                        <div class="control has-icons-left">
-                            <input class="input" type="text" name="amount" placeholder="amount of trucks to add"/>
-                            <span class="icon is-small is-left">
-                                <i class="fa fa-hashtag"></i>
-                            </span>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <br/>
-                <div>
-                    <div class="file-upload">
-                        <div class="file-select">
-                            <div class="file-select-button" id="fileName">Choose File</div>
-                            <div class="file-select-name" id="noFile">No file chosen...</div>
-                            <input type="file" name="file" id="chooseFile" />
+                <div class="columns">
+                    <div class="column">
+                        <div class="field">
+                            <label class="label">Amount</label>
+                            <div class="control has-icons-left">
+                                <input class="input" type="text" name="amount" placeholder="amount of trucks to add"/>
+                                <span class="icon is-small is-left">
+                                <i class="fa fa-hashtag"></i>
+                            </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="columns">
+                    <div class="column">
+                        <div class="field">
+                            <label class="label">Width</label>
+                            <div class="control has-icons-left">
+                                <input class="input" type="text" name="width" placeholder="meters"/>
+                                <span class="icon is-small is-left">
+                                <i class="fa fa-arrows-h"></i>
+                            </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="column">
+                        <div class="field">
+                            <label class="label">Length</label>
+                            <div class="control has-icons-left">
+                                <input class="input" type="text" name="length" placeholder="meters"/>
+                                <span class="icon is-small is-left">
+                                <i class="fa fa-arrows-v"></i>
+                            </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="column">
+                        <div class="field">
+                            <label class="label">Payload</label>
+                            <div class="control has-icons-left">
+                                <input class="input" type="text" name="payload" placeholder="kilograms"/>
+                                <span class="icon is-small is-left">
+                                <i class="mdi mdi-weight-kilogram"></i>
+                            </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="columns">
+                    <div class="column">
+                        <label class="label">Truck description</label>
+                        <p class="control">
+                            <textarea class="textarea" type="text" name="description" placeholder="Truck description" />
+                        </p>
+                    </div>
+                </div>
+                <div class="columns">
+                    <div class="column">
+                        <div class="file-upload">
+                            <div class="file-select">
+                                <div class="file-select-button" id="fileName">Choose File</div>
+                                <div class="file-select-name" id="noFile">No file chosen...</div>
+                                <input type="file" name="file" id="chooseFile" />
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -129,6 +180,8 @@
             }
         });
     });
+
+
 </script>
 </body>
 </html>

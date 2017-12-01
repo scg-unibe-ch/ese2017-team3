@@ -3,6 +3,7 @@ package spring.entity;
 
 import javax.persistence.*;
 import java.io.InputStream;
+import java.util.Arrays;
 
 @Entity
 public class Image {
@@ -36,4 +37,16 @@ public class Image {
     public void setImage(byte[] image) {
         this.image = image;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Image image1 = (Image) o;
+
+        if (getId() != image1.getId()) return false;
+        return Arrays.equals(getImage(), image1.getImage());
+    }
+
 }
