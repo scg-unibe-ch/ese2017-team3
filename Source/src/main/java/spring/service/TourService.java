@@ -8,7 +8,6 @@ import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.apache.tomcat.jni.Local;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -30,6 +29,7 @@ public class TourService {
         return tourRepository;
     }
 
+    
     public List<Tour> getToursForDriver(String username) {
         List<Tour> tours = new ArrayList<Tour>();
         tourRepository.findByDriver(username).forEach(tours::add);
@@ -57,8 +57,8 @@ public class TourService {
         Iterator<Tour> iterator = tours.iterator();
         while (iterator.hasNext()) {
             Tour t = iterator.next();
-            LocalDate date = t.getDeliveryStartDate();
-            LocalTime time = t.getDeliveryStartTime();
+            LocalDate date = t.getStartDate();
+            LocalTime time = t.getStartTime();
             if (date.isAfter(today) || (date.equals(today) && time.isAfter(now))) {
                 iterator.remove();
             }
@@ -73,8 +73,8 @@ public class TourService {
         Iterator<Tour> iterator = tours.iterator();
         while (iterator.hasNext()) {
             Tour t = iterator.next();
-            LocalDate date = t.getDeliveryStartDate();
-            LocalTime time = t.getDeliveryStartTime();
+            LocalDate date = t.getStartDate();
+            LocalTime time = t.getStartTime();
             if (date.isBefore(today) || (date.equals(today) && time.isBefore(now))) {
                 iterator.remove();
             }
@@ -105,7 +105,7 @@ public class TourService {
     public List<Tour> getUndeletedTours() {
         List<Tour> tours = new ArrayList<>();
         for (Tour t : getTours()) {
-            if (t.getTourState() != Tour.TourState.DELETED) {
+            if (t.getState() != Tour.TourState.DELETED) {
                 tours.add(t);
             }
         }
@@ -117,7 +117,7 @@ public class TourService {
         Iterator<Tour> iterator = tours.iterator();
         while (iterator.hasNext()) {
             Tour t = iterator.next();
-            if (t.getTourState() == Tour.TourState.DELETED) {
+            if (t.getState() == Tour.TourState.DELETED) {
                 iterator.remove();
             }
         }
@@ -158,14 +158,14 @@ class TourComparator implements Comparator<Tour> {
     @Override
     public int compare(Tour tour1, Tour tour2) {
         if (sortBy.equals("Date/Time")) {
-            if (tour1.getDeliveryStartDate().isAfter(tour2.getDeliveryStartDate())) {
+            if (tour1.getStartDate().isAfter(tour2.getStartDate())) {
                 return 1;
-            } else if (tour1.getDeliveryStartDate().isBefore(tour2.getDeliveryStartDate())) {
+            } else if (tour1.getStartDate().isBefore(tour2.getStartDate())) {
                 return -1;
             } else {
-                if (tour1.getDeliveryStartTime().isAfter(tour2.getDeliveryStartTime())) {
+                if (tour1.getStartTime().isAfter(tour2.getStartTime())) {
                     return 1;
-                } else if (tour1.getDeliveryStartTime().isBefore(tour2.getDeliveryStartTime())) {
+                } else if (tour1.getStartTime().isBefore(tour2.getStartTime())) {
                     return -1;
                 } else {
                     return 0;
@@ -179,6 +179,8 @@ class TourComparator implements Comparator<Tour> {
             return tour1.getDriver().compareTo(tour2.getDriver());
         } else if (sortBy.equals("Cargo")) {
             return tour1.getCargo().compareTo(tour2.getCargo());
+        } else if (sortBy.equals("State")){
+            return tour1.getState().compareTo(tour2.getState());
         }
         return 0;
     }
