@@ -207,8 +207,8 @@ public class TourController {
         LocalDate today = LocalDate.now();
         LocalTime now = LocalTime.now();
         Tour active = getTourById(activeIndex, tours);
-        boolean hasStarted = active.getDeliveryStartDate().isBefore(today)
-                || (active.getDeliveryStartDate().isEqual(today) && active.getDeliveryStartTime().isBefore(now));
+        boolean hasStarted = active.getStartDate().isBefore(today)
+                || (active.getStartDate().isEqual(today) && active.getStartTime().isBefore(now));
         model.addAttribute("tourHasStarted", hasStarted);
 
         return "backend/tourOverview";
@@ -258,8 +258,8 @@ public class TourController {
         startAddress.copyFieldsFromAddress(activeTour.getStartAddress());
         destinationAddress.copyFieldsFromAddress(activeTour.getDestinationAddress());
 
-        oldTour.setDeliveryStartDate(activeTour.getDeliveryStartDate());
-        oldTour.setDeliveryStartTime(activeTour.getDeliveryStartTime());
+        oldTour.setStartDate(activeTour.getStartDate());
+        oldTour.setStartTime(activeTour.getStartTime());
         oldTour.setDriver(activeTour.getDriver());
         oldTour.setComment(activeTour.getComment());
 
@@ -284,8 +284,8 @@ public class TourController {
     private boolean isAllowedToCloseTour(UserDetails user, Tour tour) {
         LocalDate today = LocalDate.now();
         LocalTime now  = LocalTime.now();
-        LocalDate tourStartDate = tour.getDeliveryStartDate();
-        LocalTime tourStartTime = tour.getDeliveryStartTime();
+        LocalDate tourStartDate = tour.getStartDate();
+        LocalTime tourStartTime = tour.getStartTime();
         String username = user.getUsername();
         return(tour.getDriver().equals(username) && tourStartDate.isEqual(today) && tourStartTime.isBefore(now));
     }
