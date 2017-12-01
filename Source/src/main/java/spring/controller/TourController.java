@@ -244,12 +244,7 @@ public class TourController {
         }
 
         Tour oldTour = tourRepository.findOne(activeTour.getId());
-
-        // The following attributes are not changed, because they are not part of the form in tourOverview
-        //toDelete.setId(activeTour.getId());
-        //oldTour.setEstimatedTime(activeTour.getEstimatedTime());
-        //oldTour.setTimeFrame(activeTour.getTimeFrame());
-
+        
         oldTour.getTruck().setAvailable(true);
 
         oldTour.setTruck(activeTour.getTruck());
@@ -262,8 +257,6 @@ public class TourController {
         Address destinationAddress = oldTour.getDestinationAddress();
         startAddress.copyFieldsFromAddress(activeTour.getStartAddress());
         destinationAddress.copyFieldsFromAddress(activeTour.getDestinationAddress());
-//        oldTour.setStartAddress(activeTour.getStartAddress());
-//        oldTour.setDestinationAddress(activeTour.getDestinationAddress());
 
         oldTour.setDeliveryStartDate(activeTour.getDeliveryStartDate());
         oldTour.setDeliveryStartTime(activeTour.getDeliveryStartTime());
