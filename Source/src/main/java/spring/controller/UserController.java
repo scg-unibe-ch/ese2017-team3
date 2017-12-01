@@ -52,31 +52,40 @@ public class UserController {
         
         
         if(wrappedRegistration.username.length() <= 6) {
-            bindingResult.addError(new ObjectError("username", "username must be at least 6 characters long"));
+            bindingResult.addError(new FieldError("wrappedRegistration", "username", "username must be at least 6 characters long"));
         }
-    //    new FieldError()
     
         if(userDetailsManager.userExists(wrappedRegistration.username)) {
-            bindingResult.addError(new ObjectError("username", "user with username " + wrappedRegistration.username + " already exists"));
+            bindingResult.addError(new FieldError("wrappedRegistration","username", "user with username " + wrappedRegistration.username + " already exists"));
         }
         
         if(wrappedRegistration.password.length() <= 6) {
-            bindingResult.addError(new ObjectError(wrappedRegistration.password, "password must be at least 6 characters long"));
+            bindingResult.addError(new FieldError("wrappedRegistration","password", "password must be at least 6 characters long"));
         }
         
         if(!wrappedRegistration.regCode.equals("") && !wrappedRegistration.regCode.equals("asdf123")) {
-            bindingResult.addError(new ObjectError("regCode", "this registration code you entered doesn't exist."));
+            bindingResult.addError(new FieldError("wrappedRegistration","regCode", "this registration code you entered doesn't exist."));
+        }
+        
+        if(wrappedRegistration.address.getEmail().length()<=5){
+            bindingResult.addError(new FieldError("wrappedRegistration", "address.email","E-Mail address must no be void!"));
+        }
+        
+        if(wrappedRegistration.address.getPhone().length()<=5){
+            bindingResult.addError(new FieldError("wrappedRegistration", "address.phone", "Phone number must not be void!"));
         }
         
         if(bindingResult.hasErrors()) {
             return new ModelAndView("RegistrationForm", "wrappedRegistration", wrappedRegistration);
         }
         
-        if(userDetailsManager.userExists(wrappedRegistration.username)) {
-            return new ModelAndView("duplicateUser");
+//        if(userDetailsManager.userExists(wrappedRegistration.username)) {
+//            return new ModelAndView("duplicateUser");
     
             // NOTE users need an authority, otherwise they are treated as non-existing
-        } else if(wrappedRegistration.regCode.equals("asdf123")) {
+//        }
+        
+        else if(wrappedRegistration.regCode.equals("asdf123")) {
             User user = new User(wrappedRegistration.username, wrappedRegistration.password, Collections.singletonList(new SimpleGrantedAuthority("ROLE_ADMIN")));
             userDetailsManager.createUser(user);
             Authentication auth = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
