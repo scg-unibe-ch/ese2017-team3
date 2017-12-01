@@ -24,6 +24,7 @@ import javax.validation.Valid;
 import java.time.LocalDate;
 import java.util.Collections;
 
+
 @Controller
 @RequestMapping(path = "/user")
 public class UserController {
@@ -41,6 +42,7 @@ public class UserController {
     @GetMapping(path = "/register")
     public ModelAndView createForm() {
         return new ModelAndView("RegistrationForm", "wrappedUser", new WrappedRegistration());
+
     }
 
     @PreAuthorize("@userSecurityService.canCreate()")
@@ -49,15 +51,15 @@ public class UserController {
 
         // NOTE users need an authority, otherwise they are treated as non-existing
 
-        if (wrappedRegistration.password.length()<=6 || wrappedRegistration.username.length()<=6)
+        if (wrappedRegistration.password.length() <= 6 || wrappedRegistration.username.length() <= 6)
             bindingResult.addError(new ObjectError("username", "username must be at least 6 characters"));
-            bindingResult.addError(new ObjectError("password", "password must be at least 6 characters"));
+        bindingResult.addError(new ObjectError("password", "password must be at least 6 characters"));
 
         if (bindingResult.hasErrors()) {
             return new ModelAndView("redirect:/register");
         }
 
-        if (!wrappedRegistration.regCode.equals("") && !wrappedRegistration.regCode.equals("asdf123")){
+        if (!wrappedRegistration.regCode.equals("") && !wrappedRegistration.regCode.equals("asdf123")) {
             return new ModelAndView("error");
         }
 
