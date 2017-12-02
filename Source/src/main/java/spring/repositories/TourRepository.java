@@ -18,12 +18,12 @@ public interface TourRepository extends CrudRepository<Tour, Long> {
 
 	public List<Tour> findByDriver(String username);
 
-	public List<Tour> findByDriverAndDeliveryStartDate(String username, LocalDate startDate);
+	public List<Tour> findByDriverAndStartDate(String username, LocalDate startDate);
 
-	public List<Tour> findByTourState(Tour.TourState tourState);
+	public List<Tour> findByState(Tour.State state);
 
-	public List<Tour> findByDriverAndTourState(String username, Tour.TourState tourState);
+	public List<Tour> findByDriverAndState(String username, Tour.State state);
 
-	public List<Tour> findByDriverAndTourStateOrTourState(String username, Tour.TourState t1, Tour.TourState t2);
+	public List<Tour> findByDriverAndStateOrState(String username, Tour.State t1, Tour.State t2);
 
 }

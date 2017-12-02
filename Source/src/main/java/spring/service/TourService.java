@@ -46,7 +46,7 @@ public class TourService {
     public List<Tour> getCurrentToursForDriver(String username) {
         List<Tour> tours = new ArrayList<Tour>();
         LocalDate today = LocalDate.now();
-        tourRepository.findByDriverAndDeliveryStartDate(username, today).forEach(tours::add);
+        tourRepository.findByDriverAndStartDate(username, today).forEach(tours::add);
         return tours;
     }
 
@@ -67,7 +67,7 @@ public class TourService {
     }
 
     private List<Tour> getUpcomingToursForDriver(String username) {
-        List<Tour> tours = tourRepository.findByDriverAndTourState(username, Tour.TourState.CREATED);
+        List<Tour> tours = tourRepository.findByDriverAndState(username, Tour.State.CREATED);
         LocalDate today = LocalDate.now();
         LocalTime now = LocalTime.now();
         Iterator<Tour> iterator = tours.iterator();
@@ -92,7 +92,7 @@ public class TourService {
     public List<Tour> getToursForDriverAndDay(String username, DayOfWeek day) {
         List<Tour> tours = new ArrayList<Tour>();
         LocalDate tourDate = LocalDateTime.now().with(day).toLocalDate();
-        tourRepository.findByDriverAndDeliveryStartDate(username, tourDate).forEach(tours::add);
+        tourRepository.findByDriverAndStartDate(username, tourDate).forEach(tours::add);
         return tours;
     }
 
@@ -105,7 +105,7 @@ public class TourService {
     public List<Tour> getUndeletedTours() {
         List<Tour> tours = new ArrayList<>();
         for (Tour t : getTours()) {
-            if (t.getState() != Tour.TourState.DELETED) {
+            if (t.getState() != Tour.State.DELETED) {
                 tours.add(t);
             }
         }
@@ -117,7 +117,7 @@ public class TourService {
         Iterator<Tour> iterator = tours.iterator();
         while (iterator.hasNext()) {
             Tour t = iterator.next();
-            if (t.getState() == Tour.TourState.DELETED) {
+            if (t.getState() == Tour.State.DELETED) {
                 iterator.remove();
             }
         }
