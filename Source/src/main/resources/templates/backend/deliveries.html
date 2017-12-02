@@ -152,7 +152,7 @@
                                 <div class="field">
                                     <input class="input" type="date" th:field="*{startDate}" />
                                 </div>
-                                <article class="message is-warning" th:if="${#fields.hasErrors('deliveryStartDate')}">
+                                <article class="message is-warning" th:if="${#fields.hasErrors('startDate')}">
                                     <div class="message-body" th:errors="*{startDate}" />
                                 </article>
                             </div>
@@ -259,7 +259,7 @@
                                 <div class="field">
                                     <input class="input" type="time" th:field="*{startTime}" />
                                 </div>
-                                <article class="message is-warning" th:if="${#fields.hasErrors('deliveryStartTime')}">
+                                <article class="message is-warning" th:if="${#fields.hasErrors('startTime')}">
                                     <div class="message-body" th:errors="*{startTime}" />
                                 </article>
                             </div>

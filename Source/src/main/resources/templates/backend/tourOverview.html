@@ -260,7 +260,7 @@
                                     <div class="field">
                                         <input class="input" type="date" th:value="${#temporals.format(activeTour.startDate, 'uuuu-MM-dd')}" th:field="*{startDate}" disabled="disabled"/>
                                     </div>
-                                    <article class="message is-warning" th:if="${#fields.hasErrors('deliveryStartDate')}">
+                                    <article class="message is-warning" th:if="${#fields.hasErrors('startDate')}">
                                         <div class="message-body" th:errors="*{startDate}" />
                                     </article>
                                 </div>
@@ -368,7 +368,7 @@
                                     <div class="field">
                                         <input class="input" type="time" th:value="${#temporals.format(activeTour.startTime, 'HH:mm')}" th:field="*{startTime}" disabled="disabled"/>
                                     </div>
-                                    <article class="message is-warning" th:if="${#fields.hasErrors('deliveryStartTime')}">
+                                    <article class="message is-warning" th:if="${#fields.hasErrors('startTime')}">
                                         <div class="message-body" th:errors="*{startTime}" />
                                     </article>
                                 </div>
@@ -494,7 +494,7 @@
                                         <div class="field">
                                             <input class="input" type="date" th:value="${#temporals.format(activeTour.startDate, 'uuuu-MM-dd')}" th:field="*{startDate}" />
                                         </div>
-                                        <article class="message is-warning" th:if="${#fields.hasErrors('deliveryStartDate')}">
+                                        <article class="message is-warning" th:if="${#fields.hasErrors('startDate')}">
                                             <div class="message-body" th:errors="*{startDate}" />
                                         </article>
                                     </div>
@@ -602,7 +602,7 @@
                                         <div class="field">
                                             <input class="input" type="time" th:value="${#temporals.format(activeTour.startTime, 'HH:mm')}" th:field="*{startTime}" />
                                         </div>
-                                        <article class="message is-warning" th:if="${#fields.hasErrors('deliveryStartTime')}">
+                                        <article class="message is-warning" th:if="${#fields.hasErrors('startTime')}">
                                             <div class="message-body" th:errors="*{startTime}" />
                                         </article>
                                     </div>
