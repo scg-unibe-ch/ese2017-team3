@@ -66,7 +66,7 @@ public class DriverController {
         List<Tour> toursOfDeletedDriver = tourRepository.findByDriver(username);
         
         for(Tour tour:toursOfDeletedDriver){
-            tour.setTourState(Tour.TourState.INCOMPLETE);
+            tour.setState(Tour.State.INCOMPLETE);
         }
         
         driverRepository.delete(toDelete);

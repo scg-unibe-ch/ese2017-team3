@@ -16,7 +16,7 @@ import java.time.LocalTime;
 @Entity
 public class Tour {
     
-    public enum TourState {INCOMPLETE, CREATED, FAILED, SUCCESSFUL, DELETED}
+    public enum State {INCOMPLETE, CREATED, FAILED, SUCCESSFUL, DELETED}
     
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -58,7 +58,7 @@ public class Tour {
     private String driver;
     
     
-    @NotNull(message = "There are no trucks left. Please consider buying more trucks :P")
+//    @NotNull(message = "There are no trucks left. Please consider buying more trucks :P")
     @ManyToOne
     private Truck truck;
     
@@ -73,7 +73,7 @@ public class Tour {
     private String tourFeedback = "Tour feedback";
     
     @Column(nullable = false)
-    private TourState tourState = TourState.CREATED;
+    private State state = State.CREATED;
     
     public Truck getTruck() {
         return truck;
@@ -83,15 +83,15 @@ public class Tour {
         this.truck = truck;
     }
     
-    public TourState getState() {
-        return tourState;
+    public State getState() {
+        return state;
     }
     
     public Tour() {
     }
     
     public Tour(String cargo, int numberOfAnimals, Address startAddress, Address destinationAddress, LocalDate startDate,
-                LocalTime startTime, Double estimatedTime, String timeFrame, String driver, Truck truck, TourState tourState) {
+                LocalTime startTime, Double estimatedTime, String timeFrame, String driver, Truck truck, State state) {
         this.cargo = cargo;
         this.numberOfAnimals = numberOfAnimals;
         this.startAddress = startAddress;
@@ -102,11 +102,11 @@ public class Tour {
         this.timeFrame = timeFrame;
         this.driver = driver;
         this.truck = truck;
-        this.tourState = tourState;
+        this.state = state;
     }
     
-    public void setTourState(TourState tourState) {
-        this.tourState = tourState;
+    public void setState(State state) {
+        this.state = state;
     }
     
     public long getId() {
@@ -209,6 +209,10 @@ public class Tour {
         }
     }
     
+    public boolean hasStarted() {
+        return (this.getStartDate().isBefore(LocalDate.now()) || (this.getStartDate().isEqual(LocalDate.now()) && this.getStartTime().isBefore(LocalTime.now())));
+    }
+    
     @Override
     public boolean equals(Object o) {
         if(this == o) {
@@ -219,7 +223,7 @@ public class Tour {
         }
         
         Tour tour = (Tour) o;
-    
+        
         if(getId() != tour.getId()) {
             return false;
         }

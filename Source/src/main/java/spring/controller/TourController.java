@@ -116,7 +116,7 @@ public class TourController {
         Tour successfulTour = tourRepository.findOne(tourId);
 
         if (isAllowedToCloseTour(user, successfulTour)) {
-            successfulTour.setTourState(Tour.TourState.SUCCESSFUL);
+            successfulTour.setState(Tour.State.SUCCESSFUL);
             successfulTour.setTourFeedback(feedback);
             tourRepository.save(successfulTour);
             truckService.getById(successfulTour.getTruck().getId()).setAvailable(true);
@@ -133,7 +133,7 @@ public class TourController {
         Tour failedTour = tourRepository.findOne(tourId);
 
         if (isAllowedToCloseTour(user, failedTour)) {
-            failedTour.setTourState(Tour.TourState.FAILED);
+            failedTour.setState(Tour.State.FAILED);
             failedTour.setTourFeedback(feedback);
             tourRepository.save(failedTour);
             truckService.getById(failedTour.getTruck().getId()).setAvailable(true);
@@ -204,12 +204,13 @@ public class TourController {
           model.addAttribute("activeTour", activeTour);
         }
 
-        LocalDate today = LocalDate.now();
-        LocalTime now = LocalTime.now();
-        Tour active = getTourById(activeIndex, tours);
-        boolean hasStarted = active.getStartDate().isBefore(today)
-                || (active.getStartDate().isEqual(today) && active.getStartTime().isBefore(now));
-        model.addAttribute("tourHasStarted", hasStarted);
+//
+//        LocalDate today = LocalDate.now();
+//        LocalTime now = LocalTime.now();
+//        Tour active = getTourById(activeIndex, tours);
+//        boolean hasStarted = active.getStartDate().isBefore(today)
+//                || (active.getStartDate().isEqual(today) && active.getStartTime().isBefore(now));
+//        model.addAttribute("tourHasStarted", hasStarted);
 
         return "backend/tourOverview";
     }
@@ -224,7 +225,7 @@ public class TourController {
         Truck truck = toDelete.getTruck();
         truck.setAvailable(true);
         truckRepository.save(truck);
-        toDelete.setTourState(Tour.TourState.DELETED);
+        toDelete.setState(Tour.State.DELETED);
         tourRepository.save(toDelete);
         
         tours.remove(toDelete);
