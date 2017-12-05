@@ -172,7 +172,7 @@
         </div>
         <div th:if="${not #lists.isEmpty(tours)}" class="column">
             <div class="block">
-                <div class="box" th:if="${tourHasStarted} == true" th:object="${activeTour}">
+                <div class="box" th:if="${activeTour.inProcess()} == true" th:object="${activeTour}">
                     <div class="columns">
                         <div class="column">
                             <div class="notification is-danger">
@@ -409,7 +409,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="box" th:unless="${tourHasStarted} == true">
+                <div class="box" th:unless="${activeTour.inProcess()} == true">
                     <form action="#" th:action="@{/tours/update}" th:object="${activeTour}" method="post">
                         <input type="hidden" th:field="*{id}"/>
                         <input type="hidden" th:field="*{estimatedTime}"/>

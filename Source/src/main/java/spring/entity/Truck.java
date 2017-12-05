@@ -16,7 +16,7 @@ public class Truck {
     @GeneratedValue(strategy= GenerationType.AUTO)
     private long id;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     private String truckType;
 
     @Column(nullable = false)

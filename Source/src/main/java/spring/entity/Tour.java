@@ -8,6 +8,7 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 /**
@@ -71,7 +72,8 @@ public class Tour {
     
     @Column
     private String tourFeedback = "Tour feedback";
-    
+@Column
+    private Double deliveryTime;
     @Column(nullable = false)
     private State state = State.CREATED;
     
@@ -208,11 +210,25 @@ public class Tour {
             this.comment = comment;
         }
     }
-    
-    public boolean hasStarted() {
-        return (this.getStartDate().isBefore(LocalDate.now()) || (this.getStartDate().isEqual(LocalDate.now()) && this.getStartTime().isBefore(LocalTime.now())));
+
+    public Double getDeliveryTime() {
+        return deliveryTime;
     }
-    
+
+    public void setDeliveryTime(Double deliveryTime) {
+        this.deliveryTime = deliveryTime;
+    }
+
+    public boolean inProcess() {
+	    if (this.tourState == TourState.SUCCESSFUL
+                || this.tourState == TourState.DELETED
+                || this.tourState == TourState.FAILED) {
+	        return false;
+        }
+        LocalDateTime start = LocalDateTime.of(this.deliveryStartDate, this.deliveryStartTime);
+	    return start.isBefore(LocalDateTime.now());
+    }
+
     @Override
     public boolean equals(Object o) {
         if(this == o) {
@@ -263,6 +279,8 @@ public class Tour {
         if(getTourFeedback() != null ? !getTourFeedback().equals(tour.getTourFeedback()) : tour.getTourFeedback() != null) {
             return false;
         }
+        if (getDeliveryTime() != null ? !getDeliveryTime().equals(tour.getDeliveryTime()) : tour.getDeliveryTime() != null){
+            return false;}
         return getState() == tour.getState();
     }
     

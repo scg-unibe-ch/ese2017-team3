@@ -22,9 +22,7 @@ import spring.service.TourService;
 import spring.service.TruckService;
 
 import javax.validation.Valid;
-import java.time.DayOfWeek;
-import java.time.LocalDate;
-import java.time.LocalTime;
+import java.time.*;
 import java.util.List;
 
 /**
@@ -118,6 +116,9 @@ public class TourController {
         if (isAllowedToCloseTour(user, successfulTour)) {
             successfulTour.setState(Tour.State.SUCCESSFUL);
             successfulTour.setTourFeedback(feedback);
+            LocalDateTime start = LocalDateTime.of(successfulTour.getStartDate(), successfulTour.getStartTime());
+            Double hours = new Double(Duration.between(start, LocalDateTime.now()).toHours());
+            successfulTour.setDeliveryTime(hours);
             tourRepository.save(successfulTour);
             truckService.getById(successfulTour.getTruck().getId()).setAvailable(true);
         }
@@ -135,6 +136,9 @@ public class TourController {
         if (isAllowedToCloseTour(user, failedTour)) {
             failedTour.setState(Tour.State.FAILED);
             failedTour.setTourFeedback(feedback);
+            LocalDateTime start = LocalDateTime.of(failedTour.getStartDate(), failedTour.getStartTime());
+            Double hours = new Double(Duration.between(start, LocalDateTime.now()).toHours());
+            failedTour.setDeliveryTime(hours);
             tourRepository.save(failedTour);
             truckService.getById(failedTour.getTruck().getId()).setAvailable(true);
         }
@@ -204,13 +208,9 @@ public class TourController {
           model.addAttribute("activeTour", activeTour);
         }
 
-//
-//        LocalDate today = LocalDate.now();
-//        LocalTime now = LocalTime.now();
-//        Tour active = getTourById(activeIndex, tours);
-//        boolean hasStarted = active.getStartDate().isBefore(today)
-//                || (active.getStartDate().isEqual(today) && active.getStartTime().isBefore(now));
-//        model.addAttribute("tourHasStarted", hasStarted);
+        LocalDate today = LocalDate.now();
+        LocalTime now = LocalTime.now();
+        Tour active = getTourById(activeIndex, tours);
 
         return "backend/tourOverview";
     }
