@@ -79,13 +79,10 @@ public class UserController {
             return new ModelAndView("RegistrationForm", "wrappedRegistration", wrappedRegistration);
         }
         
-//        if(userDetailsManager.userExists(wrappedRegistration.username)) {
-//            return new ModelAndView("duplicateUser");
-    
             // NOTE users need an authority, otherwise they are treated as non-existing
-//        }
+
         
-        else if(wrappedRegistration.regCode.equals("asdf123")) {
+        if(wrappedRegistration.regCode.equals("asdf123")) {
             User user = new User(wrappedRegistration.username, wrappedRegistration.password, Collections.singletonList(new SimpleGrantedAuthority("ROLE_ADMIN")));
             userDetailsManager.createUser(user);
             Authentication auth = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
