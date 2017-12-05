@@ -220,12 +220,12 @@ public class Tour {
     }
 
     public boolean inProcess() {
-	    if (this.tourState == TourState.SUCCESSFUL
-                || this.tourState == TourState.DELETED
-                || this.tourState == TourState.FAILED) {
+	    if (this.state == State.SUCCESSFUL
+                || this.state == state.DELETED
+                || this.state == state.FAILED) {
 	        return false;
         }
-        LocalDateTime start = LocalDateTime.of(this.deliveryStartDate, this.deliveryStartTime);
+        LocalDateTime start = LocalDateTime.of(this.startDate, this.startTime);
 	    return start.isBefore(LocalDateTime.now());
     }
 
