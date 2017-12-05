@@ -114,9 +114,9 @@ public class TourController {
         Tour successfulTour = tourRepository.findOne(tourId);
 
         if (isAllowedToCloseTour(user, successfulTour)) {
-            successfulTour.setTourState(Tour.TourState.SUCCESSFUL);
+            successfulTour.setState(Tour.State.SUCCESSFUL);
             successfulTour.setTourFeedback(feedback);
-            LocalDateTime start = LocalDateTime.of(successfulTour.getDeliveryStartDate(), successfulTour.getDeliveryStartTime());
+            LocalDateTime start = LocalDateTime.of(successfulTour.getStartDate(), successfulTour.getStartTime());
             Double hours = new Double(Duration.between(start, LocalDateTime.now()).toHours());
             successfulTour.setDeliveryTime(hours);
             tourRepository.save(successfulTour);
@@ -134,9 +134,9 @@ public class TourController {
         Tour failedTour = tourRepository.findOne(tourId);
 
         if (isAllowedToCloseTour(user, failedTour)) {
-            failedTour.setTourState(Tour.TourState.FAILED);
+            failedTour.setState(Tour.State.FAILED);
             failedTour.setTourFeedback(feedback);
-            LocalDateTime start = LocalDateTime.of(failedTour.getDeliveryStartDate(), failedTour.getDeliveryStartTime());
+            LocalDateTime start = LocalDateTime.of(failedTour.getStartDate(), failedTour.getStartTime());
             Double hours = new Double(Duration.between(start, LocalDateTime.now()).toHours());
             failedTour.setDeliveryTime(hours);
             tourRepository.save(failedTour);
@@ -225,7 +225,7 @@ public class TourController {
         Truck truck = toDelete.getTruck();
         truck.setAvailable(true);
         truckRepository.save(truck);
-        toDelete.setTourState(Tour.TourState.DELETED);
+        toDelete.setState(Tour.State.DELETED);
         tourRepository.save(toDelete);
         
         tours.remove(toDelete);
@@ -245,12 +245,7 @@ public class TourController {
         }
 
         Tour oldTour = tourRepository.findOne(activeTour.getId());
-
-        // The following attributes are not changed, because they are not part of the form in tourOverview
-        //toDelete.setId(activeTour.getId());
-        //oldTour.setEstimatedTime(activeTour.getEstimatedTime());
-        //oldTour.setTimeFrame(activeTour.getTimeFrame());
-
+        
         oldTour.getTruck().setAvailable(true);
 
         oldTour.setTruck(activeTour.getTruck());
@@ -263,11 +258,9 @@ public class TourController {
         Address destinationAddress = oldTour.getDestinationAddress();
         startAddress.copyFieldsFromAddress(activeTour.getStartAddress());
         destinationAddress.copyFieldsFromAddress(activeTour.getDestinationAddress());
-//        oldTour.setStartAddress(activeTour.getStartAddress());
-//        oldTour.setDestinationAddress(activeTour.getDestinationAddress());
 
-        oldTour.setDeliveryStartDate(activeTour.getDeliveryStartDate());
-        oldTour.setDeliveryStartTime(activeTour.getDeliveryStartTime());
+        oldTour.setStartDate(activeTour.getStartDate());
+        oldTour.setStartTime(activeTour.getStartTime());
         oldTour.setDriver(activeTour.getDriver());
         oldTour.setComment(activeTour.getComment());
 
@@ -292,8 +285,8 @@ public class TourController {
     private boolean isAllowedToCloseTour(UserDetails user, Tour tour) {
         LocalDate today = LocalDate.now();
         LocalTime now  = LocalTime.now();
-        LocalDate tourStartDate = tour.getDeliveryStartDate();
-        LocalTime tourStartTime = tour.getDeliveryStartTime();
+        LocalDate tourStartDate = tour.getStartDate();
+        LocalTime tourStartTime = tour.getStartTime();
         String username = user.getUsername();
         return(tour.getDriver().equals(username) && tourStartDate.isEqual(today) && tourStartTime.isBefore(now));
     }

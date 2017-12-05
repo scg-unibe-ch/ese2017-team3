@@ -26,8 +26,9 @@ public class Driver {
 
     public Driver() {}
 
-    public Driver(String username) {
+    public Driver(String username, Address address) {
         this.username = username;
+        this.hiringDate = LocalDate.now();
     }
 
     public String getHiringDateString() {

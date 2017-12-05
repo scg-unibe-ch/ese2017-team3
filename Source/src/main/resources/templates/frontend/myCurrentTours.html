@@ -69,7 +69,7 @@
                         <div class="tour-item">
                             <div class="columns is-mobile summary">
                                 <div class="column is-one-quarter">
-                                    <span type="time" th:text="${tour.deliveryStartTime}">Time</span>
+                                    <span type="time" th:text="${tour.startTime}">Time</span>
                                 </div>
                                 <div class="column">
                                     <span th:text="${tour.startAddress.street}">Address </span>
@@ -114,9 +114,9 @@
                                     </div>
                                     <div class="column is-1" />
                                 </div>
-                                <div class="columns is-mobile" th:unless="${tour.tourState} == ${tour.TourState.CREATED}">
+                                <div class="columns is-mobile" th:unless="${tour.state} == ${tour.TourState.CREATED}">
                                     <div class="column">
-                                        <strong>Tour State: </strong><span th:classappend="${(tour.tourState == tour.TourState.SUCCESSFUL ? 'success' : '') + (tour.tourState == tour.TourState.FAILED ? 'failure' : '')}" th:text="${tour.tourState}" />
+                                        <strong>Tour State: </strong><span th:classappend="${(tour.state == tour.TourState.SUCCESSFUL ? 'success' : '') + (tour.state == tour.TourState.FAILED ? 'failure' : '')}" th:text="${tour.state}" />
                                     </div>
                                 </div>
                                 <div class="columns is-mobile">
@@ -124,14 +124,14 @@
                                         <div class="box is-message" th:text="${tour.comment}">Comment</div>
                                     </div>
                                 </div>
-                                <div class="columns is-mobile" th:if="${tour.tourState} == ${tour.TourState.CREATED}">
+                                <div class="columns is-mobile" th:if="${tour.state} == ${tour.TourState.CREATED}">
                                     <div class="column">
                                         <p class="control">
                                             <textarea class="textarea" placeholder="Tour feedback" name="feedback" />
                                         </p>
                                     </div>
                                 </div>
-                                <div class="columns is-mobile" th:if="${tour.tourState} == ${tour.TourState.CREATED}">
+                                <div class="columns is-mobile" th:if="${tour.state} == ${tour.TourState.CREATED}">
                                     <input type="hidden" name="tourId" th:value="${tour.id}" />
                                     <div class="column">
                                         <button type="submit" class="button is-success is-pulled-left is-fullwidth" name="successful" value="Successful">Finish</button>

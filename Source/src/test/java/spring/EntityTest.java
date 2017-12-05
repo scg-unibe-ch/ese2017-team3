@@ -87,8 +87,8 @@ public class EntityTest {
         tour.setDriver(driver.getUsername());
         tour.setNumberOfAnimals(22);
         tour.setEstimatedTime(2.0);
-        tour.setDeliveryStartDate(LocalDate.now());
-        tour.setDeliveryStartTime(LocalTime.now());
+        tour.setStartDate(LocalDate.now());
+        tour.setStartTime(LocalTime.now());
         tour.setTruck(truck);
         tour.setStartAddress(startAddress);
         tour.setDestinationAddress(endAddress);

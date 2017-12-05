@@ -81,7 +81,7 @@
                     <div class="tour-item">
                         <div class="columns is-mobile summary">
                             <div class="column">
-                                <span type="date" th:text="${tour.deliveryStartDate}">Date</span>
+                                <span type="date" th:text="${tour.startDate}">Date</span>
                             </div>
                             <div class="column">
                                 <span th:text="${tour.cargo}">Species</span>
@@ -107,7 +107,7 @@
                         <div class="panel">
                             <div class="columns is-mobile">
                                 <div class="column">
-                                    <strong>Time: </strong><span type="time" th:text="${tour.deliveryStartTime}" />
+                                    <strong>Time: </strong><span type="time" th:text="${tour.startTime}" />
                                 </div>
                                 <div class="column">
                                     <strong>Amount: </strong><span type="text" th:text="${tour.numberOfAnimals}"/>

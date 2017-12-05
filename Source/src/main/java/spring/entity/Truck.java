@@ -53,7 +53,16 @@ public class Truck {
         this.imageId = imageId;
         this.available = available;
     }
-
+    
+    public Truck(String truckType, Boolean available, long imageId, double length, double width, double payload) {
+        this.truckType = truckType;
+        this.available = available;
+        this.imageId = imageId;
+        this.length = length;
+        this.width = width;
+        this.payload = payload;
+    }
+    
     public long getId() {
         return id;
     }
