@@ -22,9 +22,7 @@ import spring.service.TourService;
 import spring.service.TruckService;
 
 import javax.validation.Valid;
-import java.time.DayOfWeek;
-import java.time.LocalDate;
-import java.time.LocalTime;
+import java.time.*;
 import java.util.List;
 
 /**
@@ -118,6 +116,9 @@ public class TourController {
         if (isAllowedToCloseTour(user, successfulTour)) {
             successfulTour.setTourState(Tour.TourState.SUCCESSFUL);
             successfulTour.setTourFeedback(feedback);
+            LocalDateTime start = LocalDateTime.of(successfulTour.getDeliveryStartDate(), successfulTour.getDeliveryStartTime());
+            Double hours = new Double(Duration.between(start, LocalDateTime.now()).toHours());
+            successfulTour.setDeliveryTime(hours);
             tourRepository.save(successfulTour);
             truckService.getById(successfulTour.getTruck().getId()).setAvailable(true);
         }
@@ -135,6 +136,9 @@ public class TourController {
         if (isAllowedToCloseTour(user, failedTour)) {
             failedTour.setTourState(Tour.TourState.FAILED);
             failedTour.setTourFeedback(feedback);
+            LocalDateTime start = LocalDateTime.of(failedTour.getDeliveryStartDate(), failedTour.getDeliveryStartTime());
+            Double hours = new Double(Duration.between(start, LocalDateTime.now()).toHours());
+            failedTour.setDeliveryTime(hours);
             tourRepository.save(failedTour);
             truckService.getById(failedTour.getTruck().getId()).setAvailable(true);
         }
@@ -207,9 +211,6 @@ public class TourController {
         LocalDate today = LocalDate.now();
         LocalTime now = LocalTime.now();
         Tour active = getTourById(activeIndex, tours);
-        boolean hasStarted = active.getDeliveryStartDate().isBefore(today)
-                || (active.getDeliveryStartDate().isEqual(today) && active.getDeliveryStartTime().isBefore(now));
-        model.addAttribute("tourHasStarted", hasStarted);
 
         return "backend/tourOverview";
     }
