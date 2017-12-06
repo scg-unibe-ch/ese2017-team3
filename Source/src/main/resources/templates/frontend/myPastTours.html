@@ -119,7 +119,7 @@
                                     </div>
                                     <div class="column is-3">
                                         <strong>Tour State: </strong>
-                                        <span th:classappend="${(tour.state == tour.TourState.SUCCESSFUL ? 'success' : '') + (tour.state == tour.TourState.FAILED ? 'failure' : '')}" th:text="${tour.state}" />
+                                        <span th:classappend="${(tour.state == tour.State.SUCCESSFUL ? 'success' : '') + (tour.state == tour.State.FAILED ? 'failure' : '')}" th:text="${tour.state}" />
                                     </div>
                                     <div class="column is-1" />
                                 </div>
