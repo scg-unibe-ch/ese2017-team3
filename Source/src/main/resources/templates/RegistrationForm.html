@@ -121,10 +121,11 @@
                             </div>
                         </div>
 
+                        <!--Checking the patterns for phone and E-Mail in HTML because they might be null in some other cases.-->
                         <div>
                             <div class="field">
                                 <div class="control">
-                                    <input class="input" type="text" placeholder="Phone" th:field="*{address.phone}"/>
+                                    <input class="input" type="text" placeholder="Phone" pattern="^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$" th:field="*{address.phone}"/>
                                 </div>
                             </div>
                             <p th:each="error: ${#fields.errors('address.phone')}" th:text="${error}">Validation error</p>
@@ -133,7 +134,7 @@
                         <div>
                             <div class="field">
                                 <div class="control">
-                                    <input class="input" type="text" placeholder="E-Mail" th:field="*{address.email}"/>
+                                    <input class="input" type="text" placeholder="E-Mail" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" th:field="*{address.email}"/>
                                 </div>
                             </div>
                             <p th:each="error: ${#fields.errors('address.email')}" th:text="${error}">Validation error</p>
