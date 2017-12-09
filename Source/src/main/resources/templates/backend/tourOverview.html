@@ -448,14 +448,9 @@
                                 <div class="column is-4">Truck:</div>
                                 <div class="column">
                                     <div class="select">
-                                        <select th:field="*{truck}" disabled="disabled">
-                                            <option th:if="${activeTour.truck != null}"
-                                                    th:value="${activeTour.truck.id}"
-                                                    th:text="${activeTour.truck.truckType}" class="selected"/>
-                                            <div th:if="${not #lists.isEmpty(trucks)}" th:each="truck : ${trucks}">
-                                                <option th:if="${truck.available == true}"
-                                                        th:unless="${truck.id == activeTour.truck.id}"
-                                                        th:value="${truck.id}" th:text="${truck.truckType}"/>
+                                        <select th:name="truckType" disabled="disabled">
+                                            <div th:if="${not #lists.isEmpty(truckTypes)}" th:each="type : ${truckTypes}">
+                                                <option th:selected="${type.key} == ${activeTour.truck.truckType}" th:value="${type.key}" th:text="${type.key} + ' (' + ${type.value} + ')'" />
                                             </div>
                                         </select>
                                     </div>
@@ -474,6 +469,13 @@
                     </div>
                 </div>
                 <div class="box" th:if="${activeTour.canBeChanged()}">
+                    <div class="columns" th:if="${truckErrorMessage}">
+                        <div class="column">
+                            <div class="notification is-danger">
+                                <strong th:text="${truckErrorMessage}"/>
+                            </div>
+                        </div>
+                    </div>
                     <form action="#" th:action="@{/tours/update}" th:object="${activeTour}" method="post">
                         <input type="hidden" th:field="*{id}"/>
                         <input type="hidden" th:field="*{estimatedTime}"/>
@@ -708,14 +710,9 @@
                                     <div class="column is-4">Truck:</div>
                                     <div class="column">
                                         <div class="select">
-                                            <select th:field="*{truck}">
-                                                <option th:if="${activeTour.truck != null}"
-                                                        th:value="${activeTour.truck.id}"
-                                                        th:text="${activeTour.truck.truckType}" class="selected"/>
-                                                <div th:if="${not #lists.isEmpty(trucks)}" th:each="truck : ${trucks}">
-                                                    <option th:if="${truck.available == true}"
-                                                            th:unless="${truck.id == activeTour.truck.id}"
-                                                            th:value="${truck.id}" th:text="${truck.truckType}"/>
+                                            <select th:name="truckType">
+                                                <div th:if="${not #lists.isEmpty(truckTypes)}" th:each="type : ${truckTypes}">
+                                                    <option th:selected="${type.key} == ${activeTour.truck.truckType}" th:value="${type.key}" th:text="${type.key} + ' (' + ${type.value} + ')'" />
                                                 </div>
                                             </select>
                                         </div>

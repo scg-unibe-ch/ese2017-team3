@@ -74,7 +74,14 @@
 
     <div class="block">
         <div class="box">
-            <form action="#" th:action="@{/deliveries}" th:object="${tour}" method="post">
+            <div class="columns" th:if="${truckErrorMessage}">
+                <div class="column">
+                    <div class="notification is-danger">
+                        <strong th:text="${truckErrorMessage}"/>
+                    </div>
+                </div>
+            </div>
+            <form method="POST" th:action="@{/deliveries}" th:object="${tour}">
                 <div class="columns">
                     <!-- Column left -->
                     <div class="column">
@@ -282,9 +289,9 @@
                             <div class="column is-2">Truck:</div>
                             <div class="column">
                                 <span class="select is-fullwidth">
-                                    <select th:field="*{truck}">
-                                        <div th:if="${not #lists.isEmpty(trucks)}" th:each="truck : ${trucks}">
-                                            <option th:if="${truck.available == true}" th:value="${truck.id}" th:text="${truck.truckType}" />
+                                    <select th:name="truckType">
+                                        <div th:if="${not #lists.isEmpty(truckTypes)}" th:each="type : ${truckTypes}">
+                                            <option type="text" th:value="${type.key}" th:text="${type.key} + ' (' + ${type.value} + ')'" />
                                         </div>
                                     </select>
                                 </span>

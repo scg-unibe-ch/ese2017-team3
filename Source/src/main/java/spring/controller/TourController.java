@@ -24,6 +24,7 @@ import spring.service.TruckService;
 
 import javax.validation.Valid;
 import java.time.*;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -109,7 +110,7 @@ public class TourController {
         return "frontend/myCurrentTours";
     }
 
-    @RequestMapping(value="/today", method=RequestMethod.POST, params={"successful=Successful"})
+    @RequestMapping(value = "/today", method = RequestMethod.POST, params = {"successful=Successful"})
     public String markAsSuccessful(@RequestParam Long tourId, @RequestParam String feedback, ModelMap model) {
         UserDetails user = userSecurityService.getAuthenticatedUser();
         Tour successfulTour = tourRepository.findOne(tourId);
@@ -129,7 +130,7 @@ public class TourController {
         return "frontend/myCurrentTours";
     }
 
-    @RequestMapping(value="/today", method=RequestMethod.POST, params={"failed=Failed"})
+    @RequestMapping(value = "/today", method = RequestMethod.POST, params = {"failed=Failed"})
     public String markAsFailed(@RequestParam Long tourId, @RequestParam String feedback, ModelMap model) {
         UserDetails user = userSecurityService.getAuthenticatedUser();
         Tour failedTour = tourRepository.findOne(tourId);
@@ -150,7 +151,6 @@ public class TourController {
     }
 
 
-
     // Get request on /deliveries will return a form to create a new tour
     @GetMapping(path = "/deliveries")
     public String deliveryForm(Model model) {
@@ -159,9 +159,9 @@ public class TourController {
         List<Driver> drivers = driverService.getDrivers();
         model.addAttribute("drivers", drivers);
 
-        //prepare a list of Trucks to select from.
-        List<Truck> trucks = truckService.getTrucks();
-        model.addAttribute("trucks", trucks);
+        //prepare a list of Truck types to select from.
+        HashMap<String, Integer> truckTypes = getAvailableTruckTypesAndNumbers("NONE");
+        model.addAttribute("truckTypes", truckTypes);
 
         model.addAttribute("tour", new Tour());
         return "backend/deliveries";
@@ -169,26 +169,37 @@ public class TourController {
 
     // POST request to /deliveries with the appropriate values will create a new tour and redirect to /tours
     @PostMapping(path = "/deliveries")
-    public ModelAndView deliverySubmit(@Valid @ModelAttribute Tour tour, BindingResult bindingResult, ModelMap model) {
-        
-        if(tour.getStartDate().isBefore(LocalDate.now())){
-            bindingResult.addError(new FieldError("tour","startDate", "Date lies in the past. Enter a valid Date."));
+    public ModelAndView deliverySubmit(@Valid @ModelAttribute Tour tour,
+                                       BindingResult bindingResult,
+                                       ModelMap model,
+                                       @RequestParam("truckType") String truckType,
+                                       RedirectAttributes redattributes) {
+
+        if (tour.getStartDate().isBefore(LocalDate.now())) {
+            bindingResult.addError(new FieldError("tour", "startDate", "Date lies in the past. Enter a valid Date."));
         }
-        if(tour.getStartDate().isEqual(LocalDate.now()) && tour.getStartTime().isBefore(LocalTime.now())){
+        if (tour.getStartDate().isEqual(LocalDate.now()) && tour.getStartTime().isBefore(LocalTime.now())) {
             bindingResult.addError(new FieldError("tour", "startTime", "Time already passed. Enter a time in the future"));
         }
-        if (bindingResult.hasErrors()) {
+        if (bindingResult.hasErrors() || truckType == null || truckService.getAvailableTrucksOfType(truckType).isEmpty()) {
+            if (truckType == null || truckService.getAvailableTrucksOfType(truckType).isEmpty()) {
+                redattributes.addFlashAttribute("truckErrorMessage",
+                        "The chosen truck type is not available anymore, please try chosing another truck type.");
+            }
+
             List<Driver> drivers = driverService.getDrivers();
-            List<Truck> trucks = truckService.getTrucks();
             model.addAttribute("drivers", drivers);
-            model.addAttribute("trucks", trucks);
-            return new ModelAndView("backend/deliveries");
+            HashMap<String, Integer> truckTypes = getAvailableTruckTypesAndNumbers(truckType);
+            model.addAttribute("truckTypes", truckTypes);
+            return new ModelAndView("redirect:/deliveries");
         }
         addressRepository.save(tour.getStartAddress());
         addressRepository.save(tour.getDestinationAddress());
 
-        truckService.getById(tour.getTruck().getId()).setAvailable(false);
-        
+        Truck chosen = truckService.getAvailableTrucksOfType(truckType).get(0);
+        tour.setTruck(chosen);
+        chosen.setAvailable(false);
+
         tourRepository.save(tour);
         return new ModelAndView("redirect:/tours");
     }
@@ -196,25 +207,33 @@ public class TourController {
 
     // GET request to /tours will return a list of all tours
     @GetMapping(path = "/tours")
-    public String tourOverview(ModelMap model, @RequestParam(required = false, defaultValue = "-1") int activeIndex, @RequestParam(required = false, defaultValue = "Date/Time") String sortBy) {
+    public String tourOverview(ModelMap model,
+                               @RequestParam(required = false, defaultValue = "-1") int activeIndex,
+                               @RequestParam(required = false, defaultValue = "Date/Time") String sortBy) {
 
         List<Tour> tours = tourService.getSortedTours(sortBy);
         if (!sortBy.equals("")) model.addAttribute("sortBy", sortBy);
 
         model.addAttribute("tours", tours);
 
+        if (model.get("activeTour") == null) {
+            Tour activeTour = getTourById(activeIndex, tours);
+            model.addAttribute("activeTour", activeTour);
+
+            //prepare a list of Truck types to select from.
+            HashMap<String, Integer> truckTypes = getAvailableTruckTypesAndNumbers(activeTour.getTruck().getTruckType());
+            model.addAttribute("truckTypes", truckTypes);
+        } else {
+            //prepare a list of Truck types to select from.
+            Tour tour = (Tour)model.get("activeTour");
+            HashMap<String, Integer> truckTypes = getAvailableTruckTypesAndNumbers(tour.getTruck().getTruckType());
+            model.addAttribute("truckTypes", truckTypes);
+        }
+
         //prepare a list of Drivers to select from.
         List<Driver> drivers = driverService.getDrivers();
         model.addAttribute("drivers", drivers);
 
-        //prepare list of trucks to select from.
-        List<Truck> trucks = truckService.getTrucks();
-        model.addAttribute("trucks", trucks);
-
-        if (model.get("activeTour") == null) {
-          Tour activeTour = getTourById(activeIndex, tours);
-          model.addAttribute("activeTour", activeTour);
-        }
 
         LocalDate today = LocalDate.now();
         LocalTime now = LocalTime.now();
@@ -235,7 +254,7 @@ public class TourController {
         truckRepository.save(truck);
         toDelete.setState(Tour.State.DELETED);
         tourRepository.save(toDelete);
-        
+
         tours.remove(toDelete);
 
         model.addAttribute("tours", tours);
@@ -243,27 +262,49 @@ public class TourController {
     }
 
     @PostMapping(path = "/tours/update")
-    public ModelAndView updateTour(@Valid @ModelAttribute Tour activeTour, BindingResult bindingResult, ModelMap model, RedirectAttributes redattributes) {
-        if(activeTour.getStartDate().isBefore(LocalDate.now())){
-            bindingResult.addError(new FieldError("tour","startDate", "Date lies in the past. Enter a valid Date."));
+    public ModelAndView updateTour(@Valid @ModelAttribute Tour activeTour,
+                                   BindingResult bindingResult,
+                                   ModelMap model,
+                                   @RequestParam("truckType") String truckType,
+                                   RedirectAttributes redattributes) {
+
+        // Attach "old" truck to activeTour (isn't done automatically, since the select truck input is not associated
+        // with the tour anymore).
+        Truck truck = tourRepository.findOne(activeTour.getId()).getTruck();
+        activeTour.setTruck(truck);
+
+        if (activeTour.getStartDate().isBefore(LocalDate.now())) {
+            bindingResult.addError(new FieldError("tour", "startDate", "Date lies in the past. Enter a valid Date."));
         }
-        if(activeTour.getStartDate().isEqual(LocalDate.now()) && activeTour.getStartTime().isBefore(LocalTime.now())){
+        if (activeTour.getStartDate().isEqual(LocalDate.now()) && activeTour.getStartTime().isBefore(LocalTime.now())) {
             bindingResult.addError(new FieldError("tour", "startTime", "Time already passed. Enter a time in the future"));
         }
 
-        if (bindingResult.hasErrors()) {
-        	redattributes.addFlashAttribute("org.springframework.validation.BindingResult.activeTour", bindingResult);
-        	redattributes.addFlashAttribute("activeTour", activeTour);
-        	
+        if (bindingResult.hasErrors()
+                || truckType == null
+                || (truckService.getAvailableTrucksOfType(truckType).isEmpty() && !truck.getTruckType().equals(truckType))) {
+
+            if (truckType == null || (truckService.getAvailableTrucksOfType(truckType).isEmpty() && !truck.getTruckType().equals(truckType))) {
+                redattributes.addFlashAttribute("truckErrorMessage",
+                        "The chosen truck type is not available anymore, please try choosing another truck type.");
+            }
+
+            if (bindingResult.hasErrors()) {
+                redattributes.addFlashAttribute("org.springframework.validation.BindingResult.activeTour", bindingResult);
+                redattributes.addFlashAttribute("activeTour", activeTour);
+            }
+
             return new ModelAndView("redirect:/tours?activeIndex=" + activeTour.getId());
         }
 
         Tour oldTour = tourRepository.findOne(activeTour.getId());
-        
-        oldTour.getTruck().setAvailable(true);
 
-        oldTour.setTruck(activeTour.getTruck());
-        activeTour.getTruck().setAvailable(false);
+        if (!oldTour.getTruck().getTruckType().equals(truckType)) {
+            oldTour.getTruck().setAvailable(true);
+            Truck chosen = truckService.getAvailableTrucksOfType(truckType).get(0);
+            oldTour.setTruck(chosen);
+            chosen.setAvailable(false);
+        }
 
         oldTour.setCargo(activeTour.getCargo());
         oldTour.setNumberOfAnimals(activeTour.getNumberOfAnimals());
@@ -291,6 +332,7 @@ public class TourController {
     /**
      * Checks whether a <code>User</code> identified by his <code>UserDetails</code> is allowed
      * to close e certain <code>Tour</code>.
+     *
      * @param user the <code>UserDetails</code> of the <code>User</code>
      * @param tour the <code>Tour</code> that the <code>User</code> wants to close
      * @return <code>true</code> if the <code>User</code> is allowed to close the <code>Tour</code>,
@@ -298,11 +340,32 @@ public class TourController {
      */
     private boolean isAllowedToCloseTour(UserDetails user, Tour tour) {
         LocalDate today = LocalDate.now();
-        LocalTime now  = LocalTime.now();
+        LocalTime now = LocalTime.now();
         LocalDate tourStartDate = tour.getStartDate();
         LocalTime tourStartTime = tour.getStartTime();
         String username = user.getUsername();
-        return(tour.getDriver().equals(username) && tourStartDate.isEqual(today) && tourStartTime.isBefore(now));
+        return (tour.getDriver().equals(username) && tourStartDate.isEqual(today) && tourStartTime.isBefore(now));
+    }
+
+    // Return a HashMap with available, distinct truck types and the amount of available trucks.
+    // The current truck type will also be in the HashMap, even if there are no more trucks of this truck type left
+    // (since the truck is already assigned to the tour).
+    private HashMap<String, Integer> getAvailableTruckTypesAndNumbers(String currentTruckType) {
+        List<Truck> trucks = truckService.getAvailableTrucks();
+        HashMap<String, Integer> truckTypes = new HashMap<>();
+        if (!currentTruckType.equals("NONE")) {
+            truckTypes.put(currentTruckType, 1);
+        }
+        for (Truck t : trucks) {
+            String type = t.getTruckType();
+            if (truckTypes.containsKey(type)) {
+                int amount = truckTypes.get(type);
+                truckTypes.replace(type, amount + 1);
+            } else {
+                truckTypes.put(type, 1);
+            }
+        }
+        return truckTypes;
     }
 
     /**

@@ -19,4 +19,8 @@ public interface TruckRepository extends CrudRepository<Truck, Long> {
 
     List<Truck> findByTruckType(String truckType);
 
+    List<Truck> findByTruckTypeAndAndAvailable(String truckType, boolean available);
+
+    List<Truck> findByAvailable(boolean available);
+
 }
