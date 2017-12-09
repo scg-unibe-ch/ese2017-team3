@@ -220,14 +220,37 @@ public class Tour {
     }
 
     public boolean inProcess() {
-	    if (this.state == State.SUCCESSFUL
-                || this.state == state.DELETED
-                || this.state == state.FAILED) {
+	    if (this.state != State.CREATED) {
 	        return false;
         }
         LocalDateTime start = LocalDateTime.of(this.startDate, this.startTime);
 	    return start.isBefore(LocalDateTime.now());
     }
+
+    public boolean isSuccessful() {
+        return this.state == State.SUCCESSFUL;
+    }
+
+    public boolean isFailed() {
+        return this.state == State.FAILED;
+    }
+
+    public boolean isIncomplete() {
+        return this.state == State.INCOMPLETE;
+    }
+
+    public boolean isCreated() {
+        return this.state == State.CREATED;
+    }
+
+    public boolean isDeleted() {
+        return this.state == State.DELETED;
+    }
+
+    public boolean canBeChanged() {
+        return !(this.inProcess() || this.isSuccessful() || this.isFailed() || this.isDeleted());
+    }
+
 
     @Override
     public boolean equals(Object o) {
