@@ -8,6 +8,10 @@
     <title>AniTrans Driver Overview</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
     <link href="../static/css/bulma.css" th:href="@{/css/bulma.css}" rel="stylesheet"/>
+    <script
+            src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+            integrity="sha256-k2WSCIexGzOj3Euiig+TlR8gA0EmPjuc79OEeY5L45g="
+            crossorigin="anonymous"></script>
 </head>
 <body class="login-page page-layout">
 <section class="hero is-link">
@@ -65,6 +69,8 @@
         </div>
     </div>
 </section>
+
+<div th:if="${not #lists.isEmpty(drivers)}" th:each="driver : ${drivers}">
 <table class="table is-fullwidth">
     <thead>
     <tr>
@@ -83,7 +89,7 @@
     </tr>
     </thead>
     <tbody>
-    <tr th:if="${not #lists.isEmpty(drivers)}" th:each="driver : ${drivers}">
+    <tr>
         <td><p th:text="${driver.username}"></p></td>
         <td><p th:text="${driver.address.getLastname()}"></p></td>
         <td><p th:text="${driver.address.getFirstname()}"></p></td>
@@ -96,11 +102,44 @@
         <td><p th:text="${driver.getHiringDateString()}"></p></td>
         <td><a th:href="'drivers/promote?username='+${driver.username}" class="button is-info"><i
                 class="fa fa-arrow-circle-o-up"></i>&nbsp;Promote to Admin</a></td>
-        <td><a th:href="'drivers/delete?username=' + ${driver.username}" class="button is-danger"><i
+        <td><a id="showModal" class="button is-danger"><i
                 class="fa fa-fire"></i>&nbsp;Fire</a></td>
     </tr>
     </tbody>
 </table>
+
+<div class="modal">
+    <div class="modal-background"></div>
+    <div class="modal-content">
+        <div class="box is-centered">
+            <h2 class="subtitle is-2">Confirm Deletion</h2>
+            <div class="buttons is-centered">
+                <a th:href="'drivers/delete?username=' + ${driver.username}" class="button is-danger"><i
+                        class="fa fa-fire"></i>&nbsp;Fire</a>
+                <button id="modal-close" class="button">CANCEL</button>
+            </div>
+        </div>
+    </div>
+    <button class="modal-close"></button>
+</div>
+
+</div>
+<script>
+
+    //delete modal trigger
+    $(document).ready(function () {
+
+        $("#showModal").click(function () {
+            $(".modal").addClass("is-active");
+        });
+
+        $(".modal-close, #modal-close").click(function () {
+            $(".modal").removeClass("is-active");
+        });
+
+    });
+
+</script>
 
 </body>
 </html>
