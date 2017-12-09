@@ -83,6 +83,11 @@ public class DriverController {
         List<Driver> drivers = driverService.getDrivers();
         
         Driver promotedDriver = driverRepository.findDriverByUsername(username);
+        List<Tour> toursOfDeletedDriver = tourRepository.findByDriverAndState(username,Tour.State.CREATED);
+        for(Tour tour:toursOfDeletedDriver){
+            tour.setState(Tour.State.INCOMPLETE);
+        }
+        
         driverRepository.delete(promotedDriver);
         
         UserDetails driverWithNewRole = userDetailsManager.loadUserByUsername(username);
