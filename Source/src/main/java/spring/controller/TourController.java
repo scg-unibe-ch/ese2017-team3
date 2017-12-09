@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -169,6 +170,13 @@ public class TourController {
     // POST request to /deliveries with the appropriate values will create a new tour and redirect to /tours
     @PostMapping(path = "/deliveries")
     public ModelAndView deliverySubmit(@Valid @ModelAttribute Tour tour, BindingResult bindingResult, ModelMap model) {
+        
+        if(tour.getStartDate().isBefore(LocalDate.now())){
+            bindingResult.addError(new FieldError("tour","startDate", "Date lies in the past. Enter a valid Date."));
+        }
+        if(tour.getStartDate().isEqual(LocalDate.now()) && tour.getStartTime().isBefore(LocalTime.now())){
+            bindingResult.addError(new FieldError("tour", "startTime", "Time already passed. Enter a time in the future"));
+        }
         if (bindingResult.hasErrors()) {
             List<Driver> drivers = driverService.getDrivers();
             List<Truck> trucks = truckService.getTrucks();
@@ -236,6 +244,12 @@ public class TourController {
 
     @PostMapping(path = "/tours/update")
     public ModelAndView updateTour(@Valid @ModelAttribute Tour activeTour, BindingResult bindingResult, ModelMap model, RedirectAttributes redattributes) {
+        if(activeTour.getStartDate().isBefore(LocalDate.now())){
+            bindingResult.addError(new FieldError("tour","startDate", "Date lies in the past. Enter a valid Date."));
+        }
+        if(activeTour.getStartDate().isEqual(LocalDate.now()) && activeTour.getStartTime().isBefore(LocalTime.now())){
+            bindingResult.addError(new FieldError("tour", "startTime", "Time already passed. Enter a time in the future"));
+        }
 
         if (bindingResult.hasErrors()) {
         	redattributes.addFlashAttribute("org.springframework.validation.BindingResult.activeTour", bindingResult);

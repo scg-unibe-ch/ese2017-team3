@@ -68,11 +68,11 @@ public class UserController {
         }
         
         if(wrappedRegistration.address.getEmail().length()<=5){
-            bindingResult.addError(new FieldError("wrappedRegistration", "address.email","E-Mail address must no be void!"));
+            bindingResult.addError(new FieldError("wrappedRegistration", "address.email","E-Mail address must be at least 5 characters long!"));
         }
         
         if(wrappedRegistration.address.getPhone().length()<=5){
-            bindingResult.addError(new FieldError("wrappedRegistration", "address.phone", "Phone number must not be void!"));
+            bindingResult.addError(new FieldError("wrappedRegistration", "address.phone", "Phone number must be at least 5 digits long!"));
         }
         
         if(bindingResult.hasErrors()) {

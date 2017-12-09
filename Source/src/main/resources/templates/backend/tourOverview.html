@@ -109,10 +109,8 @@
 
                 <div th:if="${not #lists.isEmpty(tours)}" th:each="tour : ${tours}">
                     <div th:with="result=${tour.id}">
-                        <div class="notification"
-                             th:classappend="${tour.id == activeTour.id} ? is-info : (${tour.state == tour.State.SUCCESSFUL} ? is-success : (${tour.state == tour.State.INCOMPLETE} ? is-warning : (${tour.state == tour.State.FAILED} ? is-danger)))">
-
-                            <div class="modal">
+                        <div class="notification" th:classappend="${tour.id == activeTour.id} ? is-info : (${tour.isSuccessful()} ? is-success : (${tour.isIncomplete()} ? is-warning : (${tour.isFailed()} ? is-danger)))">
+                        <div class="modal">
                                 <div class="modal-background"></div>
                                 <div class="modal-content">
                                     <div class="box is-centered">
@@ -198,11 +196,13 @@
         </div>
         <div th:if="${not #lists.isEmpty(tours)}" class="column">
             <div class="block">
-                <div class="box" th:if="${activeTour.inProcess()} == true" th:object="${activeTour}">
+                <div class="box" th:unless="${activeTour.canBeChanged()}" th:object="${activeTour}">
                     <div class="columns">
                         <div class="column">
                             <div class="notification is-danger">
-                                <strong>This tour has already started, you cannot change it!</strong>
+                                <strong th:if="${activeTour.inProcess()}">This tour has already started, you cannot change it! Reload the page if you just tried to change the date/time to the past.</strong>
+                                <strong th:if="${activeTour.isSuccessful()}">This tour was successfully completed and can't be changed.</strong>
+                                <strong th:if="${activeTour.isFailed()}">This tour has failed and can't be changed.</strong>
                             </div>
                         </div>
                     </div>
@@ -470,7 +470,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="box" th:unless="${activeTour.inProcess()} == true">
+                <div class="box" th:if="${activeTour.canBeChanged()}">
                     <form action="#" th:action="@{/tours/update}" th:object="${activeTour}" method="post">
                         <input type="hidden" th:field="*{id}"/>
                         <input type="hidden" th:field="*{estimatedTime}"/>
