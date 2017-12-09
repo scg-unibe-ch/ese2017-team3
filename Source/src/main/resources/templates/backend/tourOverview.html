@@ -200,7 +200,7 @@
                     <div class="columns">
                         <div class="column">
                             <div class="notification is-danger">
-                                <strong th:if="${activeTour.inProcess()}">This tour has already started, you cannot change it!</strong>
+                                <strong th:if="${activeTour.inProcess()}">This tour has already started, you cannot change it! Reload the page if you just tried to change the date/time to the past.</strong>
                                 <strong th:if="${activeTour.isSuccessful()}">This tour was successfully completed and can't be changed.</strong>
                                 <strong th:if="${activeTour.isFailed()}">This tour has failed and can't be changed.</strong>
                             </div>
