@@ -73,7 +73,9 @@
         </div>
     </div>
 </section>
+
 <div class="block">
+
     <div class="columns is-gapless">
         <div class="column is-one-third scrollable">
             <div class="content">
@@ -694,28 +696,7 @@
                                         </article>
                                     </div>
                                 </div>
-                                <script th:inline="javascript">
-                                    function generateMapsLink() {
-                                        var SACity = document.getElementById('SAC').value;
-                                        var SAZip = document.getElementById('SAZ').value;
-                                        var SAStreet = document.getElementById('SAS').value;
-                                        var SASNumber = document.getElementById('SAN').value;
 
-                                        var DACity = document.getElementById('DAC').value;
-                                        var DAZip = document.getElementById('DAZ').value;
-                                        var DAStreet = document.getElementById('DAS').value;
-                                        var DASNumber = document.getElementById('DAN').value;
-
-                                        if (!SACity.match(/\S/) || !SAZip.match(/\S/) || !SAStreet.match(/\S/) || !SASNumber.match(/\S/) || !DACity.match(/\S/) || !DAZip.match(/\S/) || !DAStreet.match(/\S/) || !DASNumber.match(/\S/)) {
-                                            var mapsNavRequestLink = 'https://www.google.com/maps/embed/v1/directions?key=AIzaSyAfswMMILTpyhxnZfWOhTNOgClKSuag9Cs&#10;    &amp;origin=+Bibliothek+Exakte+Wissenschaften&amp;destination=' + DAStreet + '+' + DASNumber + '+' + DAZip + '+' + DACity + '&amp;waypoints=' + SAStreet + '+' + SASNumber + '+' + SAZip + '+' + SACity + '';
-                                            $('#mapsFrame').replacWith('<iframe id="mapsFrame" class="map-top" width="100%" height="450" src=' + mapsNavRequestLink + ' allowfullscreen=""> </iframe>');
-                                        }
-                                    }
-
-                                    /<![CDATA[/
-
-                                    /]]>/
-                                </script>
                                 <div class="columns">
                                     <div class="column is-4">Time:</div>
                                     <div class="column">
@@ -770,14 +751,39 @@
                         </div>
                     </form>
                     <iframe id="mapsFrame" class="map-top" width="100%" height="450"
-                            src="https://www.google.com/maps/embed/v1/directions?key=AIzaSyAfswMMILTpyhxnZfWOhTNOgClKSuag9Cs&#10;    &amp;origin=Oslo+Norway&amp;destination=Telemark+Norway&amp;avoid=tolls|highways"
-                            allowfullscreen=""></iframe>
+                            src="https://www.google.com/maps/embed/v1/place?key=AIzaSyAfswMMILTpyhxnZfWOhTNOgClKSuag9Cs&#10;    &amp;q=Sidlerstrasse+5,Bern+Schweiz" allowfullscreen=""></iframe>
+                            <!--src="https://www.google.com/maps/embed/v1/directions?key=AIzaSyAfswMMILTpyhxnZfWOhTNOgClKSuag9Cs&#10;    &amp;origin=Oslo+Norway&amp;destination=Telemark+Norway&amp;avoid=tolls|highways"-->
+
                 </div>
             </div>
         </div>
     </div>
+
 </div>
 <script>
+    /*<![CDATA[/
+
+    /]]>*/
+    generateMapsLink();
+
+    function generateMapsLink() {
+        var SACity = document.getElementById('SAC').value;
+        var SAZip = document.getElementById('SAZ').value;
+        var SAStreet = document.getElementById('SAS').value;
+        var SASNumber = document.getElementById('SAN').value;
+
+        var DACity = document.getElementById('DAC').value;
+        var DAZip = document.getElementById('DAZ').value;
+        var DAStreet = document.getElementById('DAS').value;
+        var DASNumber = document.getElementById('DAN').value;
+
+        if (!SACity.match(/\S/) || !SAZip.match(/\S/) || !SAStreet.match(/\S/) || !SASNumber.match(/\S/) || !DACity.match(/\S/) || !DAZip.match(/\S/) || !DAStreet.match(/\S/) || !DASNumber.match(/\S/)) {
+            var mapsNavRequestLink = 'https://www.google.com/maps/embed/v1/directions?key=AIzaSyAfswMMILTpyhxnZfWOhTNOgClKSuag9Cs&#10;    &amp;origin=+Bibliothek+Exakte+Wissenschaften&amp;destination=' + DAStreet + '+' + DASNumber + '+' + DAZip + '+' + DACity + '&amp;waypoints=' + SAStreet + '+' + SASNumber + '+' + SAZip + '+' + SACity + '';
+            $('#mapsFrame').replaceWith('<iframe id="mapsFrame" class="map-top" width="100%" height="450" src=' + mapsNavRequestLink + ' allowfullscreen=""> </iframe>');
+        }
+    }
+
+
     /*
      $(document).ready(function () {
      $(".delete").click(function () {
