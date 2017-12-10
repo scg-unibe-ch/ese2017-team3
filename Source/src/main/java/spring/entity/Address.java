@@ -7,6 +7,7 @@ import javax.persistence.Id;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 @Entity
@@ -29,9 +30,8 @@ public class Address {
     private String streetNumber;
 
     @NotNull(message = "Please enter the Zip-Code")
-    @Min(value = 1000, message = "You entered an invalid ZIP code.")
-    @Max(value = 9999, message = "You entered an invalid ZIP code.")
-    private int zip;
+    @Pattern(regexp = "[1-9][0-9]{3}", message = "You entered an invalid number.")
+    private String zip;
 
     @Size(min = 1, message = "Please specify the city")
     private String city;
@@ -43,7 +43,7 @@ public class Address {
     public Address() {
     }
 
-    public Address(String lastname, String firstname, String street, String streetNumber, int zip, String city, String phone, String email) {
+    public Address(String lastname, String firstname, String street, String streetNumber, String zip, String city, String phone, String email) {
         this.lastname = lastname;
         this.firstname = firstname;
         this.street = street;
@@ -79,7 +79,7 @@ public class Address {
         return streetNumber;
     }
 
-    public int getZip() {
+    public String getZip() {
         return zip;
     }
 
@@ -108,7 +108,7 @@ public class Address {
         this.streetNumber = addressNumber;
     }
 
-    public void setZip(int zip) {
+    public void setZip(String zip) {
         this.zip = zip;
     }
 
