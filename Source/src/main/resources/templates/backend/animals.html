@@ -54,7 +54,7 @@
                         <a href="deliveries">New Tour</a>
                     </li>
                     <li>
-                        <a>Drivers</a>
+                        <a href="drivers">Drivers</a>
                     </li>
                     <li>
                         <a href="trucks">Trucks</a>
@@ -82,21 +82,22 @@
         <th>Length</th>
         <th>Width</th>
         <th>Weight</th>
+        <th></th>
     </tr>
     </thead>
 
     <tbody>
     <tr th:if="${not #lists.isEmpty(animals)}" th:each="animal : ${animals}">
-        <td><p th:text="${animal.species}"></p></td>
+        <th><p th:text="${animal.species}"></p></th>
         <th></th>
         <th></th>
         <td><p th:text="${animal.length}"></p></td>
         <td><p th:text="${animal.width}"></p></td>
         <td><p th:text="${animal.weight}"></p></td>
-        <td>
+        <th>
             <a th:href="'animals/delete?species=' + ${animal.species}" class="button is-danger"><i
                     class="fa fa-fire"></i>&nbsp;Delete</a>
-        </td>
+        </th>
 
     </tr>
     </tbody>
