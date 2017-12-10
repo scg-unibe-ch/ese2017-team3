@@ -57,10 +57,9 @@
     <div class="box">
         <div class="content">
             <div class="columns is-mobile">
-                <div class="column is-one-quarter"><strong>Start</strong></div>
-                <div class="column"><strong>From</strong></div>
-                <div class="column"><strong>To</strong></div>
-                <div class="column is-1" />
+                <div class="column is-6"><strong>From</strong></div>
+                <div class="column is-4"><strong>To</strong></div>
+                <div class="column" />
             </div>
             <hr/>
             <div th:if="${not #lists.isEmpty(tours)}" th:each="tour : ${tours}">
@@ -68,70 +67,92 @@
                     <form action="#" th:action="@{/today}" method="post">
                         <div class="tour-item">
                             <div class="columns is-mobile summary">
-                                <div class="column is-one-quarter">
-                                    <span type="time" th:text="${tour.startTime}">Time</span>
+                                <div class="column is-6">
+                                    <span th:text="${tour.startAddress.street}"/>
+                                    <span th:text="${tour.startAddress.streetNumber}" /><span>,</span><br/>
+                                    <span th:text="${tour.startAddress.zip}"/>
+                                    <span th:text="${tour.startAddress.city}"/>
+                                </div>
+                                <div class="column is-4">
+                                    <span th:text="${tour.destinationAddress.street}"/>
+                                    <span th:text="${tour.destinationAddress.streetNumber}"/><span>,</span><br/>
+                                    <span th:text="${tour.destinationAddress.zip}"/>
+                                    <span th:text="${tour.destinationAddress.city}"/>
                                 </div>
                                 <div class="column">
-                                    <span th:text="${tour.startAddress.street}">Address </span>
-                                    <span th:text="${tour.startAddress.streetNumber}">Number </span><span>,</span>
-                                    <span th:text="${tour.startAddress.zip}">ZIP </span>
-                                    <span th:text="${tour.startAddress.city}">City </span>
-                                </div>
-                                <div class="column">
-                                    <span th:text="${tour.destinationAddress.street}">Address </span>
-                                    <span th:text="${tour.destinationAddress.streetNumber}">Number </span><span>,</span>
-                                    <span th:text="${tour.destinationAddress.zip}">ZIP </span>
-                                    <span th:text="${tour.destinationAddress.city}">City </span>
-                                </div>
-                                <div class="column is-1">
-                                    <span class="icon is-right">
+                                    <span class="icon is-medium is-pulled-right">
                                         <i class="fa fa-lg fa-chevron-down"></i>
                                     </span>
                                 </div>
                             </div>
                             <div class="panel">
-                                <div class="columns is-mobile">
-                                    <div class="column is-one-quarter">
-                                        <strong>Species: </strong><span th:text="${tour.cargo}"/>
+                                <div class="columns">
+                                    <div class="column">
+                                        <div class="columns is-mobile">
+                                            <div class="column">
+                                                <strong>Start: </strong><br/>
+                                                <span th:text="${tour.startTime}"/>
+                                            </div>
+                                            <div class="column">
+                                                <strong>Contact Person: </strong><br/>
+                                                <span th:text="${tour.destinationAddress.firstname}" />
+                                                <span th:text="${tour.destinationAddress.lastname}" />
+                                            </div>
+                                        </div>
                                     </div>
                                     <div class="column">
-                                        <strong>Amount: </strong><span type="text" th:text="${tour.numberOfAnimals}"/>
+                                        <div class="columns is-mobile">
+                                            <div class="column">
+                                                <strong>Species: </strong><br/>
+                                                <span th:text="${tour.cargo}"/>
+                                            </div>
+                                            <div class="column">
+                                                <strong>Amount: </strong><br/>
+                                                <span th:text="${tour.numberOfAnimals}"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="columns">
+                                    <div class="column">
+                                        <div class="columns is-mobile">
+                                            <div class="column">
+                                                <strong>Estimated Time: </strong><br/>
+                                                <span th:text="${tour.estimatedTime}"/><span>h</span>
+                                            </div>
+                                            <div class="column">
+                                                <strong>Time Frame: </strong><br/>
+                                                <span th:text="${tour.timeFrame}" />
+                                            </div>
+                                        </div>
                                     </div>
                                     <div class="column">
-                                        <strong>Time Frame: </strong><span type="text" th:text="${tour.timeFrame}">--:-- to --:--</span>
+                                        <div class="columns is-mobile">
+                                            <div class="column">
+                                                <strong>Truck Type: </strong><br/>
+                                                <span th:text="${tour.truck.truckType}" />
+                                            </div>
+                                            <div class="column" th:if="${tour.isSuccessful()} OR ${tour.isFailed()}">
+                                                <strong>Tour State: </strong><br/>
+                                                <span th:classappend="${(tour.isSuccessful() ? 'success' : '') + (tour.isFailed() ? 'failure' : '')}" th:text="${tour.state}" />
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="column is-1" />
                                 </div>
                                 <div class="columns is-mobile">
-                                    <div class="column is-one-quarter"></div>
                                     <div class="column">
-                                        <strong>Estimated Time: </strong><span th:text="${tour.estimatedTime}">--</span>h
-                                    </div>
-                                    <div class="column">
-                                        <strong>Contact Person: </strong>
-                                        <span th:text="${tour.destinationAddress.firstname}" />
-                                        <span th:text="${tour.destinationAddress.lastname}" />
-                                    </div>
-                                    <div class="column is-1" />
-                                </div>
-                                <div class="columns is-mobile" th:unless="${tour.state} == ${tour.State.CREATED}">
-                                    <div class="column">
-                                        <strong>Tour State: </strong><span th:classappend="${(tour.state == tour.State.SUCCESSFUL ? 'success' : '') + (tour.state == tour.State.FAILED ? 'failure' : '')}" th:text="${tour.state}" />
+                                        <strong>Comment: </strong><br/>
+                                        <div class="box is-message" th:text="${tour.comment}"/>
                                     </div>
                                 </div>
-                                <div class="columns is-mobile">
-                                    <div class="column">
-                                        <div class="box is-message" th:text="${tour.comment}">Comment</div>
-                                    </div>
-                                </div>
-                                <div class="columns is-mobile" th:if="${tour.state} == ${tour.State.CREATED}">
+                                <div class="columns is-mobile" th:if="${tour.isCreated()}">
                                     <div class="column">
                                         <p class="control">
                                             <textarea class="textarea" placeholder="Tour feedback" name="feedback" />
                                         </p>
                                     </div>
                                 </div>
-                                <div class="columns is-mobile" th:if="${tour.state} == ${tour.State.CREATED}">
+                                <div class="columns is-mobile" th:if="${tour.isCreated()}">
                                     <input type="hidden" name="tourId" th:value="${tour.id}" />
                                     <div class="column">
                                         <button type="submit" class="button is-success is-pulled-left is-fullwidth" name="successful" value="Successful">Finish</button>
@@ -143,7 +164,6 @@
                             </div>
                         </div>
                     </form>
-
                     <hr/>
                 </div>
             </div>
