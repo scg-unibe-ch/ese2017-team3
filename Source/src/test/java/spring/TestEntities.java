@@ -64,12 +64,12 @@ public class TestEntities {
     
     @Before
     public void setUp() {
-        address1 = new Address("Max", "Mad", "Madness", "122", 2222, "Madcity", "0001232", "Mad@max.com");
-        address2 = new Address("Man", "Iron", "Steelstr", "12323", 3455, "Weaponfeast", "0123345", "iron.man@men.com");
-        address3 = new Address("Pirate", "Carrebean", "Carrebeansea", "-12", 1200, "underseas", "65465445", "johny.depp@trottel.com");
-        address4 = new Address("Prime", "Optimus", "Robotsstr", "85d", 2355, "Earth", "-694686", "optimus.prime@autobots.com");
-        address5 = new Address("Bee", "Bumble", "Robotsstr", "85c", 2355, "Earth", "123412", "bumble.bee@autobots.com");
-        address6 = new Address("Hai", "Iron", "Robotsstr", "85a", 2355, "Earth", "23542354", "ironhai@autobots.com");
+        address1 = new Address("Max", "Mad", "Madness", "122", "2222", "Madcity", "0001232", "Mad@max.com");
+        address2 = new Address("Man", "Iron", "Steelstr", "12323", "3455", "Weaponfeast", "0123345", "iron.man@men.com");
+        address3 = new Address("Pirate", "Carrebean", "Carrebeansea", "-12", "1200", "underseas", "65465445", "johny.depp@trottel.com");
+        address4 = new Address("Prime", "Optimus", "Robotsstr", "85d", "2355", "Earth", "-694686", "optimus.prime@autobots.com");
+        address5 = new Address("Bee", "Bumble", "Robotsstr", "85c", "2355", "Earth", "123412", "bumble.bee@autobots.com");
+        address6 = new Address("Hai", "Iron", "Robotsstr", "85a", "2355", "Earth", "23542354", "ironhai@autobots.com");
         
         addressRepository.save(address1);
         addressRepository.save(address2);

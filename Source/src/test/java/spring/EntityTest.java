@@ -52,21 +52,21 @@ public class EntityTest {
         driverAddress.setCity("Zürich");
         driverAddress.setLastname("Alfredo");
         driverAddress.setFirstname("Gorgonzola");
-        driverAddress.setZip(2222);
+        driverAddress.setZip("2222");
         driverAddress.setStreet("Bergstrasse");
         driverAddress.setStreetNumber("100");
 
         startAddress.setCity("Narnia");
         startAddress.setFirstname("Gowen");
         startAddress.setLastname("Geter");
-        startAddress.setZip(1001);
+        startAddress.setZip("1001");
         startAddress.setStreet("Rhubarb Hill");
         startAddress.setStreetNumber("12A");
 
         endAddress.setCity("Bielefeld");
         endAddress.setFirstname("Sam");
         endAddress.setLastname("Sung");
-        endAddress.setZip(1001);
+        endAddress.setZip("1001");
         endAddress.setStreet("Galaxy Avenue");
         endAddress.setStreetNumber("8E");
 
