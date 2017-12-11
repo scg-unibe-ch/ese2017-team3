@@ -156,7 +156,7 @@ public class TourController {
 
     // Get request on /deliveries will return a form to create a new tour
     @GetMapping(path = "/deliveries")
-    public String deliveryForm(Model model) {
+    public String deliveryForm(ModelMap model) {
 
         //prepare a list of Drivers to select from.
         List<Driver> drivers = driverService.getDrivers();
@@ -166,7 +166,9 @@ public class TourController {
         HashMap<String, Integer> truckTypes = getAvailableTruckTypesAndNumbers("NONE");
         model.addAttribute("truckTypes", truckTypes);
 
-        model.addAttribute("tour", new Tour());
+        if (model.get("tour") == null) {
+        	model.addAttribute("tour", new Tour());
+        }
         return "backend/deliveries";
     }
 
@@ -177,15 +179,16 @@ public class TourController {
                                        ModelMap model,
                                        @RequestParam("truckType") String truckType,
                                        RedirectAttributes redattributes) {
-
-        if (tour.getStartDate().isBefore(LocalDate.now())) {
+        if (tour.getStartDate() != null && tour.getStartDate().isBefore(LocalDate.now())) {
             bindingResult.addError(new FieldError("tour", "startDate", "Date lies in the past. Enter a valid Date."));
         }
-        if (tour.getStartDate().isEqual(LocalDate.now()) && tour.getStartTime().isBefore(LocalTime.now())) {
+        if (tour.getStartDate() != null && tour.getStartTime() != null
+        		&& tour.getStartDate().isEqual(LocalDate.now()) && tour.getStartTime().isBefore(LocalTime.now())) {
             bindingResult.addError(new FieldError("tour", "startTime", "Time already passed. Enter a time in the future"));
         }
-        if (bindingResult.hasErrors() || truckType == null || truckService.getAvailableTrucksOfType(truckType).isEmpty()) {
-            if (truckType == null || truckService.getAvailableTrucksOfType(truckType).isEmpty()) {
+        boolean truckError = truckType == null || truckService.getAvailableTrucksOfType(truckType).isEmpty();
+        if (bindingResult.hasErrors() || truckError) {
+            if (truckError) {
                 redattributes.addFlashAttribute("truckErrorMessage",
                         "The chosen truck type is not available anymore, please try chosing another truck type.");
             }
@@ -194,6 +197,10 @@ public class TourController {
             model.addAttribute("drivers", drivers);
             HashMap<String, Integer> truckTypes = getAvailableTruckTypesAndNumbers(truckType);
             model.addAttribute("truckTypes", truckTypes);
+            
+            redattributes.addFlashAttribute("org.springframework.validation.BindingResult.tour", bindingResult);
+            redattributes.addFlashAttribute("tour", tour);
+            
             return new ModelAndView("redirect:/deliveries");
         }
         addressRepository.save(tour.getStartAddress());
@@ -218,39 +225,27 @@ public class TourController {
         if (!sortBy.equals("")) model.addAttribute("sortBy", sortBy);
 
         model.addAttribute("tours", tours);
-
+        
+        Tour activeTour;
         if (model.get("activeTour") == null) {
-            Tour activeTour = getTourById(activeIndex, tours);
+            activeTour = getTourById(activeIndex, tours);
             model.addAttribute("activeTour", activeTour);
-
-            if (activeTour.isSuccessful() || activeTour.isFailed()) {
-                model.addAttribute("estimationFeedback", getEstimationFeedback(activeTour));
-                model.addAttribute("estimationAccuracyClass", getEstimationAccuracyClass(activeTour));
-            }
-
-            //prepare a list of Truck types to select from.
-            HashMap<String, Integer> truckTypes = getAvailableTruckTypesAndNumbers(activeTour.getTruck().getTruckType());
-            model.addAttribute("truckTypes", truckTypes);
         } else {
-            Tour activeTour = (Tour) model.get("activeTour");
-            if (activeTour.isSuccessful() || activeTour.isFailed()) {
-                model.addAttribute("estimationFeedback", getEstimationFeedback(activeTour));
-                model.addAttribute("estimationAccuracyClass", getEstimationAccuracyClass(activeTour));
-            }
-
-            //prepare a list of Truck types to select from.
-            Tour tour = (Tour)model.get("activeTour");
-            HashMap<String, Integer> truckTypes = getAvailableTruckTypesAndNumbers(tour.getTruck().getTruckType());
-            model.addAttribute("truckTypes", truckTypes);
+            activeTour = (Tour) model.get("activeTour");
         }
+        if (activeTour.isSuccessful() || activeTour.isFailed()) {
+            model.addAttribute("estimationFeedback", getEstimationFeedback(activeTour));
+            model.addAttribute("estimationAccuracyClass", getEstimationAccuracyClass(activeTour));
+        }
+        
+        
+        //prepare a list of Truck types to select from.
+        HashMap<String, Integer> truckTypes = getAvailableTruckTypesAndNumbers(activeTour.getTruck().getTruckType());
+        model.addAttribute("truckTypes", truckTypes);
 
         //prepare a list of Drivers to select from.
         List<Driver> drivers = driverService.getDrivers();
         model.addAttribute("drivers", drivers);
-
-        LocalDate today = LocalDate.now();
-        LocalTime now = LocalTime.now();
-        Tour active = getTourById(activeIndex, tours);
 
         return "backend/tourOverview";
     }
@@ -293,20 +288,16 @@ public class TourController {
             bindingResult.addError(new FieldError("tour", "startTime", "Time already passed. Enter a time in the future"));
         }
 
-        if (bindingResult.hasErrors()
-                || truckType == null
-                || (truckService.getAvailableTrucksOfType(truckType).isEmpty() && !truck.getTruckType().equals(truckType))) {
-
-            if (truckType == null || (truckService.getAvailableTrucksOfType(truckType).isEmpty() && !truck.getTruckType().equals(truckType))) {
+        boolean truckError = truckType == null || (truckService.getAvailableTrucksOfType(truckType).isEmpty() && !truck.getTruckType().equals(truckType));
+        if (bindingResult.hasErrors() || truckError) {
+            if (truckError) {
                 redattributes.addFlashAttribute("truckErrorMessage",
                         "The chosen truck type is not available anymore, please try choosing another truck type.");
             }
-
-            if (bindingResult.hasErrors()) {
-                redattributes.addFlashAttribute("org.springframework.validation.BindingResult.activeTour", bindingResult);
-                redattributes.addFlashAttribute("activeTour", activeTour);
-            }
-
+            
+            redattributes.addFlashAttribute("org.springframework.validation.BindingResult.activeTour", bindingResult);
+            redattributes.addFlashAttribute("activeTour", activeTour);
+            
             return new ModelAndView("redirect:/tours?activeIndex=" + activeTour.getId());
         }
 
