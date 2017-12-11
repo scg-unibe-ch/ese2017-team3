@@ -96,6 +96,23 @@
 
                         </div>
                     </div>
+                    <div class="columns">
+                        <div class="column ">
+                            Filter by state:
+                        </div>
+                        <div class="column is-half">
+                            <div class="select">
+                                <select id="stateFilter">
+                                    <option>NONE</option>
+                                    <option>CREATED</option>
+                                    <option>INCOMPLETE</option>
+                                    <option>FAILED</option>
+                                    <option>SUCCESSFUL</option>
+                                </select>
+                            </div>
+
+                        </div>
+                    </div>
                 </div>
 
                 <div th:if="${#lists.isEmpty(tours)}">
@@ -111,8 +128,8 @@
                 </div>
 
                 <div th:if="${not #lists.isEmpty(tours)}" th:each="tour : ${tours}">
-                    <div th:with="result=${tour.id}">
-                        <div class="notification" th:classappend="${tour.id == activeTour.id} ? is-info : (${tour.isSuccessful()} ? is-success : (${tour.isIncomplete()} ? is-warning : (${tour.isFailed()} ? is-danger)))">
+                    <div th:class="${tour.state}" th:with="result=${tour.id}">
+                        <div class="notification" th:classappend="${tour.id == activeTour.id} ? is-info">
                         <div class="modal">
                                 <div class="modal-background"></div>
                                 <div class="modal-content">
@@ -140,8 +157,8 @@
                                             <div class="column is-narrow">
                                                 <span class="icon"><i class="fa fa-calendar"></i>&nbsp;</span>
                                             </div>
-                                            <div class="column "><u
-                                                    th:text="${#temporals.format(tour.startDate, 'dd.MM.yyyy')}"></u>
+                                            <div class="column">
+                                                <u th:text="${#temporals.format(tour.startDate, 'dd.MM.yyyy')}"/>
                                             </div>
                                         </div>
                                     </div>
@@ -172,7 +189,6 @@
                                         </div>
                                     </div>
                                 </div>
-
                                 <div class="columns is-gapless">
                                     <div class="column is-half">
                                         <div class="columns is-gapless">
@@ -767,9 +783,9 @@
         window.location.href = newHref + "";
     }
 
-    //delete modal trigger
     $(document).ready(function () {
 
+        // Delete modal trigger
         $("#showModal").click(function () {
             $(".modal").addClass("is-active");
         });
@@ -778,7 +794,32 @@
             $(".modal").removeClass("is-active");
         });
 
+        // Filter tours by state
+        $("#stateFilter").on("change", function() {
+            var filter = $(this).val();
+            if (filter == "NONE") {
+                showAll();
+            } else {
+                hideAll();
+                $("div." + filter).show();
+            }
+        });
+
+        function showAll() {
+            $("div.CREATED").show();
+            $("div.INCOMPLETE").show();
+            $("div.FAILED").show();
+            $("div.SUCCESSFUL").show();
+        }
+
+        function hideAll() {
+            $("div.CREATED").hide();
+            $("div.INCOMPLETE").hide();
+            $("div.FAILED").hide();
+            $("div.SUCCESSFUL").hide();
+        }
     });
+
 </script>
 </body>
 </html>
