@@ -96,6 +96,12 @@ public class TourService {
         return tours;
     }
 
+    public List<Tour> getCurrentSortedToursForDriver(String username) {
+        List<Tour> tours = getCurrentToursForDriver(username);
+        tours.sort(new TourComparator("Date/Time"));
+        return tours;
+    }
+
     public List<Tour> getTours() {
         List<Tour> tours = new ArrayList<Tour>();
         tourRepository.findAll().forEach(tours::add);
