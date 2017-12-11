@@ -456,8 +456,11 @@
                                 <div class="column">
                                     <div class="select">
                                         <select th:name="truckType" disabled="disabled">
-                                            <div th:if="${not #lists.isEmpty(truckTypes)}" th:each="type : ${truckTypes}">
-                                                <option th:selected="${type.key} == ${activeTour.truck.truckType}" th:value="${type.key}" th:text="${type.key} + ' (' + ${type.value} + ')'" />
+                                            <div th:if="${not #lists.isEmpty(truckTypes)}"
+                                                 th:each="type : ${truckTypes}">
+                                                <option th:selected="${type.key} == ${activeTour.truck.truckType}"
+                                                        th:value="${type.key}"
+                                                        th:text="${type.key} + ' (' + ${type.value} + ')'"/>
                                             </div>
                                         </select>
                                     </div>
@@ -726,8 +729,11 @@
                                     <div class="column">
                                         <div class="select">
                                             <select th:name="truckType">
-                                                <div th:if="${not #lists.isEmpty(truckTypes)}" th:each="type : ${truckTypes}">
-                                                    <option th:selected="${type.key} == ${activeTour.truck.truckType}" th:value="${type.key}" th:text="${type.key} + ' (' + ${type.value} + ')'" />
+                                                <div th:if="${not #lists.isEmpty(truckTypes)}"
+                                                     th:each="type : ${truckTypes}">
+                                                    <option th:selected="${type.key} == ${activeTour.truck.truckType}"
+                                                            th:value="${type.key}"
+                                                            th:text="${type.key} + ' (' + ${type.value} + ')'"/>
                                                 </div>
                                             </select>
                                         </div>
@@ -751,8 +757,9 @@
                         </div>
                     </form>
                     <iframe id="mapsFrame" class="map-top" width="100%" height="450"
-                            src="https://www.google.com/maps/embed/v1/place?key=AIzaSyAfswMMILTpyhxnZfWOhTNOgClKSuag9Cs&#10;    &amp;q=Sidlerstrasse+5,Bern+Schweiz" allowfullscreen=""></iframe>
-                            <!--src="https://www.google.com/maps/embed/v1/directions?key=AIzaSyAfswMMILTpyhxnZfWOhTNOgClKSuag9Cs&#10;    &amp;origin=Oslo+Norway&amp;destination=Telemark+Norway&amp;avoid=tolls|highways"-->
+                            src="https://www.google.com/maps/embed/v1/place?key=AIzaSyAfswMMILTpyhxnZfWOhTNOgClKSuag9Cs&#10;    &amp;q=Sidlerstrasse+5,Bern+Schweiz"
+                            allowfullscreen=""></iframe>
+                    <!--src="https://www.google.com/maps/embed/v1/directions?key=AIzaSyAfswMMILTpyhxnZfWOhTNOgClKSuag9Cs&#10;    &amp;origin=Oslo+Norway&amp;destination=Telemark+Norway&amp;avoid=tolls|highways"-->
 
                 </div>
             </div>
@@ -777,10 +784,14 @@
         var DAStreet = document.getElementById('DAS').value;
         var DASNumber = document.getElementById('DAN').value;
 
-        if (!SACity.match(/\S/) || !SAZip.match(/\S/) || !SAStreet.match(/\S/) || !SASNumber.match(/\S/) || !DACity.match(/\S/) || !DAZip.match(/\S/) || !DAStreet.match(/\S/) || !DASNumber.match(/\S/)) {
-            var mapsNavRequestLink = 'https://www.google.com/maps/embed/v1/directions?key=AIzaSyAfswMMILTpyhxnZfWOhTNOgClKSuag9Cs&#10;    &amp;origin=+Bibliothek+Exakte+Wissenschaften&amp;destination=' + DAStreet + '+' + DASNumber + '+' + DAZip + '+' + DACity + '&amp;waypoints=' + SAStreet + '+' + SASNumber + '+' + SAZip + '+' + SACity + '';
-            $('#mapsFrame').replaceWith('<iframe id="mapsFrame" class="map-top" width="100%" height="450" src=' + mapsNavRequestLink + ' allowfullscreen=""> </iframe>');
+        if (!isEmpty(SACity)&&!isEmpty(SAZip)&&!isEmpty(SAStreet)&&!isEmpty(SASNumber)&&!isEmpty(DACity)&&!isEmpty(DAZip)&&!isEmpty(DAStreet)&&!isEmpty(DASNumber)) {
+            var mapsNavRequestLink = 'https://www.google.com/maps/embed/v1/directions?key=AIzaSyAfswMMILTpyhxnZfWOhTNOgClKSuag9Cs&#10;    &amp;origin=+Sidlerstrasse+5+Bern+Schweiz&amp;destination=' + DAStreet + '+' + DASNumber + '+' + DAZip + '+' + DACity + '&amp;waypoints=' + SAStreet + '+' + SASNumber + '+' + SAZip + '+' + SACity + '';
+            $('#mapsFrame').replaceWith('<iframe id="mapsFrame" class="map-top" width="100%" height="450" src="' + mapsNavRequestLink + '" allowfullscreen=""> </iframe>');
         }
+    }
+
+    function isEmpty(str) {
+        return (!str || !str.length);
     }
 
 
