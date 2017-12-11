@@ -325,6 +325,17 @@
                                 </div>
                             </div>
                             <div class="columns">
+                                <div class="column is-4">Driver:</div>
+                                <div class="column">
+                                    <div class="select">
+                                        <select th:field="*{driver}" disabled="disabled">
+                                            <option th:if="${not #lists.isEmpty(drivers)}" th:each="driver : ${drivers}"
+                                                    th:value="${driver.username}" th:text="${driver.username}"/>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="columns">
                                 <div class="column is-4">Estimated Time:</div>
                                 <div class="column">
                                     <div class="field">
@@ -336,18 +347,14 @@
                                     </article>
                                 </div>
                             </div>
-                            <div class="columns">
-                                <div class="column is-4">Driver:</div>
+                            <div class="columns" th:if="${activeTour.isSuccessful()} OR ${activeTour.isFailed()}">
+                                <div class="column is-4">Actual delivery time:</div>
                                 <div class="column">
-                                    <div class="select">
-                                        <select th:field="*{driver}" disabled="disabled">
-                                            <option th:if="${not #lists.isEmpty(drivers)}" th:each="driver : ${drivers}"
-                                                    th:value="${driver.username}" th:text="${driver.username}"/>
-                                        </select>
+                                    <div class="field">
+                                        <span th:text="${activeTour.deliveryTime}" /><span>h</span>
                                     </div>
                                 </div>
                             </div>
-
                         </div>
 
                         <!-- Column right -->
@@ -450,6 +457,18 @@
                                 </div>
                             </div>
                             <div class="columns">
+                                <div class="column is-4">Truck:</div>
+                                <div class="column">
+                                    <div class="select">
+                                        <select th:name="truckType" disabled="disabled">
+                                            <div th:if="${not #lists.isEmpty(truckTypes)}" th:each="type : ${truckTypes}">
+                                                <option th:selected="${type.key} == ${activeTour.truck.truckType}" th:value="${type.key}" th:text="${type.key} + ' (' + ${type.value} + ')'" />
+                                            </div>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="columns">
                                 <div class="column is-4">Time Frame:</div>
                                 <div class="column">
                                     <div class="field">
@@ -460,15 +479,10 @@
                                     </article>
                                 </div>
                             </div>
-                            <div class="columns">
-                                <div class="column is-4">Truck:</div>
+                            <div class="columns" th:if="${activeTour.isSuccessful()} OR ${activeTour.isFailed()}">
                                 <div class="column">
-                                    <div class="select">
-                                        <select th:name="truckType" disabled="disabled">
-                                            <div th:if="${not #lists.isEmpty(truckTypes)}" th:each="type : ${truckTypes}">
-                                                <option th:selected="${type.key} == ${activeTour.truck.truckType}" th:value="${type.key}" th:text="${type.key} + ' (' + ${type.value} + ')'" />
-                                            </div>
-                                        </select>
+                                    <div class="notification" th:if="${estimationFeedback}" th:classappend="${estimationAccuracyClass}">
+                                        <strong th:text="${estimationFeedback}"/>
                                     </div>
                                 </div>
                             </div>
@@ -481,6 +495,12 @@
                                     <textarea class="textarea" type="text" th:value="*{comment}"
                                               th:field="*{comment}" disabled="disabled"></textarea>
                             </p>
+                        </div>
+                    </div>
+                    <div class="columns" th:if="${activeTour.isSuccessful()} OR ${activeTour.isFailed()}">
+                        <div class="column is-2">Driver Feedback:</div>
+                        <div class="column">
+                            <i th:text="${activeTour.tourFeedback}" />
                         </div>
                     </div>
                 </div>
@@ -613,7 +633,6 @@
                                         </div>
                                     </div>
                                 </div>
-
                             </div>
 
                             <!-- Column right -->
@@ -818,6 +837,8 @@
             $("div.FAILED").hide();
             $("div.SUCCESSFUL").hide();
         }
+
+        $(".columns .deliveryTime").css({'height':($(".columns .estimationFeedback").height()+'px')});
     });
 
 </script>

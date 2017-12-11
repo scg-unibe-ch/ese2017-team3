@@ -23,9 +23,16 @@ import spring.service.TourService;
 import spring.service.TruckService;
 
 import javax.validation.Valid;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
 import java.time.*;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.HashMap;
 import java.util.List;
+
+import static java.time.temporal.ChronoUnit.MINUTES;
 
 /**
  * Created by olulrich on 20.10.17.
@@ -104,7 +111,7 @@ public class TourController {
     public String myCurrentTours(Model model) {
         UserDetails user = userSecurityService.getAuthenticatedUser();
 
-        List<Tour> tours = tourService.getCurrentToursForDriver(user.getUsername());
+        List<Tour> tours = tourService.getCurrentSortedToursForDriver(user.getUsername());
         model.addAttribute("tours", tours);
 
         return "frontend/myCurrentTours";
@@ -118,9 +125,7 @@ public class TourController {
         if (isAllowedToCloseTour(user, successfulTour)) {
             successfulTour.setState(Tour.State.SUCCESSFUL);
             successfulTour.setTourFeedback(feedback);
-            LocalDateTime start = LocalDateTime.of(successfulTour.getStartDate(), successfulTour.getStartTime());
-            Double hours = new Double(Duration.between(start, LocalDateTime.now()).toHours());
-            successfulTour.setDeliveryTime(hours);
+            successfulTour.setDeliveryTime(computeDeliveryTime(successfulTour));
             tourRepository.save(successfulTour);
             truckService.getById(successfulTour.getTruck().getId()).setAvailable(true);
         }
@@ -138,9 +143,7 @@ public class TourController {
         if (isAllowedToCloseTour(user, failedTour)) {
             failedTour.setState(Tour.State.FAILED);
             failedTour.setTourFeedback(feedback);
-            LocalDateTime start = LocalDateTime.of(failedTour.getStartDate(), failedTour.getStartTime());
-            Double hours = new Double(Duration.between(start, LocalDateTime.now()).toHours());
-            failedTour.setDeliveryTime(hours);
+            failedTour.setDeliveryTime(computeDeliveryTime(failedTour));
             tourRepository.save(failedTour);
             truckService.getById(failedTour.getTruck().getId()).setAvailable(true);
         }
@@ -220,10 +223,21 @@ public class TourController {
             Tour activeTour = getTourById(activeIndex, tours);
             model.addAttribute("activeTour", activeTour);
 
+            if (activeTour.isSuccessful() || activeTour.isFailed()) {
+                model.addAttribute("estimationFeedback", getEstimationFeedback(activeTour));
+                model.addAttribute("estimationAccuracyClass", getEstimationAccuracyClass(activeTour));
+            }
+
             //prepare a list of Truck types to select from.
             HashMap<String, Integer> truckTypes = getAvailableTruckTypesAndNumbers(activeTour.getTruck().getTruckType());
             model.addAttribute("truckTypes", truckTypes);
         } else {
+            Tour activeTour = (Tour) model.get("activeTour");
+            if (activeTour.isSuccessful() || activeTour.isFailed()) {
+                model.addAttribute("estimationFeedback", getEstimationFeedback(activeTour));
+                model.addAttribute("estimationAccuracyClass", getEstimationAccuracyClass(activeTour));
+            }
+
             //prepare a list of Truck types to select from.
             Tour tour = (Tour)model.get("activeTour");
             HashMap<String, Integer> truckTypes = getAvailableTruckTypesAndNumbers(tour.getTruck().getTruckType());
@@ -233,7 +247,6 @@ public class TourController {
         //prepare a list of Drivers to select from.
         List<Driver> drivers = driverService.getDrivers();
         model.addAttribute("drivers", drivers);
-
 
         LocalDate today = LocalDate.now();
         LocalTime now = LocalTime.now();
@@ -368,6 +381,52 @@ public class TourController {
         return truckTypes;
     }
 
+    private String getEstimationFeedback(Tour tour) {
+        long percentage = getEstimationPercentage(tour);
+        long absolutePercentage = Math.abs(percentage);
+
+        if (percentage > 0) {
+            if (percentage <= 25) {
+                return "Your estimation was quite good. The tour took "
+                        + percentage + "% less time than expected.";
+            } else if (percentage <= 50) {
+                return "The delivery was faster than you expected. The tour took "
+                        + percentage + "% less time than estimated.";
+            } else {
+                return "What happened? Your estimation was way bigger than the actual delivery time. " +
+                        "The tour took " + percentage + "% less time than expected.";
+            }
+        } else {
+            if (absolutePercentage <= 25) {
+                return "Your estimation was quite good. The tour took "
+                        + absolutePercentage + "% more time than expected.";
+            } else if (absolutePercentage <= 50) {
+                return "The delivery was slower than expected. The tour took "
+                        + absolutePercentage + "% more time than estimated.";
+            } else {
+                return "What happened? Your estimation was way smaller than the actual delivery time. "
+                        + "The tour took " + absolutePercentage + "% more time than expected.";
+            }
+        }
+    }
+
+    private String getEstimationAccuracyClass(Tour tour) {
+        long absolutePercentage = Math.abs(getEstimationPercentage(tour));
+
+        if (absolutePercentage <= 25) {
+            return "is-success";
+        } else if (absolutePercentage <=  50) {
+            return "is-warning";
+        } else {
+            return "is-danger";
+        }
+    }
+
+    private long getEstimationPercentage(Tour tour) {
+        Double difference = tour.getEstimatedTime() - tour.getDeliveryTime();
+        return Math.round(difference / tour.getEstimatedTime() * 100);
+    }
+
     /**
      * Returns the tour in the list with the given id.
      *
@@ -390,5 +449,12 @@ public class TourController {
             }
         }
         return null;
+    }
+
+    private double computeDeliveryTime(Tour tour) {
+        LocalDateTime start = LocalDateTime.of(tour.getStartDate(), tour.getStartTime());
+        LocalDateTime now = LocalDateTime.now();
+        double hours = (float) Duration.between(start, now).toMinutes() / 60;
+        return Math.round(hours*100.0)/100.0;
     }
 }
