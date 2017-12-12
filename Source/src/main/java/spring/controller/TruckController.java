@@ -76,9 +76,9 @@ public class TruckController {
     public String handleFileUpload(@RequestParam("file") MultipartFile file,
                                    @RequestParam("amount") Integer amount,
                                    @RequestParam("truckType") String truckType,
-                                   @RequestParam("length") double length,
-                                   @RequestParam("width") double width,
-                                   @RequestParam("payload") double payload,
+                                   @RequestParam("length") int length,
+                                   @RequestParam("width") int width,
+                                   @RequestParam("payload") int payload,
                                    @RequestParam("description") String description,
                                    RedirectAttributes redirectAttributes) {
 

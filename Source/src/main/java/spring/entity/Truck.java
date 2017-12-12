@@ -26,13 +26,13 @@ public class Truck {
     private long imageId;
 
     @Column
-    private double length;
+    private int length;
 
     @Column
-    private double width;
+    private int width;
 
     @Column
-    private double payload;
+    private int payload;
 
     @Column
     private String description = "";
@@ -54,13 +54,17 @@ public class Truck {
         this.available = available;
     }
     
-    public Truck(String truckType, Boolean available, long imageId, double length, double width, double payload) {
+    public Truck(String truckType, Boolean available, long imageId, int length, int width, int payload) {
         this.truckType = truckType;
         this.available = available;
         this.imageId = imageId;
         this.length = length;
         this.width = width;
         this.payload = payload;
+    }
+
+    public Integer getSurfaceArea() {
+        return width * length;
     }
     
     public long getId() {
@@ -103,27 +107,27 @@ public class Truck {
         this.tours = tours;
     }
 
-    public double getLength() {
+    public int getLength() {
         return length;
     }
 
-    public void setLength(double length) {
+    public void setLength(int length) {
         this.length = length;
     }
 
-    public double getWidth() {
+    public int getWidth() {
         return width;
     }
 
-    public void setWidth(double width) {
+    public void setWidth(int width) {
         this.width = width;
     }
 
-    public double getPayload() {
+    public int getPayload() {
         return payload;
     }
 
-    public void setPayload(double payload) {
+    public void setPayload(int payload) {
         this.payload = payload;
     }
 
