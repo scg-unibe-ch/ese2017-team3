@@ -10,11 +10,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.security.core.userdetails.UserDetails;
-import spring.entity.Address;
-import spring.entity.Driver;
-import spring.entity.Tour;
+import spring.entity.*;
 import spring.repositories.AddressRepository;
-import spring.entity.Truck;
+import spring.repositories.AnimalRepository;
 import spring.repositories.TourRepository;
 import spring.repositories.TruckRepository;
 import spring.security.UserSecurityService;
@@ -26,6 +24,7 @@ import javax.validation.Valid;
 import java.time.*;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Created by olulrich on 20.10.17.
@@ -54,6 +53,9 @@ public class TourController {
 
     @Autowired
     private TruckRepository truckRepository;
+
+    @Autowired
+    private AnimalRepository animalRepository;
 
 
     @GetMapping(path = "/upcoming")
@@ -159,9 +161,13 @@ public class TourController {
         List<Driver> drivers = driverService.getDrivers();
         model.addAttribute("drivers", drivers);
 
+        //prepare a list of Animals to select from.
+        List<Animal> animalList = animalRepository.findAll();
+        model.addAttribute("animals", animalList);
+
         //prepare a list of Truck types to select from.
-        HashMap<String, Integer> truckTypes = getAvailableTruckTypesAndNumbers("NONE");
-        model.addAttribute("truckTypes", truckTypes);
+        //HashMap<String, Integer> truckTypes = getAvailableTruckTypesAndNumbers("NONE");
+        //model.addAttribute("truckTypes", truckTypes);
 
         model.addAttribute("tour", new Tour());
         return "backend/deliveries";
@@ -172,7 +178,6 @@ public class TourController {
     public ModelAndView deliverySubmit(@Valid @ModelAttribute Tour tour,
                                        BindingResult bindingResult,
                                        ModelMap model,
-                                       @RequestParam("truckType") String truckType,
                                        RedirectAttributes redattributes) {
 
         if (tour.getStartDate().isBefore(LocalDate.now())) {
@@ -181,24 +186,37 @@ public class TourController {
         if (tour.getStartDate().isEqual(LocalDate.now()) && tour.getStartTime().isBefore(LocalTime.now())) {
             bindingResult.addError(new FieldError("tour", "startTime", "Time already passed. Enter a time in the future"));
         }
-        if (bindingResult.hasErrors() || truckType == null || truckService.getAvailableTrucksOfType(truckType).isEmpty()) {
-            if (truckType == null || truckService.getAvailableTrucksOfType(truckType).isEmpty()) {
-                redattributes.addFlashAttribute("truckErrorMessage",
-                        "The chosen truck type is not available anymore, please try chosing another truck type.");
-            }
 
-            List<Driver> drivers = driverService.getDrivers();
-            model.addAttribute("drivers", drivers);
-            HashMap<String, Integer> truckTypes = getAvailableTruckTypesAndNumbers(truckType);
-            model.addAttribute("truckTypes", truckTypes);
-            return new ModelAndView("redirect:/deliveries");
+
+        List<Animal> animalList = animalRepository.findAll();
+
+        Truck chosen;
+
+        for (Animal a : animalList) {
+            if (Objects.equals(tour.getCargo(), a.getSpecies())) {
+
+                chosen = truckService.findFittingTruck(a, tour.getNumberOfAnimals());
+
+                if (chosen == null) {
+                    bindingResult.addError(new FieldError("tour", "cargo", "No Truck can fit all these animals. Please split the tour up into multiple smaller Trucks!"));
+
+                    List<Driver> drivers = driverService.getDrivers();
+                    model.addAttribute("drivers", drivers);
+
+                    redattributes.addFlashAttribute("org.springframework.validation.BindingResult.tour", bindingResult);
+                    redattributes.addFlashAttribute("tour", tour);
+
+                    return new ModelAndView("redirect:/deliveries");
+                } else {
+                    tour.setTruck(chosen);
+                    chosen.setAvailable(false);
+                }
+            }
         }
+
+
         addressRepository.save(tour.getStartAddress());
         addressRepository.save(tour.getDestinationAddress());
-
-        Truck chosen = truckService.getAvailableTrucksOfType(truckType).get(0);
-        tour.setTruck(chosen);
-        chosen.setAvailable(false);
 
         tourRepository.save(tour);
         return new ModelAndView("redirect:/tours");
@@ -225,7 +243,7 @@ public class TourController {
             model.addAttribute("truckTypes", truckTypes);
         } else {
             //prepare a list of Truck types to select from.
-            Tour tour = (Tour)model.get("activeTour");
+            Tour tour = (Tour) model.get("activeTour");
             HashMap<String, Integer> truckTypes = getAvailableTruckTypesAndNumbers(tour.getTruck().getTruckType());
             model.addAttribute("truckTypes", truckTypes);
         }
