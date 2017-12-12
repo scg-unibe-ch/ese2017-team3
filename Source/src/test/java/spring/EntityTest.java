@@ -7,14 +7,8 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
-import spring.entity.Address;
-import spring.entity.Driver;
-import spring.entity.Tour;
-import spring.entity.Truck;
-import spring.repositories.AddressRepository;
-import spring.repositories.DriverRepository;
-import spring.repositories.TourRepository;
-import spring.repositories.TruckRepository;
+import spring.entity.*;
+import spring.repositories.*;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -33,6 +27,7 @@ public class EntityTest {
     private Address driverAddress = new Address();
     private Address startAddress = new Address();
     private Address endAddress = new Address();
+    private Animal cow = new Animal();
 
     @Autowired
     private TourRepository tourRepository;
@@ -46,6 +41,9 @@ public class EntityTest {
     @Autowired
     private DriverRepository driverRepository;
 
+    @Autowired
+    private AnimalRepository animalRepository;
+
     @Before
     public void setUp() {
 
@@ -55,6 +53,12 @@ public class EntityTest {
         driverAddress.setZip("2222");
         driverAddress.setStreet("Bergstrasse");
         driverAddress.setStreetNumber("100");
+
+        cow.setSpecies("Cow");
+        cow.setLength(180);
+        cow.setWidth(100);
+        cow.setWeight(1100);
+        animalRepository.save(cow);
 
         startAddress.setCity("Narnia");
         startAddress.setFirstname("Gowen");
@@ -83,7 +87,7 @@ public class EntityTest {
         truck.setTruckType("TestTruck");
         truckRepository.save(truck);
 
-        tour.setCargo("Monkey");
+        tour.setCargo(cow.getSpecies());
         tour.setDriver(driver.getUsername());
         tour.setNumberOfAnimals(22);
         tour.setEstimatedTime(2.0);
@@ -99,6 +103,7 @@ public class EntityTest {
     @After
     public void resetTables() {
         tourRepository.delete(tour);
+        animalRepository.delete(cow);
         truckRepository.delete(truck);
         driverRepository.delete(driver);
         addressRepository.delete(startAddress);
@@ -110,6 +115,12 @@ public class EntityTest {
     public void retrieveSameTour() {
         Tour found = tourRepository.findOne(tour.getId());
         assertEquals(tour, found);
+    }
+
+    @Test
+    public void retrieveSameAnimal() {
+        Animal found = animalRepository.findOne(cow.getId());
+        assertEquals(cow, found);
     }
 
     @Test

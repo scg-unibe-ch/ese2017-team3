@@ -1,6 +1,7 @@
 package spring.entity;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 /**
  * Created by olulrich on 09.12.17.
@@ -69,4 +70,25 @@ public class Animal {
     public void setWidth(int width) {
         this.width = width;
     }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Animal animal = (Animal) o;
+        return getId() == animal.getId() &&
+                getLength() == animal.getLength() &&
+                getWidth() == animal.getWidth() &&
+                getWeight() == animal.getWeight() &&
+                Objects.equals(getSpecies(), animal.getSpecies());
+    }
+
 }
