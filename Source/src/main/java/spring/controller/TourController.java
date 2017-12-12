@@ -202,7 +202,7 @@ public class TourController {
 
                 chosen = truckService.findFittingTruck(a, tour.getNumberOfAnimals());
 
-                if (chosen == null) {
+                if (chosen == null || bindingResult.hasErrors()) {
                     bindingResult.addError(new FieldError("tour", "cargo", "No Truck can fit all these animals. Please split the tour up into multiple smaller Trucks!"));
 
                     List<Driver> drivers = driverService.getDrivers();
@@ -218,7 +218,6 @@ public class TourController {
                 }
             }
         }
-
 
         addressRepository.save(tour.getStartAddress());
         addressRepository.save(tour.getDestinationAddress());
@@ -252,7 +251,12 @@ public class TourController {
         }
 
         //prepare a list of Truck types to select from.
-        HashMap<String, Integer> truckTypes = getAvailableTruckTypesAndNumbers(activeTour.getTruck().getTruckType());
+        HashMap<String, Integer> truckTypes;
+        if (activeTour.getTruck() == null) {
+            truckTypes = getAvailableTruckTypesAndNumbers("NONE");
+        } else {
+            truckTypes = getAvailableTruckTypesAndNumbers(activeTour.getTruck().getTruckType());
+        }
         model.addAttribute("truckTypes", truckTypes);
 
         //prepare a list of Drivers to select from.
