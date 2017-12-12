@@ -195,30 +195,38 @@ public class TourController {
 
         List<Animal> animalList = animalRepository.findAll();
 
-        Truck chosen;
+        Truck chosen = null;
 
-        for (Animal a : animalList) {
-            if (Objects.equals(tour.getCargo(), a.getSpecies())) {
-
-                chosen = truckService.findFittingTruck(a, tour.getNumberOfAnimals());
-
-                if (chosen == null || bindingResult.hasErrors()) {
+        if (animalList.isEmpty()) {
+        	bindingResult.addError(new FieldError("tour", "cargo", "No animal available. Please add some animals first"));
+        } else {
+        	Animal animal = getAnimalByName(tour.getCargo(), animalList);
+        	if (animal == null) {  //This shouldn't happen because if the animalList isn't empty, the tour.getCargo() shouldn't be null and should be in the list
+                bindingResult.addError(new FieldError("tour", "cargo", "There was an intern error  :("));
+            } else {
+            	chosen = truckService.findFittingTruck(animal, tour.getNumberOfAnimals());
+            	
+            	if (chosen == null) {
                     bindingResult.addError(new FieldError("tour", "cargo", "No Truck can fit all these animals. Please split the tour up into multiple smaller Trucks!"));
-
-                    List<Driver> drivers = driverService.getDrivers();
-                    model.addAttribute("drivers", drivers);
-
-                    redattributes.addFlashAttribute("org.springframework.validation.BindingResult.tour", bindingResult);
-                    redattributes.addFlashAttribute("tour", tour);
-
-                    return new ModelAndView("redirect:/deliveries");
                 } else {
                     tour.setTruck(chosen);
                     chosen.setAvailable(false);
                 }
             }
         }
+        
+        
+        if (bindingResult.hasErrors()) {
+        	/*List<Driver> drivers = driverService.getDrivers();
+            model.addAttribute("drivers", drivers);*/
 
+            redattributes.addFlashAttribute("org.springframework.validation.BindingResult.tour", bindingResult);
+            redattributes.addFlashAttribute("tour", tour);
+
+            return new ModelAndView("redirect:/deliveries");
+        }
+
+        
         addressRepository.save(tour.getStartAddress());
         addressRepository.save(tour.getDestinationAddress());
 
@@ -245,14 +253,14 @@ public class TourController {
         } else {
             activeTour = (Tour) model.get("activeTour");
         }
-        if (activeTour.isSuccessful() || activeTour.isFailed()) {
+        if (activeTour != null && (activeTour.isSuccessful() || activeTour.isFailed())) {
             model.addAttribute("estimationFeedback", getEstimationFeedback(activeTour));
             model.addAttribute("estimationAccuracyClass", getEstimationAccuracyClass(activeTour));
         }
 
         //prepare a list of Truck types to select from.
         HashMap<String, Integer> truckTypes;
-        if (activeTour.getTruck() == null) {
+        if (activeTour == null || activeTour.getTruck() == null) {
             truckTypes = getAvailableTruckTypesAndNumbers("NONE");
         } else {
             truckTypes = getAvailableTruckTypesAndNumbers(activeTour.getTruck().getTruckType());
@@ -457,6 +465,20 @@ public class TourController {
         }
         return null;
     }
+    
+    private Animal getAnimalByName(String animalName, List<Animal> animals) {
+            if (animalName == null) {
+                return null;
+            } else {
+                for (Animal a : animals) {
+                    if (a.getSpecies().equals(animalName)) {
+                        return a;
+                    }
+                }
+            }
+            return null;
+    }
+    
 
     private double computeDeliveryTime(Tour tour) {
         LocalDateTime start = LocalDateTime.of(tour.getStartDate(), tour.getStartTime());
