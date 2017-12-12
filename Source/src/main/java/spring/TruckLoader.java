@@ -59,8 +59,8 @@ public class TruckLoader implements ApplicationRunner {
 
                 for(int i=0; i<3; i++) {
                     Truck t = new Truck("BIG", big.getId(), true);
-                    t.setLength(15.65);
-                    t.setWidth(2.55);
+                    t.setLength(1565);
+                    t.setWidth(255);
                     t.setPayload(40000);
                     t.setDescription("A big truck with a lot of space.");
                     truckRepository.save(t);
@@ -68,8 +68,8 @@ public class TruckLoader implements ApplicationRunner {
 
                 for(int i=0; i<3; i++) {
                     Truck t = new Truck("MEDIUM", medium.getId(), true);
-                    t.setLength(12);
-                    t.setWidth(2.55);
+                    t.setLength(1200);
+                    t.setWidth(255);
                     t.setPayload(36000);
                     t.setDescription("Perfect for the transport of medium sized animals.");
                     truckRepository.save(t);
@@ -77,8 +77,8 @@ public class TruckLoader implements ApplicationRunner {
 
                 for(int i=0; i<5; i++) {
                     Truck t = new Truck("SMALL", small.getId(), true);
-                    t.setLength(10);
-                    t.setWidth(2.55);
+                    t.setLength(1000);
+                    t.setWidth(255);
                     t.setPayload(25000);
                     t.setDescription("Small but powerful.");
                     truckRepository.save(t);
@@ -86,8 +86,8 @@ public class TruckLoader implements ApplicationRunner {
 
                 for(int i=0; i<7; i++) {
                     Truck t = new Truck("TINY", tiny.getId(), true);
-                    t.setLength(8);
-                    t.setWidth(2.55);
+                    t.setLength(800);
+                    t.setWidth(255);
                     t.setPayload(18000);
                     t.setDescription("Only for minor payloads.");
                     truckRepository.save(t);
