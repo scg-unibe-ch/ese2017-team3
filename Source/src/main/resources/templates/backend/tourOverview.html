@@ -214,299 +214,10 @@
         </div>
         <div th:if="${not #lists.isEmpty(tours)}" class="column">
             <div class="block">
-                <!--<div class="box" th:unless="${activeTour.canBeChanged()}" th:object="${activeTour}">-->
-                <!--<div class="columns">-->
-                <!--<div class="column">-->
-                <!--<div class="notification is-danger">-->
-                <!--<strong th:if="${activeTour.inProcess()}">This tour has already started, you cannot change it! Reload the page if you just tried to change the date/time to the past.</strong>-->
-                <!--<strong th:if="${activeTour.isSuccessful()}">This tour was successfully completed and can't be changed.</strong>-->
-                <!--<strong th:if="${activeTour.isFailed()}">This tour has failed and can't be changed.</strong>-->
-                <!--</div>-->
-                <!--</div>-->
-                <!--</div>-->
-                <!--<div class="columns">-->
-                <!--&lt;!&ndash; Column left &ndash;&gt;-->
-                <!--<div class="column">-->
-                <!--<div class="columns">-->
-                <!--<div class="column is-4">Cargo:</div>-->
-                <!--<div class="column">-->
-                <!--<div class="field">-->
-                <!--<input class="input" type="text" th:field="*{cargo}" disabled="disabled"/>-->
-                <!--</div>-->
-                <!--<article class="message is-warning" th:if="${#fields.hasErrors('cargo')}">-->
-                <!--<div class="message-body" th:errors="*{cargo}"/>-->
-                <!--</article>-->
-                <!--</div>-->
-                <!--</div>-->
-                <!--<div class="columns">-->
-                <!--<div class="column is-4">Start:</div>-->
-                <!--<div class="column">-->
-                <!--<div class="field">-->
-                <!--<input class="input" type="text" th:field="*{startAddress.lastname}"-->
-                <!--disabled="disabled"/>-->
-                <!--</div>-->
-                <!--<article class="message is-warning"-->
-                <!--th:if="${#fields.hasErrors('startAddress.lastname')}">-->
-                <!--<div class="message-body" th:errors="*{startAddress.lastname}"/>-->
-                <!--</article>-->
-                <!--</div>-->
-                <!--</div>-->
-                <!--<div class="columns">-->
-                <!--<div class="column is-4"/>-->
-                <!--<div class="column">-->
-                <!--<div class="field">-->
-                <!--<input class="input" type="text" th:field="*{startAddress.firstname}"-->
-                <!--disabled="disabled"/>-->
-                <!--</div>-->
-                <!--<article class="message is-warning"-->
-                <!--th:if="${#fields.hasErrors('startAddress.firstname')}">-->
-                <!--<div class="message-body" th:errors="*{startAddress.firstname}"/>-->
-                <!--</article>-->
-                <!--</div>-->
-                <!--</div>-->
-                <!--<div class="columns">-->
-                <!--<div class="column is-4"/>-->
-                <!--<div class="column is-6">-->
-                <!--<div class="field">-->
-                <!--<input class="input" type="text" th:field="*{startAddress.street}"-->
-                <!--disabled="disabled"/>-->
-                <!--</div>-->
-                <!--<article class="message is-warning"-->
-                <!--th:if="${#fields.hasErrors('startAddress.street')}">-->
-                <!--<div class="message-body" th:errors="*{startAddress.street}"/>-->
-                <!--</article>-->
-                <!--</div>-->
-                <!--<div class="column">-->
-                <!--<div class="field">-->
-                <!--<input class="input" type="text" th:field="*{startAddress.streetNumber}"-->
-                <!--disabled="disabled"/>-->
-                <!--</div>-->
-                <!--<article class="message is-warning"-->
-                <!--th:if="${#fields.hasErrors('startAddress.streetNumber')}">-->
-                <!--<div class="message-body" th:errors="*{startAddress.streetNumber}"/>-->
-                <!--</article>-->
-                <!--</div>-->
-                <!--</div>-->
-                <!--<div class="columns">-->
-                <!--<div class="column is-4"/>-->
-                <!--<div class="column is-4">-->
-                <!--<div class="field">-->
-                <!--<input class="input" type="text" th:field="*{startAddress.zip}"-->
-                <!--disabled="disabled"/>-->
-                <!--</div>-->
-                <!--<article class="message is-warning"-->
-                <!--th:if="${#fields.hasErrors('startAddress.zip')}">-->
-                <!--<div class="message-body" th:errors="*{startAddress.zip}"/>-->
-                <!--</article>-->
-                <!--</div>-->
-                <!--<div class="column">-->
-                <!--<div class="field">-->
-                <!--<input class="input" type="text" th:field="*{startAddress.city}"-->
-                <!--disabled="disabled"/>-->
-                <!--</div>-->
-                <!--<article class="message is-warning"-->
-                <!--th:if="${#fields.hasErrors('startAddress.city')}">-->
-                <!--<div class="message-body" th:errors="*{startAddress.city}"/>-->
-                <!--</article>-->
-                <!--</div>-->
-                <!--</div>-->
-                <!--<div class="columns">-->
-                <!--<div class="column is-4">Date:</div>-->
-                <!--<div class="column">-->
-                <!--<div class="field">-->
-                <!--<input class="input" type="date"-->
-                <!--th:value="${#temporals.format(activeTour.startDate, 'uuuu-MM-dd')}"-->
-                <!--th:field="*{startDate}" disabled="disabled"/>-->
-                <!--</div>-->
-                <!--<article class="message is-warning" th:if="${#fields.hasErrors('startDate')}">-->
-                <!--<div class="message-body" th:errors="*{startDate}"/>-->
-                <!--</article>-->
-                <!--</div>-->
-                <!--</div>-->
-                <!--<div class="columns">-->
-                <!--<div class="column is-4">Driver:</div>-->
-                <!--<div class="column">-->
-                <!--<div class="select">-->
-                <!--<select th:field="*{driver}" disabled="disabled">-->
-                <!--<option th:if="${not #lists.isEmpty(drivers)}" th:each="driver : ${drivers}"-->
-                <!--th:value="${driver.username}" th:text="${driver.username}"/>-->
-                <!--</select>-->
-                <!--</div>-->
-                <!--</div>-->
-                <!--</div>-->
-                <!--<div class="columns">-->
-                <!--<div class="column is-4">Estimated Time:</div>-->
-                <!--<div class="column">-->
-                <!--<div class="field">-->
-                <!--<input class="input" type="text" th:field="*{estimatedTime}"-->
-                <!--disabled="disabled"/>-->
-                <!--</div>-->
-                <!--<article class="message is-warning" th:if="${#fields.hasErrors('estimatedTime')}">-->
-                <!--<div class="message-body" th:errors="*{estimatedTime}"/>-->
-                <!--</article>-->
-                <!--</div>-->
-                <!--</div>-->
-                <!--<div class="columns" th:if="${activeTour.isSuccessful()} OR ${activeTour.isFailed()}">-->
-                <!--<div class="column is-4">Actual Delivery Time:</div>-->
-                <!--<div class="column">-->
-                <!--<div class="field">-->
-                <!--<span th:text="${activeTour.deliveryTime}" /><span>h</span>-->
-                <!--</div>-->
-                <!--</div>-->
-                <!--</div>-->
-                <!--</div>-->
-
-                <!--&lt;!&ndash; Column right &ndash;&gt;-->
-                <!--<div class="column">-->
-                <!--<div class="columns">-->
-                <!--<div class="column is-4">Number:</div>-->
-                <!--<div class="column">-->
-                <!--<div class="field">-->
-                <!--<input class="input" type="text" th:field="*{numberOfAnimals}"-->
-                <!--disabled="disabled"/>-->
-                <!--</div>-->
-                <!--<article class="message is-warning" th:if="${#fields.hasErrors('numberOfAnimals')}">-->
-                <!--<div class="message-body" th:errors="*{numberOfAnimals}"/>-->
-                <!--</article>-->
-                <!--</div>-->
-                <!--</div>-->
-                <!--<div class="columns">-->
-                <!--<div class="column is-4">Destination:</div>-->
-                <!--<div class="column">-->
-                <!--<div class="field">-->
-                <!--<input class="input" type="text" th:field="*{destinationAddress.lastname}"-->
-                <!--disabled="disabled"/>-->
-                <!--</div>-->
-                <!--<article class="message is-warning"-->
-                <!--th:if="${#fields.hasErrors('destinationAddress.lastname')}">-->
-                <!--<div class="message-body" th:errors="*{destinationAddress.lastname}"/>-->
-                <!--</article>-->
-                <!--</div>-->
-                <!--</div>-->
-                <!--<div class="columns">-->
-                <!--<div class="column is-4"/>-->
-                <!--<div class="column">-->
-                <!--<div class="field">-->
-                <!--<input class="input" type="text" th:field="*{destinationAddress.firstname}"-->
-                <!--disabled="disabled"/>-->
-                <!--</div>-->
-                <!--<article class="message is-warning"-->
-                <!--th:if="${#fields.hasErrors('destinationAddress.firstname')}">-->
-                <!--<div class="message-body" th:errors="*{destinationAddress.firstname}"/>-->
-                <!--</article>-->
-                <!--</div>-->
-                <!--</div>-->
-                <!--<div class="columns">-->
-                <!--<div class="column is-4"/>-->
-                <!--<div class="column is-6">-->
-                <!--<div class="field">-->
-                <!--<input class="input" type="text" th:field="*{destinationAddress.street}"-->
-                <!--disabled="disabled"/>-->
-                <!--</div>-->
-                <!--<article class="message is-warning"-->
-                <!--th:if="${#fields.hasErrors('destinationAddress.street')}">-->
-                <!--<div class="message-body" th:errors="*{destinationAddress.street}"/>-->
-                <!--</article>-->
-                <!--</div>-->
-                <!--<div class="column">-->
-                <!--<div class="field">-->
-                <!--<input class="input" type="text" th:field="*{destinationAddress.streetNumber}"-->
-                <!--disabled="disabled"/>-->
-                <!--</div>-->
-                <!--<article class="message is-warning"-->
-                <!--th:if="${#fields.hasErrors('destinationAddress.streetNumber')}">-->
-                <!--<div class="message-body" th:errors="*{destinationAddress.streetNumber}"/>-->
-                <!--</article>-->
-                <!--</div>-->
-                <!--</div>-->
-                <!--<div class="columns">-->
-                <!--<div class="column is-4"/>-->
-                <!--<div class="column is-4">-->
-                <!--<div class="field">-->
-                <!--<input class="input" type="text" th:field="*{destinationAddress.zip}"-->
-                <!--disabled="disabled"/>-->
-                <!--</div>-->
-                <!--<article class="message is-warning"-->
-                <!--th:if="${#fields.hasErrors('destinationAddress.zip')}">-->
-                <!--<div class="message-body" th:errors="*{destinationAddress.zip}"/>-->
-                <!--</article>-->
-                <!--</div>-->
-                <!--<div class="column">-->
-                <!--<div class="field">-->
-                <!--<input class="input" type="text" th:field="*{destinationAddress.city}"-->
-                <!--disabled="disabled"/>-->
-                <!--</div>-->
-                <!--<article class="message is-warning"-->
-                <!--th:if="${#fields.hasErrors('destinationAddress.city')}">-->
-                <!--<div class="message-body" th:errors="*{destinationAddress.city}"/>-->
-                <!--</article>-->
-                <!--</div>-->
-                <!--</div>-->
-                <!--<div class="columns">-->
-                <!--<div class="column is-4">Time:</div>-->
-                <!--<div class="column">-->
-                <!--<div class="field">-->
-                <!--<input class="input" type="time"-->
-                <!--th:value="${#temporals.format(activeTour.startTime, 'HH:mm')}"-->
-                <!--th:field="*{startTime}" disabled="disabled"/>-->
-                <!--</div>-->
-                <!--<article class="message is-warning" th:if="${#fields.hasErrors('startTime')}">-->
-                <!--<div class="message-body" th:errors="*{startTime}"/>-->
-                <!--</article>-->
-                <!--</div>-->
-                <!--</div>-->
-                <!--<div class="columns">-->
-                <!--<div class="column is-4">Truck:</div>-->
-                <!--<div class="column">-->
-                <!--<div class="select">-->
-                <!--<select th:name="truckType" disabled="disabled">-->
-                <!--<div th:if="${not #lists.isEmpty(truckTypes)}" th:each="type : ${truckTypes}">-->
-                <!--<option th:selected="${type.key} == ${activeTour.truck.truckType}" th:value="${type.key}" th:text="${type.key} + ' (' + ${type.value} + ')'" />-->
-                <!--</div>-->
-                <!--</select>-->
-                <!--</div>-->
-                <!--</div>-->
-                <!--</div>-->
-                <!--<div class="columns">-->
-                <!--<div class="column is-4">Time Frame:</div>-->
-                <!--<div class="column">-->
-                <!--<div class="field">-->
-                <!--<input class="input" type="text" th:field="*{timeFrame}" disabled="disabled"/>-->
-                <!--</div>-->
-                <!--<article class="message is-warning" th:if="${#fields.hasErrors('timeFrame')}">-->
-                <!--<div class="message-body" th:errors="*{timeFrame}"/>-->
-                <!--</article>-->
-                <!--</div>-->
-                <!--</div>-->
-                <!--<div class="columns" th:if="${activeTour.isSuccessful()} OR ${activeTour.isFailed()}">-->
-                <!--<div class="column">-->
-                <!--<div class="notification" th:if="${estimationFeedback}" th:classappend="${estimationAccuracyClass}">-->
-                <!--<strong th:text="${estimationFeedback}"/>-->
-                <!--</div>-->
-                <!--</div>-->
-                <!--</div>-->
-                <!--</div>-->
-                <!--</div>-->
-                <!--<div class="columns">-->
-                <!--<div class="column is-2">Comment:</div>-->
-                <!--<div class="column">-->
-                <!--<p class="control">-->
-                <!--<textarea class="textarea" type="text" th:value="*{comment}"-->
-                <!--th:field="*{comment}" disabled="disabled"></textarea>-->
-                <!--</p>-->
-                <!--</div>-->
-                <!--</div>-->
-                <!--<div class="columns" th:if="${activeTour.isSuccessful()} OR ${activeTour.isFailed()}">-->
-                <!--<div class="column is-2">Driver Feedback:</div>-->
-                <!--<div class="column">-->
-                <!--<i th:text="${activeTour.tourFeedback}" />-->
-                <!--</div>-->
-                <!--</div>-->
-                <!--</div>-->
-                <div class="box"> <!--th:if="${activeTour.canBeChanged()}"-->
+                <div class="box" th:unless="${activeTour.canBeChanged()}" th:object="${activeTour}" >
                     <div class="columns">
                         <div class="column">
-                            <div class="notification is-danger" th:unless="${activeTour.canBeChanged()}">
+                            <div class="notification is-danger">
                                 <strong th:if="${activeTour.inProcess()}">This tour has already started, you cannot
                                     change it! Reload the page if you just tried to change the date/time to the
                                     past.</strong>
@@ -517,6 +228,306 @@
                             </div>
                         </div>
                     </div>
+                    <div class="columns">
+                        <!-- Column left -->
+                        <div class="column">
+                            <div class="columns">
+                                <div class="column is-4">Cargo:</div>
+                                <div class="column">
+                                    <div class="field">
+                                        <input class="input" type="text" th:field="*{cargo}" disabled="disabled"/>
+                                    </div>
+                                    <article class="message is-warning" th:if="${#fields.hasErrors('cargo')}">
+                                        <div class="message-body" th:errors="*{cargo}"/>
+                                    </article>
+                                </div>
+                            </div>
+                            <div class="columns">
+                                <div class="column is-4">Start:</div>
+                                <div class="column">
+                                    <div class="field">
+                                        <input class="input" type="text" th:field="*{startAddress.lastname}"
+                                               disabled="disabled"/>
+                                    </div>
+                                    <article class="message is-warning"
+                                             th:if="${#fields.hasErrors('startAddress.lastname')}">
+                                        <div class="message-body" th:errors="*{startAddress.lastname}"/>
+                                    </article>
+                                </div>
+                            </div>
+                            <div class="columns">
+                                <div class="column is-4"/>
+                                <div class="column">
+                                    <div class="field">
+                                        <input class="input" type="text" th:field="*{startAddress.firstname}"
+                                               disabled="disabled"/>
+                                    </div>
+                                    <article class="message is-warning"
+                                             th:if="${#fields.hasErrors('startAddress.firstname')}">
+                                        <div class="message-body" th:errors="*{startAddress.firstname}"/>
+                                    </article>
+                                </div>
+                            </div>
+                            <div class="columns">
+                                <div class="column is-4"/>
+                                <div class="column is-6">
+                                    <div class="field">
+                                        <input class="input" type="text" id='SASF' th:field="*{startAddress.street}"
+                                               disabled="disabled"/>
+                                    </div>
+                                    <article class="message is-warning"
+                                             th:if="${#fields.hasErrors('startAddress.street')}">
+                                        <div class="message-body" th:errors="*{startAddress.street}"/>
+                                    </article>
+                                </div>
+                                <div class="column">
+                                    <div class="field">
+                                        <input class="input" type="text" id='SANF' th:field="*{startAddress.streetNumber}"
+                                               disabled="disabled"/>
+                                    </div>
+                                    <article class="message is-warning"
+                                             th:if="${#fields.hasErrors('startAddress.streetNumber')}">
+                                        <div class="message-body" th:errors="*{startAddress.streetNumber}"/>
+                                    </article>
+                                </div>
+                            </div>
+                            <div class="columns">
+                                <div class="column is-4"/>
+                                <div class="column is-4">
+                                    <div class="field">
+                                        <input class="input" type="text" id='SAZF' th:field="*{startAddress.zip}"
+                                               disabled="disabled"/>
+                                    </div>
+                                    <article class="message is-warning"
+                                             th:if="${#fields.hasErrors('startAddress.zip')}">
+                                        <div class="message-body" th:errors="*{startAddress.zip}"/>
+                                    </article>
+                                </div>
+                                <div class="column">
+                                    <div class="field">
+                                        <input class="input" type="text" id='SACF' th:field="*{startAddress.city}"
+                                               disabled="disabled"/>
+                                    </div>
+                                    <article class="message is-warning"
+                                             th:if="${#fields.hasErrors('startAddress.city')}">
+                                        <div class="message-body" th:errors="*{startAddress.city}"/>
+                                    </article>
+                                </div>
+                            </div>
+                            <div class="columns">
+                                <div class="column is-4">Date:</div>
+                                <div class="column">
+                                    <div class="field">
+                                        <input class="input" type="date"
+                                               th:value="${#temporals.format(activeTour.startDate, 'uuuu-MM-dd')}"
+                                               th:field="*{startDate}" disabled="disabled"/>
+                                    </div>
+                                    <article class="message is-warning" th:if="${#fields.hasErrors('startDate')}">
+                                        <div class="message-body" th:errors="*{startDate}"/>
+                                    </article>
+                                </div>
+                            </div>
+                            <div class="columns">
+                                <div class="column is-4">Driver:</div>
+                                <div class="column">
+                                    <div class="select">
+                                        <select th:field="*{driver}" disabled="disabled">
+                                            <option th:if="${not #lists.isEmpty(drivers)}" th:each="driver : ${drivers}"
+                                                    th:value="${driver.username}" th:text="${driver.username}"/>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="columns">
+                                <div class="column is-4">Estimated Time:</div>
+                                <div class="column">
+                                    <div class="field">
+                                        <input class="input" type="text" th:field="*{estimatedTime}"
+                                               disabled="disabled"/>
+                                    </div>
+                                    <article class="message is-warning" th:if="${#fields.hasErrors('estimatedTime')}">
+                                        <div class="message-body" th:errors="*{estimatedTime}"/>
+                                    </article>
+                                </div>
+                            </div>
+                            <div class="columns" th:if="${activeTour.isSuccessful()} OR ${activeTour.isFailed()}">
+                                <div class="column is-4">Actual Delivery Time:</div>
+                                <div class="column">
+                                    <div class="field">
+                                        <span th:text="${activeTour.deliveryTime}"/><span>h</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Column right -->
+                        <div class="column">
+                            <div class="columns">
+                                <div class="column is-4">Number:</div>
+                                <div class="column">
+                                    <div class="field">
+                                        <input class="input" type="text" th:field="*{numberOfAnimals}"
+                                               disabled="disabled"/>
+                                    </div>
+                                    <article class="message is-warning" th:if="${#fields.hasErrors('numberOfAnimals')}">
+                                        <div class="message-body" th:errors="*{numberOfAnimals}"/>
+                                    </article>
+                                </div>
+                            </div>
+                            <div class="columns">
+                                <div class="column is-4">Destination:</div>
+                                <div class="column">
+                                    <div class="field">
+                                        <input class="input" type="text" th:field="*{destinationAddress.lastname}"
+                                               disabled="disabled"/>
+                                    </div>
+                                    <article class="message is-warning"
+                                             th:if="${#fields.hasErrors('destinationAddress.lastname')}">
+                                        <div class="message-body" th:errors="*{destinationAddress.lastname}"/>
+                                    </article>
+                                </div>
+                            </div>
+                            <div class="columns">
+                                <div class="column is-4"/>
+                                <div class="column">
+                                    <div class="field">
+                                        <input class="input" type="text" th:field="*{destinationAddress.firstname}"
+                                               disabled="disabled"/>
+                                    </div>
+                                    <article class="message is-warning"
+                                             th:if="${#fields.hasErrors('destinationAddress.firstname')}">
+                                        <div class="message-body" th:errors="*{destinationAddress.firstname}"/>
+                                    </article>
+                                </div>
+                            </div>
+                            <div class="columns">
+                                <div class="column is-4"/>
+                                <div class="column is-6">
+                                    <div class="field">
+                                        <input class="input" type="text" id='DASF' th:field="*{destinationAddress.street}"
+                                               disabled="disabled"/>
+                                    </div>
+                                    <article class="message is-warning"
+                                             th:if="${#fields.hasErrors('destinationAddress.street')}">
+                                        <div class="message-body" th:errors="*{destinationAddress.street}"/>
+                                    </article>
+                                </div>
+                                <div class="column">
+                                    <div class="field">
+                                        <input class="input" type="text" id='DANF' th:field="*{destinationAddress.streetNumber}"
+                                               disabled="disabled"/>
+                                    </div>
+                                    <article class="message is-warning"
+                                             th:if="${#fields.hasErrors('destinationAddress.streetNumber')}">
+                                        <div class="message-body" th:errors="*{destinationAddress.streetNumber}"/>
+                                    </article>
+                                </div>
+                            </div>
+                            <div class="columns">
+                                <div class="column is-4"/>
+                                <div class="column is-4">
+                                    <div class="field">
+                                        <input class="input" type="text" id='DAZF' th:field="*{destinationAddress.zip}"
+                                               disabled="disabled"/>
+                                    </div>
+                                    <article class="message is-warning"
+                                             th:if="${#fields.hasErrors('destinationAddress.zip')}">
+                                        <div class="message-body" th:errors="*{destinationAddress.zip}"/>
+                                    </article>
+                                </div>
+                                <div class="column">
+                                    <div class="field">
+                                        <input class="input" type="text" id='DACF' th:field="*{destinationAddress.city}"
+                                               disabled="disabled"/>
+                                    </div>
+                                    <article class="message is-warning"
+                                             th:if="${#fields.hasErrors('destinationAddress.city')}">
+                                        <div class="message-body" th:errors="*{destinationAddress.city}"/>
+                                    </article>
+                                </div>
+                            </div>
+                            <div class="columns">
+                                <div class="column is-4">Time:</div>
+                                <div class="column">
+                                    <div class="field">
+                                        <input class="input" type="time"
+                                               th:value="${#temporals.format(activeTour.startTime, 'HH:mm')}"
+                                               th:field="*{startTime}" disabled="disabled"/>
+                                    </div>
+                                    <article class="message is-warning" th:if="${#fields.hasErrors('startTime')}">
+                                        <div class="message-body" th:errors="*{startTime}"/>
+                                    </article>
+                                </div>
+                            </div>
+                            <div class="columns">
+                                <div class="column is-4">Truck:</div>
+                                <div class="column">
+                                    <div class="select">
+                                        <select th:name="truckType" disabled="disabled">
+                                            <div th:if="${not #lists.isEmpty(truckTypes)}"
+                                                 th:each="type : ${truckTypes}">
+                                                <option th:selected="${type.key} == ${activeTour.truck.truckType}"
+                                                        th:value="${type.key}"
+                                                        th:text="${type.key} + ' (' + ${type.value} + ')'"/>
+                                            </div>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="columns">
+                                <div class="column is-4">Time Frame:</div>
+                                <div class="column">
+                                    <div class="field">
+                                        <input class="input" type="text" th:field="*{timeFrame}" disabled="disabled"/>
+                                    </div>
+                                    <article class="message is-warning" th:if="${#fields.hasErrors('timeFrame')}">
+                                        <div class="message-body" th:errors="*{timeFrame}"/>
+                                    </article>
+                                </div>
+                            </div>
+                            <div class="columns" th:if="${activeTour.isSuccessful()} OR ${activeTour.isFailed()}">
+                                <div class="column">
+                                    <div class="notification" th:if="${estimationFeedback}"
+                                         th:classappend="${estimationAccuracyClass}">
+                                        <strong th:text="${estimationFeedback}"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="columns">
+                        <div class="column is-2">Comment:</div>
+                        <div class="column">
+                            <p class="control">
+                <textarea class="textarea" type="text" th:value="*{comment}"
+                          th:field="*{comment}" disabled="disabled"></textarea>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="columns" th:if="${activeTour.isSuccessful()} OR ${activeTour.isFailed()}">
+                        <div class="column is-2">Driver Feedback:</div>
+                        <div class="column">
+                            <i th:text="${activeTour.tourFeedback}"/>
+                        </div>
+                    </div>
+                    <iframe id="mapsFrameFixed" class="map-top" width="100%" height="450" onload="initialMap()"
+                            src="https://www.google.com/maps/embed/v1/place?key=AIzaSyAfswMMILTpyhxnZfWOhTNOgClKSuag9Cs&#10;    &amp;q=Sidlerstrasse+5,Bern+Schweiz"
+                            allowfullscreen=""></iframe>
+                </div>
+                <div class="box" th:if="${activeTour.canBeChanged()}"  >
+                    <!--<div class="columns">-->
+                        <!--<div class="column">-->
+                            <!--<div class="notification is-danger" th:unless="${activeTour.canBeChanged()}">-->
+                                <!--<strong th:if="${activeTour.inProcess()}">This tour has already started, you cannot-->
+                                    <!--change it! Reload the page if you just tried to change the date/time to the-->
+                                    <!--past.</strong>-->
+                                <!--<strong th:if="${activeTour.isSuccessful()}">This tour was successfully completed and-->
+                                    <!--can't be changed.</strong>-->
+                                <!--<strong th:if="${activeTour.isFailed()}">This tour has failed and can't be-->
+                                    <!--changed.</strong>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</div>-->
                     <div class="columns" th:if="${truckErrorMessage}">
                         <div class="column">
                             <div class="notification is-danger">
@@ -788,13 +799,13 @@
                         </div>
                         <div class="columns">
                             <div class="column is-2 is-offset-10">
-                                <button th:if="${activeTour.canBeChanged()}" type="submit"
+                                <button type="submit"
                                         class="button is-info is-pulled-right">Save
-                                </button>
+                                </button> <!--th:if="${activeTour.canBeChanged()}" -->
                             </div>
                         </div>
                     </form>
-                    <iframe id="mapsFrame" class="map-top" width="100%" height="450"
+                    <iframe id="mapsFrame" class="map-top" width="100%" height="450" onload="updateMaps()"
                             src="https://www.google.com/maps/embed/v1/place?key=AIzaSyAfswMMILTpyhxnZfWOhTNOgClKSuag9Cs&#10;    &amp;q=Sidlerstrasse+5,Bern+Schweiz"
                             allowfullscreen=""></iframe>
                 </div>
@@ -805,7 +816,6 @@
 <script>
     /*<![CDATA[/
     /]]>*/
-    updateMaps();
 
     function updateMaps() {
         var SACity = document.getElementById('SAC').value;
@@ -818,14 +828,31 @@
         var DAStreet = document.getElementById('DAS').value;
         var DASNumber = document.getElementById('DAN').value;
 
-        replaceMaps(SACity, SAZip, SAStreet, SASNumber, DACity, DAZip, DAStreet, DASNumber);
+        replaceMapsUpdate(SACity, SAZip, SAStreet, SASNumber, DACity, DAZip, DAStreet, DASNumber);
     }
 
-    function replaceMaps(SACity, SAZip, SAStreet, SASNumber, DACity, DAZip, DAStreet, DASNumber) {
+    function replaceMapsUpdate(SACity, SAZip, SAStreet, SASNumber, DACity, DAZip, DAStreet, DASNumber) {
         if (!(isEmpty(SACity) || isEmpty(SAZip) || isEmpty(SAStreet) || isEmpty(SASNumber) || isEmpty(DACity) || isEmpty(DAZip) || isEmpty(DAStreet) || isEmpty(DASNumber))) {
             var mapsNavRequestLink = 'https://www.google.com/maps/embed/v1/directions?key=AIzaSyAfswMMILTpyhxnZfWOhTNOgClKSuag9Cs&#10;    &amp;origin=+Sidlerstrasse+5+Bern+Schweiz&amp;destination=' + DAStreet + '+' + DASNumber + '+' + DAZip + '+' + DACity + '&amp;waypoints=' + SAStreet + '+' + SASNumber + '+' + SAZip + '+' + SACity + '';
             $('#mapsFrame').replaceWith('<iframe id="mapsFrame" class="map-top" width="100%" height="450" src="' + mapsNavRequestLink + '" allowfullscreen=""> </iframe>');
         }
+    }
+
+    function initialMap(){
+        var SACity = document.getElementById('SACF').value;
+        var SAZip = document.getElementById('SAZF').value;
+        var SAStreet = document.getElementById('SASF').value;
+        var SASNumber = document.getElementById('SANF').value;
+
+        var DACity = document.getElementById('DACF').value;
+        var DAZip = document.getElementById('DAZF').value;
+        var DAStreet = document.getElementById('DASF').value;
+        var DASNumber = document.getElementById('DANF').value;
+
+        var mapsNavRequestLink = 'https://www.google.com/maps/embed/v1/directions?key=AIzaSyAfswMMILTpyhxnZfWOhTNOgClKSuag9Cs&#10;    &amp;origin=+Sidlerstrasse+5+Bern+Schweiz&amp;destination=' + DAStreet + '+' + DASNumber + '+' + DAZip + '+' + DACity + '&amp;waypoints=' + SAStreet + '+' + SASNumber + '+' + SAZip + '+' + SACity + '';
+        $('#mapsFrameFixed').replaceWith('<iframe id="mapsFrameFixed" class="map-top" width="100%" height="450" src="' + mapsNavRequestLink + '" allowfullscreen=""> </iframe>');
+
+
     }
 
     function isEmpty(str) {
