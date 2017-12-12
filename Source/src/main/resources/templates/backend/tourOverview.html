@@ -128,24 +128,8 @@
                 <div th:if="${not #lists.isEmpty(tours)}" th:each="tour : ${tours}">
                     <div th:class="${tour.state}" th:with="result=${tour.id}">
                         <div class="notification" th:classappend="${tour.id == activeTour.id} ? is-info">
-                            <div class="modal">
-                                <div class="modal-background"></div>
-                                <div class="modal-content">
-                                    <div class="box is-centered">
-                                        <h2 class="subtitle is-2">Confirm Deletion</h2>
-                                        <div class="buttons is-centered">
-                                            <a th:href="'tours/delete?index=' + ${result}"
-                                               class="button is-danger">
-                                                DELETE
-                                            </a>
-                                            <button id="modal-close" class="button">CANCEL</button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <button class="modal-close"></button>
-                            </div>
 
-                            <a th:if="${tour.inProcess() == false}" id="showModal" class="button delete"/>
+                            <a th:if="${tour.inProcess() == false}" class="button delete" onclick="return confirm('Are you sure?')"/>
                             <a th:unless="${tour.inProcess() == false}" class="button delete" disabled="disabled"/>
 
                             <a th:attr="onClick='paramChangerSetter(\'activeIndex\', ' + ${result} + ')'">
@@ -859,15 +843,6 @@
         return (!str || !str.length);
     }
 
-
-    /*
-     $(document).ready(function () {
-     $(".delete").click(function () {
-     $(this).parent(".notification").hide(300);
-     });
-     });
-     */
-
     function paramChangerSetter(paramName, newValueForParam) {
         var newHref = window.location.href;
         var regularExpression = new RegExp(paramName + "=[a-zA-Z1-9/ (%20)]*", "g");
@@ -887,16 +862,6 @@
     }
 
     $(document).ready(function () {
-
-        // Delete modal trigger
-        $("#showModal").click(function () {
-            $(".modal").addClass("is-active");
-        });
-
-        $(".modal-close, #modal-close").click(function () {
-            $(".modal").removeClass("is-active");
-        });
-
         // Filter tours by state
         $("#stateFilter").on("change", function () {
             var filter = $(this).val();

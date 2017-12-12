@@ -88,7 +88,7 @@
         <td class="limited-width-20"><span th:title="${animal.width}" th:text="${animal.width}"/><span>cm</span></td>
         <td class="limited-width-20"><span th:title="${animal.weight}" th:text="${animal.weight}"/><span>kg</span></td>
         <td class="limited-width-20">
-            <a th:href="'animals/delete?species=' + ${animal.species}" class="button is-danger"><i
+            <a th:href="'animals/delete?species=' + ${animal.species}" onclick="return confirm('Are you sure?')" class="button is-danger"><i
                     class="fa fa-trash"></i>&nbsp;Delete</a>
         </td>
 
