@@ -53,8 +53,15 @@ public class AnimalController {
                             @RequestParam("weight") int weight,
                             RedirectAttributes redirectAttributes) {
 
+        List<Animal> animalList = animalRepository.findAll();
+        
         String errorMessage = "";
 
+        for (Animal a : animalList) {
+            if (species.equals(a.getSpecies())) {
+                errorMessage += "This animal already exists. Please choose another species name!\n";
+            }
+        }
         if (length <= 0) {
             errorMessage += "Animal length must be positive!\n";
         }
