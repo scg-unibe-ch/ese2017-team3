@@ -128,7 +128,7 @@
                 <div th:if="${not #lists.isEmpty(tours)}" th:each="tour : ${tours}">
                     <div th:class="${tour.state}" th:with="result=${tour.id}">
                         <div class="notification" th:classappend="${tour.id == activeTour.id} ? is-info">
-                        <div class="modal">
+                            <div class="modal">
                                 <div class="modal-background"></div>
                                 <div class="modal-content">
                                     <div class="box is-centered">
@@ -187,6 +187,7 @@
                                         </div>
                                     </div>
                                 </div>
+
                                 <div class="columns is-gapless">
                                     <div class="column is-half">
                                         <div class="columns is-gapless">
@@ -213,13 +214,17 @@
         </div>
         <div th:if="${not #lists.isEmpty(tours)}" class="column">
             <div class="block">
-                <div class="box" th:unless="${activeTour.canBeChanged()}" th:object="${activeTour}">
+                <div class="box" th:unless="${activeTour.canBeChanged()}" th:object="${activeTour}" >
                     <div class="columns">
                         <div class="column">
                             <div class="notification is-danger">
-                                <strong th:if="${activeTour.inProcess()}">This tour has already started, you cannot change it! Reload the page if you just tried to change the date/time to the past.</strong>
-                                <strong th:if="${activeTour.isSuccessful()}">This tour was successfully completed and can't be changed.</strong>
-                                <strong th:if="${activeTour.isFailed()}">This tour has failed and can't be changed.</strong>
+                                <strong th:if="${activeTour.inProcess()}">This tour has already started, you cannot
+                                    change it! Reload the page if you just tried to change the date/time to the
+                                    past.</strong>
+                                <strong th:if="${activeTour.isSuccessful()}">This tour was successfully completed and
+                                    can't be changed.</strong>
+                                <strong th:if="${activeTour.isFailed()}">This tour has failed and can't be
+                                    changed.</strong>
                             </div>
                         </div>
                     </div>
@@ -267,7 +272,7 @@
                                 <div class="column is-4"/>
                                 <div class="column is-6">
                                     <div class="field">
-                                        <input class="input" type="text" th:field="*{startAddress.street}"
+                                        <input class="input" type="text" id='SASF' th:field="*{startAddress.street}"
                                                disabled="disabled"/>
                                     </div>
                                     <article class="message is-warning"
@@ -277,7 +282,7 @@
                                 </div>
                                 <div class="column">
                                     <div class="field">
-                                        <input class="input" type="text" th:field="*{startAddress.streetNumber}"
+                                        <input class="input" type="text" id='SANF' th:field="*{startAddress.streetNumber}"
                                                disabled="disabled"/>
                                     </div>
                                     <article class="message is-warning"
@@ -290,7 +295,7 @@
                                 <div class="column is-4"/>
                                 <div class="column is-4">
                                     <div class="field">
-                                        <input class="input" type="text" th:field="*{startAddress.zip}"
+                                        <input class="input" type="text" id='SAZF' th:field="*{startAddress.zip}"
                                                disabled="disabled"/>
                                     </div>
                                     <article class="message is-warning"
@@ -300,7 +305,7 @@
                                 </div>
                                 <div class="column">
                                     <div class="field">
-                                        <input class="input" type="text" th:field="*{startAddress.city}"
+                                        <input class="input" type="text" id='SACF' th:field="*{startAddress.city}"
                                                disabled="disabled"/>
                                     </div>
                                     <article class="message is-warning"
@@ -349,7 +354,7 @@
                                 <div class="column is-4">Actual Delivery Time:</div>
                                 <div class="column">
                                     <div class="field">
-                                        <span th:text="${activeTour.deliveryTime}" /><span>h</span>
+                                        <span th:text="${activeTour.deliveryTime}"/><span>h</span>
                                     </div>
                                 </div>
                             </div>
@@ -399,7 +404,7 @@
                                 <div class="column is-4"/>
                                 <div class="column is-6">
                                     <div class="field">
-                                        <input class="input" type="text" th:field="*{destinationAddress.street}"
+                                        <input class="input" type="text" id='DASF' th:field="*{destinationAddress.street}"
                                                disabled="disabled"/>
                                     </div>
                                     <article class="message is-warning"
@@ -409,7 +414,7 @@
                                 </div>
                                 <div class="column">
                                     <div class="field">
-                                        <input class="input" type="text" th:field="*{destinationAddress.streetNumber}"
+                                        <input class="input" type="text" id='DANF' th:field="*{destinationAddress.streetNumber}"
                                                disabled="disabled"/>
                                     </div>
                                     <article class="message is-warning"
@@ -422,7 +427,7 @@
                                 <div class="column is-4"/>
                                 <div class="column is-4">
                                     <div class="field">
-                                        <input class="input" type="text" th:field="*{destinationAddress.zip}"
+                                        <input class="input" type="text" id='DAZF' th:field="*{destinationAddress.zip}"
                                                disabled="disabled"/>
                                     </div>
                                     <article class="message is-warning"
@@ -432,7 +437,7 @@
                                 </div>
                                 <div class="column">
                                     <div class="field">
-                                        <input class="input" type="text" th:field="*{destinationAddress.city}"
+                                        <input class="input" type="text" id='DACF' th:field="*{destinationAddress.city}"
                                                disabled="disabled"/>
                                     </div>
                                     <article class="message is-warning"
@@ -459,8 +464,11 @@
                                 <div class="column">
                                     <div class="select">
                                         <select th:name="truckType" disabled="disabled">
-                                            <div th:if="${not #lists.isEmpty(truckTypes)}" th:each="type : ${truckTypes}">
-                                                <option th:selected="${type.key} == ${activeTour.truck.truckType}" th:value="${type.key}" th:text="${type.key} + ' (' + ${type.value} + ')'" />
+                                            <div th:if="${not #lists.isEmpty(truckTypes)}"
+                                                 th:each="type : ${truckTypes}">
+                                                <option th:selected="${type.key} == ${activeTour.truck.truckType}"
+                                                        th:value="${type.key}"
+                                                        th:text="${type.key} + ' (' + ${type.value} + ')'"/>
                                             </div>
                                         </select>
                                     </div>
@@ -479,7 +487,8 @@
                             </div>
                             <div class="columns" th:if="${activeTour.isSuccessful()} OR ${activeTour.isFailed()}">
                                 <div class="column">
-                                    <div class="notification" th:if="${estimationFeedback}" th:classappend="${estimationAccuracyClass}">
+                                    <div class="notification" th:if="${estimationFeedback}"
+                                         th:classappend="${estimationAccuracyClass}">
                                         <strong th:text="${estimationFeedback}"/>
                                     </div>
                                 </div>
@@ -490,19 +499,35 @@
                         <div class="column is-2">Comment:</div>
                         <div class="column">
                             <p class="control">
-                                    <textarea class="textarea" type="text" th:value="*{comment}"
-                                              th:field="*{comment}" disabled="disabled"></textarea>
+                <textarea class="textarea" type="text" th:value="*{comment}"
+                          th:field="*{comment}" disabled="disabled"></textarea>
                             </p>
                         </div>
                     </div>
                     <div class="columns" th:if="${activeTour.isSuccessful()} OR ${activeTour.isFailed()}">
                         <div class="column is-2">Driver Feedback:</div>
                         <div class="column">
-                            <i th:text="${activeTour.tourFeedback}" />
+                            <i th:text="${activeTour.tourFeedback}"/>
                         </div>
                     </div>
+                    <iframe id="mapsFrameFixed" class="map-top" width="100%" height="450" onload="initialMap()"
+                            src="https://www.google.com/maps/embed/v1/place?key=AIzaSyAfswMMILTpyhxnZfWOhTNOgClKSuag9Cs&#10;    &amp;q=Sidlerstrasse+5,Bern+Schweiz"
+                            allowfullscreen=""></iframe>
                 </div>
-                <div class="box" th:if="${activeTour.canBeChanged()}">
+                <div class="box" th:if="${activeTour.canBeChanged()}"  >
+                    <!--<div class="columns">-->
+                        <!--<div class="column">-->
+                            <!--<div class="notification is-danger" th:unless="${activeTour.canBeChanged()}">-->
+                                <!--<strong th:if="${activeTour.inProcess()}">This tour has already started, you cannot-->
+                                    <!--change it! Reload the page if you just tried to change the date/time to the-->
+                                    <!--past.</strong>-->
+                                <!--<strong th:if="${activeTour.isSuccessful()}">This tour was successfully completed and-->
+                                    <!--can't be changed.</strong>-->
+                                <!--<strong th:if="${activeTour.isFailed()}">This tour has failed and can't be-->
+                                    <!--changed.</strong>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</div>-->
                     <div class="columns" th:if="${truckErrorMessage}">
                         <div class="column">
                             <div class="notification is-danger">
@@ -556,7 +581,8 @@
                                     <div class="column is-4"/>
                                     <div class="column is-6">
                                         <div class="field">
-                                            <input class="input" type="text" th:field="*{startAddress.street}"/>
+                                            <input class="input" type="text" id="SAS" onblur="updateMaps()"
+                                                   th:field="*{startAddress.street}"/>
                                         </div>
                                         <article class="message is-warning"
                                                  th:if="${#fields.hasErrors('startAddress.street')}">
@@ -565,7 +591,8 @@
                                     </div>
                                     <div class="column">
                                         <div class="field">
-                                            <input class="input" type="text" th:field="*{startAddress.streetNumber}"/>
+                                            <input class="input" type="text" id="SAN" onblur="updateMaps()"
+                                                   th:field="*{startAddress.streetNumber}"/>
                                         </div>
                                         <article class="message is-warning"
                                                  th:if="${#fields.hasErrors('startAddress.streetNumber')}">
@@ -577,7 +604,8 @@
                                     <div class="column is-4"/>
                                     <div class="column is-4">
                                         <div class="field">
-                                            <input class="input" type="text" th:field="*{startAddress.zip}"/>
+                                            <input class="input" type="text" id="SAZ" onblur="updateMaps()"
+                                                   th:field="*{startAddress.zip}"/>
                                         </div>
                                         <article class="message is-warning"
                                                  th:if="${#fields.hasErrors('startAddress.zip')}">
@@ -586,7 +614,8 @@
                                     </div>
                                     <div class="column">
                                         <div class="field">
-                                            <input class="input" type="text" th:field="*{startAddress.city}"/>
+                                            <input class="input" type="text" id="SAC" onblur="updateMaps()"
+                                                   th:field="*{startAddress.city}"/>
                                         </div>
                                         <article class="message is-warning"
                                                  th:if="${#fields.hasErrors('startAddress.city')}">
@@ -676,7 +705,8 @@
                                     <div class="column is-4"/>
                                     <div class="column is-6">
                                         <div class="field">
-                                            <input class="input" type="text" th:field="*{destinationAddress.street}"/>
+                                            <input class="input" type="text" id="DAS" onblur="updateMaps()"
+                                                   th:field="*{destinationAddress.street}"/>
                                         </div>
                                         <article class="message is-warning"
                                                  th:if="${#fields.hasErrors('destinationAddress.street')}">
@@ -685,7 +715,7 @@
                                     </div>
                                     <div class="column">
                                         <div class="field">
-                                            <input class="input" type="text"
+                                            <input class="input" type="text" id="DAN" onblur="updateMaps()"
                                                    th:field="*{destinationAddress.streetNumber}"/>
                                         </div>
                                         <article class="message is-warning"
@@ -698,7 +728,8 @@
                                     <div class="column is-4"/>
                                     <div class="column is-4">
                                         <div class="field">
-                                            <input class="input" type="text" th:field="*{destinationAddress.zip}"/>
+                                            <input class="input" type="text" id="DAZ" onblur="updateMaps()"
+                                                   th:field="*{destinationAddress.zip}"/>
                                         </div>
                                         <article class="message is-warning"
                                                  th:if="${#fields.hasErrors('destinationAddress.zip')}">
@@ -707,7 +738,8 @@
                                     </div>
                                     <div class="column">
                                         <div class="field">
-                                            <input class="input" type="text" th:field="*{destinationAddress.city}"/>
+                                            <input class="input" type="text" id="DAC" onblur="updateMaps()"
+                                                   th:field="*{destinationAddress.city}"/>
                                         </div>
                                         <article class="message is-warning"
                                                  th:if="${#fields.hasErrors('destinationAddress.city')}">
@@ -744,8 +776,11 @@
                                     <div class="column">
                                         <div class="select">
                                             <select th:name="truckType">
-                                                <div th:if="${not #lists.isEmpty(truckTypes)}" th:each="type : ${truckTypes}">
-                                                    <option th:selected="${type.key} == ${activeTour.truck.truckType}" th:value="${type.key}" th:text="${type.key} + ' (' + ${type.value} + ')'" />
+                                                <div th:if="${not #lists.isEmpty(truckTypes)}"
+                                                     th:each="type : ${truckTypes}">
+                                                    <option th:selected="${type.key} == ${activeTour.truck.truckType}"
+                                                            th:value="${type.key}"
+                                                            th:text="${type.key} + ' (' + ${type.value} + ')'"/>
                                                 </div>
                                             </select>
                                         </div>
@@ -764,16 +799,67 @@
                         </div>
                         <div class="columns">
                             <div class="column is-2 is-offset-10">
-                                <button type="submit" class="button is-info is-pulled-right">Save</button>
+                                <button type="submit"
+                                        class="button is-info is-pulled-right">Save
+                                </button> <!--th:if="${activeTour.canBeChanged()}" -->
                             </div>
                         </div>
                     </form>
+                    <iframe id="mapsFrame" class="map-top" width="100%" height="450" onload="updateMaps()"
+                            src="https://www.google.com/maps/embed/v1/place?key=AIzaSyAfswMMILTpyhxnZfWOhTNOgClKSuag9Cs&#10;    &amp;q=Sidlerstrasse+5,Bern+Schweiz"
+                            allowfullscreen=""></iframe>
                 </div>
             </div>
         </div>
     </div>
 </div>
 <script>
+    /*<![CDATA[/
+    /]]>*/
+
+    function updateMaps() {
+        var SACity = document.getElementById('SAC').value;
+        var SAZip = document.getElementById('SAZ').value;
+        var SAStreet = document.getElementById('SAS').value;
+        var SASNumber = document.getElementById('SAN').value;
+
+        var DACity = document.getElementById('DAC').value;
+        var DAZip = document.getElementById('DAZ').value;
+        var DAStreet = document.getElementById('DAS').value;
+        var DASNumber = document.getElementById('DAN').value;
+
+        replaceMapsUpdate(SACity, SAZip, SAStreet, SASNumber, DACity, DAZip, DAStreet, DASNumber);
+    }
+
+    function replaceMapsUpdate(SACity, SAZip, SAStreet, SASNumber, DACity, DAZip, DAStreet, DASNumber) {
+        if (!(isEmpty(SACity) || isEmpty(SAZip) || isEmpty(SAStreet) || isEmpty(SASNumber) || isEmpty(DACity) || isEmpty(DAZip) || isEmpty(DAStreet) || isEmpty(DASNumber))) {
+            var mapsNavRequestLink = 'https://www.google.com/maps/embed/v1/directions?key=AIzaSyAfswMMILTpyhxnZfWOhTNOgClKSuag9Cs&#10;    &amp;origin=+Sidlerstrasse+5+Bern+Schweiz&amp;destination=' + DAStreet + '+' + DASNumber + '+' + DAZip + '+' + DACity + '&amp;waypoints=' + SAStreet + '+' + SASNumber + '+' + SAZip + '+' + SACity + '';
+            $('#mapsFrame').replaceWith('<iframe id="mapsFrame" class="map-top" width="100%" height="450" src="' + mapsNavRequestLink + '" allowfullscreen=""> </iframe>');
+        }
+    }
+
+    function initialMap(){
+        var SACity = document.getElementById('SACF').value;
+        var SAZip = document.getElementById('SAZF').value;
+        var SAStreet = document.getElementById('SASF').value;
+        var SASNumber = document.getElementById('SANF').value;
+
+        var DACity = document.getElementById('DACF').value;
+        var DAZip = document.getElementById('DAZF').value;
+        var DAStreet = document.getElementById('DASF').value;
+        var DASNumber = document.getElementById('DANF').value;
+
+        var mapsNavRequestLink = 'https://www.google.com/maps/embed/v1/directions?key=AIzaSyAfswMMILTpyhxnZfWOhTNOgClKSuag9Cs&#10;    &amp;origin=+Sidlerstrasse+5+Bern+Schweiz&amp;destination=' + DAStreet + '+' + DASNumber + '+' + DAZip + '+' + DACity + '&amp;waypoints=' + SAStreet + '+' + SASNumber + '+' + SAZip + '+' + SACity + '';
+        $('#mapsFrameFixed').replaceWith('<iframe id="mapsFrameFixed" class="map-top" width="100%" height="450" src="' + mapsNavRequestLink + '" allowfullscreen=""> </iframe>');
+
+
+    }
+
+    function isEmpty(str) {
+        return (!str || !str.length);
+    }
+
+
     /*
      $(document).ready(function () {
      $(".delete").click(function () {
@@ -812,7 +898,7 @@
         });
 
         // Filter tours by state
-        $("#stateFilter").on("change", function() {
+        $("#stateFilter").on("change", function () {
             var filter = $(this).val();
             if (filter == "NONE") {
                 showAll();
@@ -836,7 +922,7 @@
             $("div.SUCCESSFUL").hide();
         }
 
-        $(".columns .deliveryTime").css({'height':($(".columns .estimationFeedback").height()+'px')});
+        $(".columns .deliveryTime").css({'height': ($(".columns .estimationFeedback").height() + 'px')});
     });
 
 </script>
