@@ -244,21 +244,13 @@ public class TourController {
             activeTour = getTourById(activeIndex, tours);
             model.addAttribute("activeTour", activeTour);
         } else {
-<<<<<<< HEAD
             activeTour = (Tour) model.get("activeTour");
         }
         if (activeTour.isSuccessful() || activeTour.isFailed()) {
             model.addAttribute("estimationFeedback", getEstimationFeedback(activeTour));
             model.addAttribute("estimationAccuracyClass", getEstimationAccuracyClass(activeTour));
-=======
-            //prepare a list of Truck types to select from.
-            Tour tour = (Tour) model.get("activeTour");
-            HashMap<String, Integer> truckTypes = getAvailableTruckTypesAndNumbers(tour.getTruck().getTruckType());
-            model.addAttribute("truckTypes", truckTypes);
->>>>>>> olivier
         }
-        
-        
+
         //prepare a list of Truck types to select from.
         HashMap<String, Integer> truckTypes = getAvailableTruckTypesAndNumbers(activeTour.getTruck().getTruckType());
         model.addAttribute("truckTypes", truckTypes);
