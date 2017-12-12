@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
+    <link rel="stylesheet" type="text/css" href="Source/src/main/resources/static/css/bulma.css"/>
     <link rel="stylesheet" th:href="@{/css/sliderCSS.css}"/>
     <script type="text/javascript" th:src="@{/js/sliderScript.js}"/>
     <meta charset="utf-8"/>
@@ -73,7 +74,6 @@
     </div>
 </section>
 
-<div th:if="${not #lists.isEmpty(drivers)}" th:each="driver : ${drivers}">
 <table class="table is-fullwidth">
     <thead>
     <tr>
@@ -92,57 +92,24 @@
     </tr>
     </thead>
     <tbody>
-    <tr>
-        <td><p th:text="${driver.username}"></p></td>
-        <td><p th:text="${driver.address.getLastname()}"></p></td>
-        <td><p th:text="${driver.address.getFirstname()}"></p></td>
-        <td><p th:text="${driver.address.getStreet()}"></p></td>
-        <td><p th:text="${driver.address.getStreetNumber()}"></p></td>
-        <td><p th:text="${driver.address.getZip()}"></p></td>
-        <td><p th:text="${driver.address.getCity()}"></p></td>
-        <td><p th:text="${driver.address.getEmail()}"></p></td>
-        <td><p th:text="${driver.address.getPhone()}"></p></td>
-        <td><p th:text="${driver.getHiringDateString()}"></p></td>
-        <td><a th:href="'drivers/promote?username='+${driver.username}" class="button is-info"><i
+    <tr th:if="${not #lists.isEmpty(drivers)}" th:each="driver : ${drivers}">
+        <td class="limited-width-8"><p th:text="${driver.username}" th:title="${driver.username}"></p></td>
+        <td class="limited-width-8"><p th:text="${driver.address.getLastname()}" th:title="${driver.address.getLastname()}"></p></td>
+        <td class="limited-width-8"><p th:text="${driver.address.getFirstname()}" th:title="${driver.address.getFirstname()}"></p></td>
+        <td class="limited-width-8"><p th:text="${driver.address.getStreet()}" th:title="${driver.address.getStreet()}"></p></td>
+        <td class="limited-width-8"><p th:text="${driver.address.getStreetNumber()}" th:title="${driver.address.getStreetNumber()}"></p></td>
+        <td class="limited-width-8"><p th:text="${driver.address.getZip()}" th:title="${driver.address.getZip()}"></p></td>
+        <td class="limited-width-8"><p th:text="${driver.address.getCity()}" th:title="${driver.address.getCity()}"></p></td>
+        <td class="limited-width-8"><p th:text="${driver.address.getEmail()}" th:title="${driver.address.getEmail()}"></p></td>
+        <td class="limited-width-8"><p th:text="${driver.address.getPhone()}" th:title="${driver.address.getPhone()}"></p></td>
+        <td class="limited-width-8"><p th:text="${driver.getHiringDateString()}" th:title="${driver.getHiringDateString()}"></p></td>
+        <td class="limited-width-8"><a th:href="'drivers/promote?username='+${driver.username}" class="button is-info"><i
                 class="fa fa-arrow-circle-o-up"></i>&nbsp;Promote to Admin</a></td>
-        <td><a id="showModal" class="button is-danger"><i
+        <td class="limited-width"><a th:href="'drivers/delete?username=' + ${driver.username}" class="button is-danger"><i
                 class="fa fa-fire"></i>&nbsp;Fire</a></td>
     </tr>
     </tbody>
 </table>
-
-<div class="modal">
-    <div class="modal-background"></div>
-    <div class="modal-content">
-        <div class="box is-centered">
-            <h2 class="subtitle is-2">Confirm Deletion</h2>
-            <div class="buttons is-centered">
-                <a th:href="'drivers/delete?username=' + ${driver.username}" class="button is-danger"><i
-                        class="fa fa-fire"></i>&nbsp;Fire</a>
-                <button id="modal-close" class="button">CANCEL</button>
-            </div>
-        </div>
-    </div>
-    <button class="modal-close"></button>
-</div>
-
-</div>
-<script>
-
-    //delete modal trigger
-    $(document).ready(function () {
-
-        $("#showModal").click(function () {
-            $(".modal").addClass("is-active");
-        });
-
-        $(".modal-close, #modal-close").click(function () {
-            $(".modal").removeClass("is-active");
-        });
-
-    });
-
-</script>
 
 </body>
 </html>
