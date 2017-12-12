@@ -85,15 +85,15 @@
 
     <tbody>
     <tr th:if="${not #lists.isEmpty(animals)}" th:each="animal : ${animals}">
-        <td><p th:text="${animal.species}"></p></td>
+        <td><span th:text="${animal.species}"/></td>
         <th></th>
         <th></th>
-        <td><p th:text="${animal.length}"></p></td>
-        <td><p th:text="${animal.width}"></p></td>
-        <td><p th:text="${animal.weight}"></p></td>
+        <td><span th:text="${animal.length}"/><span>cm</span></td>
+        <td><span th:text="${animal.width}"/><span>cm</span></td>
+        <td><span th:text="${animal.weight}"/><span>kg</span></td>
         <td>
             <a th:href="'animals/delete?species=' + ${animal.species}" class="button is-danger"><i
-                    class="fa fa-fire"></i>&nbsp;Delete</a>
+                    class="fa fa-trash"></i>&nbsp;Delete</a>
         </td>
 
     </tr>

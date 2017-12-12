@@ -11,8 +11,8 @@
 }
 
 .truck-info {
-  background-color:#789F8A;
-  color: #E2D8A3;
+  background-color:#222930;
+  color: #4EB1BA;
   cursor:default;
   display:none;
   position:fixed;
@@ -33,11 +33,11 @@
   font-family: 'Varela', sans-serif;
   font-weight: 600;
   font-size: 30px;
-  color: #E2D8A3;
+  color: #E9E9E9;
 }
 
 .truck-info strong {
-  color: #E2D8A3;
+  color: #E9E9E9;
   font-family: monospace;
 }
 
